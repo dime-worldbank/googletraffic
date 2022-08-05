@@ -142,7 +142,7 @@ leaflet() %>%
 ```
 
 <p align="center">
-<images src="images/nyc_grid.jpg">
+<images src="images/nyc_grid.jpg?raw=true">
 </p>
 
 We notice that the tile in the bottom left corner just covers water and some land outside of Manhattan (the Manhattan polygon includes water area). To reduce the number of API queries we need to make, we can remove this tile.
@@ -156,7 +156,7 @@ leaflet() %>%
 ```
 
 <p align="center">
-<images src="images/nyc_grid_clean.jpg" width="550">
+<images src="images/nyc_grid_clean.jpg?raw=true" width="550">
 </p>
 
 We can then use the grid to make a traffic raster.
