@@ -31,21 +31,6 @@ if(F){
   roxygen2::roxygenise("~/Documents/github/googletraffic")
 }
 
-#' Determine pixel distance in decimal degrees
-#'
-#' Based on the zoom level, determine the height/width of each pixel in decimal degrees
-#'
-#' @param zoom Zoom level
-#'
-#' @return Returns the pixel height/width in decimal degrees (integer)
-det_google_pixel_dist_deg <- function(zoom){
-  # Information from: https://wiki.openstreetmap.org/wiki/Zoom_levels
-  
-  pixel_dist_deg <- 360/(2^zoom)/256
-  
-  return(pixel_dist_deg)
-}
-
 latLngToPoint <- function(mapWidth, mapHeight, lat, lng){
   # Adapted from: https://stackoverflow.com/questions/12507274/how-to-get-bounds-of-a-google-static-map
   
@@ -140,7 +125,7 @@ gt_make_point_grid <- function(polygon,
                                height,
                                width,
                                zoom,
-                               reduce_hw = 100){
+                               reduce_hw = 10){
   
   ## Polygon should be sf object
   if(class(polygon)[1] %in% "SpatialPolygonsDataFrame"){
@@ -160,13 +145,35 @@ gt_make_point_grid <- function(polygon,
   height_use <- height - reduce_hw
   width_use  <- width  - reduce_hw
   
-  pixel_dist_deg   <- det_google_pixel_dist_deg(zoom)
+  ## Decimal degree distance of pixel
+  # Use most extreme latitude location
+  most_extreme_lat_point <- st_coordinates(polygon) %>%
+    as.data.frame() %>%
+    mutate(Y_abs = abs(Y)) %>%
+    arrange(-Y_abs) %>%
+    head(1)
+  
+  most_extreme_lat_ext <- gt_make_extent(latitude = most_extreme_lat_point$Y,
+                                         longitude = most_extreme_lat_point$X,
+                                         height = height,
+                                         width = width,
+                                         zoom = zoom)
+  
+  pixel_dist_deg <- min(
+    (most_extreme_lat_ext@xmax - most_extreme_lat_ext@xmin) / width,
+    (most_extreme_lat_ext@ymax - most_extreme_lat_ext@ymin) / height
+  )
+  
+  x_degree <- (most_extreme_lat_ext@xmax - most_extreme_lat_ext@xmin) / width
+  y_degree <- (most_extreme_lat_ext@ymax - most_extreme_lat_ext@ymin) / height
+  
+  #pixel_dist_deg   <- det_google_pixel_dist_deg(zoom)
   
   ## Make raster and convert to polygon
   poly_ext <- extent(polygon)
   
-  r <- raster(ext = poly_ext, res=c(width_use*pixel_dist_deg,
-                                    height_use*pixel_dist_deg))
+  r <- raster(ext = poly_ext, res=c(width_use*x_degree,
+                                    height_use*y_degree))
   r <- raster::extend(r, c(1,1)) #Expand by one cell, to ensure covers all study area
   
   p <- as(r, "SpatialPolygonsDataFrame") %>% st_as_sf()
@@ -451,8 +458,7 @@ gt_html_to_raster <- function(filename,
                                      zoom)
   
   ## Save PNG
-  img <- readPNG(file.path(filename_dir, paste0(filename_only, ".png")))
-  writePNG(img, "~/Desktop/test12345.png")
+  #img <- readPNG(file.path(filename_dir, paste0(filename_only, ".png")))
   
   ## Delete png from temp file
   unlink(file.path(filename_dir, paste0(filename_only,".png")))
@@ -615,7 +621,8 @@ gt_make_raster_from_grid <- function(grid_param_df,
   r_list$fun       <- max
   r_list$tolerance <- 1
   
-  r <- do.call(mosaic, r_list)
+  r <- do.call(raster::mosaic, r_list)
+  r[r[] %in% 0] <- NA
   
   return(r)
 }
@@ -641,7 +648,8 @@ gt_make_raster_from_polygon <- function(polygon,
                                         zoom,
                                         webshot_delay,
                                         google_key,
-                                        reduce_hw = 0,
+                                        reduce_hw = 10,
+                                        crop_to_polygon = T,
                                         print_progress = T){
   
   grid_param_df <- gt_make_point_grid(polygon   = polygon,
@@ -659,6 +667,12 @@ gt_make_raster_from_polygon <- function(polygon,
   r <- gt_make_raster_from_grid(grid_param_df = grid_param_df,
                                 webshot_delay = webshot_delay,
                                 google_key    = google_key)
+  
+  if(crop_to_polygon){
+    r <- r %>%
+      crop(polygon) %>%
+      mask(polygon)
+  }
   
   return(r)
 }
@@ -893,4 +907,28 @@ bing_traffic <- function(latitude,
 #   }
 #   
 #   return("Done!")
+# }
+# det_google_pixel_dist_m <- function(latitude, zoom){
+#   # https://wiki.openstreetmap.org/wiki/Zoom_levels
+#   #pixel_dist_m <- (2*pi*6378137*cos(deg2rad(latitude))/2^zoom)/256
+#   
+#   pixel_dist_m <- (cos(latitude * pi/180) * 2 * pi * 6378137) / (256 * 2^zoom)
+#   
+#   return(pixel_dist_m)
+# }
+
+#' Determine pixel distance in decimal degrees
+#'
+#' Based on the zoom level, determine the height/width of each pixel in decimal degrees
+#'
+#' @param zoom Zoom level
+#'
+#' @return Returns the pixel height/width in decimal degrees (integer)
+# det_google_pixel_dist_deg <- function(zoom){
+#   # Information from: https://wiki.openstreetmap.org/wiki/Zoom_levels
+#   
+#   # TODO: Account for latitude; issues when high
+#   pixel_dist_deg <- 360/(2^zoom)/256
+#   
+#   return(pixel_dist_deg)
 # }
