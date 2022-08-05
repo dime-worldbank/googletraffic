@@ -64,7 +64,7 @@ rasterVis::levelplot(r,
                      xlab = NULL,
                      ylab = NULL,
                      margin = F,
-                     maxpixels = 1e10)
+                     maxpixels = 1e8)
 dev.off()
 
 # Polygon example -----------------------------------------------------------------
@@ -89,7 +89,7 @@ rasterVis::levelplot(r,
                      xlab = NULL,
                      ylab = NULL,
                      margin = F,
-                     maxpixels = 1e10)
+                     maxpixels = 1e8)
 dev.off()
 
 # Grid example -----------------------------------------------------------------
@@ -130,18 +130,18 @@ rasterVis::levelplot(r,
                      xlab = NULL,
                      ylab = NULL,
                      margin = F,
-                     maxpixels = 1e10)
+                     maxpixels = 1e8)
 dev.off()
 
 # Washington DC Example --------------------------------------------------------
 us_sp <- getData('GADM', country='USA', level=1)
-dc_sp <- us_sp[us_sp$NAME_1 %in% "Washington DC",]
+dc_sp <- us_sp[us_sp$NAME_1 %in% "District of Columbia",]
 
 r <- gt_make_raster_from_polygon(polygon       = dc_sp,
                                  height        = 3000,
                                  width         = 3000,
                                  zoom          = 16,
-                                 webshot_delay = 10,
+                                 webshot_delay = 15,
                                  google_key    = google_key)
 
 jpeg("dc.jpeg",
@@ -155,7 +155,7 @@ rasterVis::levelplot(r,
                      xlab = NULL,
                      ylab = NULL,
                      margin = F,
-                     maxpixels = 1e10)
+                     maxpixels = 1e8)
 dev.off()
 
 
