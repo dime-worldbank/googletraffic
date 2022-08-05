@@ -26,7 +26,7 @@ google_key <- api_keys_df %>%
                 Account == "ramarty@email.wm.edu") %>%
   pull(Key)
 
-setwd("~/Documents/Github/googletraffic/img")
+setwd("~/Documents/Github/googletraffic/images")
 
 # Point example 1 -----------------------------------------------------------------
 r <- gt_make_raster(location = c(40.712778, -74.006111),
@@ -134,17 +134,15 @@ rasterVis::levelplot(r,
 dev.off()
 
 # Washington DC Example --------------------------------------------------------
-us_sp <- getData('GADM', country='USA', level=1)
-dc_sp <- us_sp[us_sp$NAME_1 %in% "District of Columbia",]
+# https://www.google.com/maps/place/38%C2%B054'05.9%22N+77%C2%B002'11.7%22W/@38.9010952,-77.0350844,16.08z/data=!4m6!3m5!1s0x0:0xdfa7b78027c7aac6!7e2!8m2!3d38.9016494!4d-77.0365891!5m1!1e1
+r <- gt_make_raster(location = c(38.901649, -77.036589),
+                    height = 700,
+                    width = 700,
+                    zoom = 16,
+                    webshot_delay = 5,
+                    google_key = google_key)
 
-r <- gt_make_raster_from_polygon(polygon       = dc_sp,
-                                 height        = 3000,
-                                 width         = 3000,
-                                 zoom          = 16,
-                                 webshot_delay = 15,
-                                 google_key    = google_key)
-
-jpeg("dc.jpeg",
+jpeg("dc.jpg",
      width = 480*4,
      height = 480*4)
 rasterVis::levelplot(r, 
