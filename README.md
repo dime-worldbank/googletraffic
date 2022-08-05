@@ -1,6 +1,11 @@
 # googletraffic
 Create data from Google Maps Traffic
 
+* [Overview](#overview)
+* [Installation](#installation)
+* [Google API Key](#google-api-key)
+* [Quickstart](#quickstart)
+
 # Overview <a name="overview"></a>
 
 Google Maps Traffic provides valuable information about traffic conditions across an area. This package provides functions to produce georeferenced rasters from live Google Maps traffic information. Providing Google Traffic information in a georeferenced data format facilitates analysis of traffic information (e.g., merging traffic information with other data sources, observing trends over time, etc).
@@ -40,9 +45,9 @@ google_key <- "GOOGLE-KEY-HERE"
 
 The package enables querying Google traffic information around a specific location and for specific or larger spatial extents. In this section, key parameters relevant across functions are defined; then examples are shown querying traffic around a point, polygon, and grid.
 
-* [Key parameters]((#key-parameters))
+* [Key parameters](#key-parameters)
 * [Query Traffic Around a Specific Location](#raster-from-location)
-* [Query Granular Traffic Information for Large Spatial Extent](#raster-from-location)
+* [Query Granular Traffic Information for Large Spatial Extent](#large-extent)
   - [Query Traffic From a Polygon](#raster-from-polygon)
   - [Query Traffic From a Grid](#raster-from-grid)
 
