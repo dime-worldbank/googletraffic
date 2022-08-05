@@ -1,6 +1,6 @@
 # Examples used for readme
 
-if(F){
+if(T){
   
   # Setup ------------------------------------------------------------------------
   library(googletraffic)
@@ -56,7 +56,7 @@ if(F){
                       webshot_delay = 20,
                       google_key    = google_key)
   
-  jpg("usa.jpg",
+  jpeg("usa.jpg",
        width = 480*4,
        height = 480*4)
   rasterVis::levelplot(r, 
@@ -81,7 +81,7 @@ if(F){
                                    webshot_delay = 10,
                                    google_key    = google_key)
   
-  jpg("nyc_large.jpg",
+  jpeg("nyc_large.jpg",
        width = 480*4,
        height = 480*4)
   rasterVis::levelplot(r, 
@@ -122,7 +122,7 @@ if(F){
                                 webshot_delay = 10,
                                 google_key = google_key)
   
-  jpg("nyc_large_from_grid.jpg",
+  jpeg("nyc_large_from_grid.jpg",
        width = 480*4,
        height = 480*4)
   rasterVis::levelplot(r, 
@@ -145,7 +145,7 @@ if(F){
                       webshot_delay = 5,
                       google_key = google_key)
   
-  jpg("top_example.jpg",
+  jpeg("top_example.jpg",
        width = 480*1.5,
        height = 480*1.5)
   rasterVis::levelplot(r, 

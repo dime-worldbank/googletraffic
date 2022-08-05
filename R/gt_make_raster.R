@@ -30,8 +30,11 @@ gt_make_raster <- function(location,
                            height,
                            width,
                            zoom,
-                           webshot_delay,
-                           google_key){
+                           google_key,
+                           webshot_delay){
+  
+  ## Set webshot_delay if null
+  webshot_delay <- gt_estimate_webshot_delay(height, width, webshot_delay)
   
   ## Filename; as html
   filename_html <- tempfile(pattern = "file", tmpdir = tempdir(), fileext = ".html")

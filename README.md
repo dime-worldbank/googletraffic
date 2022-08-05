@@ -68,6 +68,7 @@ The following are key parameters used when querying Google Traffic data.
 * __zoom:__ The [zoom level](https://wiki.openstreetmap.org/wiki/Zoom_levels) defines the resolution of the traffic image. Values can range from 0 to 20. At the equator, with a zoom level 10, each will be about 150 meters; with a zoom level 20, each pixel will be about 0.15 meters. Consequently, smaller zoom levels can be used if only larger roads are of interest (e.g., highways), while larger zoom levels will be needed for capturing smaller roads.
 * __height/width:__ The height and width defines the height and width of the raster in terms of pixels. The spatial extent of pixels depends on the `zoom` level and latitude.
 * __webshot_delay:__ Google maps information is originally rendered on an interactive map. For large values of `height` and `width`, traffic information can take some time to render on a map. Consequently, a delay (specified using `webshot_delay`) is introduced to ensure traffic information is fully rendered on the map before traffic data is extracted. For example, when using a `height` and `width` of 500, a delay time of 2 seconds works well. For a `height` and `width` of 5000, a delay of up to 20 seconds may be needed. Traffic information cannot be rendered for very large `height` and `width` values, no matter the `webshot_delay` specified.
+  - __Note that `webshot_delay` does not need to be specified.__ If it is not specified, the function estimates an appropriate delay length given the `height` and `width`. However, `webshot_delay` can be manually specified to (1) attempt to make faster queries or (2) or introduce longer delays if traffic information fails to render.
 
 ## Raster Around a Specific Location <a name="raster-from-location"></a>
 
@@ -79,7 +80,6 @@ r <- gt_make_raster(location      = c(-1.286389, 36.817222),
                     height        = 1000,
                     width         = 1000,
                     zoom          = 16,
-                    webshot_delay = 4,
                     google_key    = google_key)
 
 ## Map raster
@@ -100,7 +100,6 @@ r <- gt_make_raster(location    = c(38.744324, -85.511534),
                   height        = 1000,
                   width         = 1000,
                   zoom          = 7,
-                  webshot_delay = 4,
                   google_key    = google_key)
 
 ## Map raster
@@ -138,7 +137,6 @@ r <- gt_make_raster_from_polygon(polygon       = ny_sp,
                                  height        = 2000,
                                  width         = 2000,
                                  zoom          = 16,
-                                 webshot_delay = 10,
                                  google_key    = google_key)
 
 ## Plot raster
@@ -188,7 +186,6 @@ leaflet() %>%
 We can then use the grid to make a traffic raster.
 ```r
 r <- gt_make_raster_from_grid(grid_param_df = grid_clean_df,
-                              webshot_delay = 10,
                               google_key = google_key)
 
 rasterVis::levelplot(r,

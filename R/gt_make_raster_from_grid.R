@@ -14,6 +14,9 @@ gt_make_raster_from_grid <- function(grid_param_df,
                                      google_key,
                                      print_progress = T){
   
+  ## Set webshot_delay if null
+  webshot_delay <- gt_estimate_webshot_delay(height, width, webshot_delay)
+  
   ## Make list of rasters
   r_list <- lapply(1:nrow(grid_param_df), function(i){
     

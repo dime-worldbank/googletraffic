@@ -23,6 +23,9 @@ gt_make_raster_from_polygon <- function(polygon,
                                         crop_to_polygon = T,
                                         print_progress = T){
   
+  ## Set webshot_delay if null
+  webshot_delay <- gt_estimate_webshot_delay(height, width, webshot_delay)
+  
   grid_param_df <- gt_make_point_grid(polygon   = polygon,
                                       height    = height,
                                       width     = width,
