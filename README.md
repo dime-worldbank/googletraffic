@@ -122,7 +122,7 @@ rasterVis::levelplot(r,
 ```
 
 <p align="center">
-<images src="images/nyc_large.jpg" width="550">
+<images src="images/nyc_large.jpg">
 </p>
 
 ## Raster from Grid
