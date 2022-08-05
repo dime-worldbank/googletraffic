@@ -66,7 +66,7 @@ leaflet() %>%
 
 ![NYC Example 1](images/nyc_small.jpg)
 
-By using a smaller `zoom` and larger `height` and `width`, we can capture a larger area. Note that because we used a larger zoom, we also increased the `webshot_delay` time.
+By using a smaller `zoom` and larger `height` and `width`, we can capture a larger area. Note that because we used a larger `zoom`, we also increased the `webshot_delay` time.
 ```r  
 ## Make raster
 r <- gt_make_raster(location    = c(38.744324, -85.511534),
@@ -93,7 +93,7 @@ rasterVis::levelplot(r,
 
 The above raster shows traffic across multiple U.S. states. However, the height/width of each pixel is over 300 meters; the above data may be useful if focusing on a larger scale (e.g., where a unit would be a city, not a road). To have high granularity and also cover a larger area, we could increase the `zoom` and further increase the `height` and `width`; however, traffic data will not render if the `height` and `width` are too large. Instead, we can increase the `zoom`, use a smaller `height` and `width`, and call the function across a grid that covers our study area. The `gt_make_raster_from_polygon()` facilitates this process; instead of specifying the centroid location, we can use a polygon; multiple rasters are created and mosaiced together to create a raster that covers the polygon.
 
-In the first example, we captured traffic in lower Manhattan using a `zoom` of 15. Now, we create traffic data across all of Manhattan using the same zoom.
+In the first example, we captured traffic in lower Manhattan using a `zoom` of 16. Now, we create traffic data across all of Manhattan using the same zoom.
 
 ```r  
 ## Grab polygon

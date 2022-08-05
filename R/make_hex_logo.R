@@ -1,5 +1,8 @@
 # Make Hexagon Logo
 
-library(hexSticker)
-
-
+if(F){
+  
+  library(hexSticker)
+  
+  
+}
