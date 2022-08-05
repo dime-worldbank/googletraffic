@@ -36,11 +36,17 @@ Querying Google traffic information requires a Google API key with the [Maps Jav
 google_key <- "GOOGLE-KEY-HERE"
 ```
 
-# Examples
+# Quickstart
 
-This section provides examples of using the function
+The package enables querying Google traffic information around a specific location and for specific or larger spatial extents. In this section, key parameters relevant across functions are defined; then examples are shown querying traffic around a point, polygon, and grid.
 
-To run the examples, the following packages should be loaded.
+* [Key parameters]
+* [Query Traffic Around a Specific Location]
+* [Query Granular Traffic Information for Large Spatial Extent]
+  - [Query Traffic From a Polygon]
+  - [Query Traffic From a Grid]
+
+To run the below examples, the following packages should be also be loaded for visualizing the rasters.
 ```r
 library(googletraffic)
 library(leaflet)
@@ -50,20 +56,25 @@ library(scales)
 library(mapview)
 ```
 
-## Raster around lat/lon
+## Key parameters
 
-The `gt_make_raster` function produces a raster, using a centroid location and height/width to specify the location where data is queried. The height/width are in terms of pixels, where pixel size primarily depends on the [zoom level](https://wiki.openstreetmap.org/wiki/Zoom_levels). For example, with a zoom level 13, each pixel will be about 20 meters (at the equator); with a zoom level of 16, each pixel will be about 2.5 meters (at the equator). Consequently, larger zoom values will give a more granular depiction of a location (e.g., for small streets within a city).
+The following are key parameters used when querying Google Traffic data.
 
-The function captures traffic information that originally appears on an interactive map produced from Google; for large values of `height` and `width`, the traffic information can take some time to render on the map. Consequently, a delay (specified using `webshot_delay`) is introduced to ensure traffic information is fully rendered on the map before the map is transformed into data. The below example uses a delay time of 2 seconds. For a height/width of 5000, a delay of up to 20 seconds may need to be used.
+* __zoom:__ The [zoom level](https://wiki.openstreetmap.org/wiki/Zoom_levels) defines the resolution of the traffic image. Values can range from 0 to 20. At the equator, with a zoom level 10, each will be about 150 meters; with a zoom level 20, each pixel will be about 0.15 meters. Consequently, smaller zoom levels can be used if only larger roads are of interest (e.g., highways), while larger zoom levels will be needed for capturing smaller roads.
+* __height/width:__ The height and width defines the height and width of the raster in terms of pixels. The spatial extent of pixels depends on the `zoom` level and latitude.
+* __webshot_delay:__ Google maps information is originally rendered on an interactive map. For large values of `height` and `width`, traffic information can take some time to render on a map. Consequently, a delay (specified using `webshot_delay`) is introduced to ensure traffic information is fully rendered on the map before traffic data is extracted. For example, when using a `height` and `width` of 500, a delay time of 2 seconds works well. For a `height` and `width` of 5000, a delay of up to 20 seconds may be needed. Traffic information cannot be rendered for very large `height` and `width` values, no matter the `webshot_delay` specified.
 
-The below example shows traffic in lower Manhattan, NYC.
+## Raster Around a Specific Location
+
+The `gt_make_raster` function produces a raster, using a centroid location and height/width to specify the location where data is queried. The below example queries traffic for lower Manhattan, NYC.
+
 ```r  
 ## Make raster
 r <- gt_make_raster(location      = c(-1.286389, 36.817222),
-                    height        = 500,
-                    width         = 500,
+                    height        = 1000,
+                    width         = 1000,
                     zoom          = 16,
-                    webshot_delay = 2,
+                    webshot_delay = 4,
                     google_key    = google_key)
 
 ## Map raster
@@ -77,14 +88,14 @@ leaflet() %>%
 
 ![NYC Example 1](images/nyc_small.jpg)
 
-By using a smaller `zoom` and larger `height` and `width`, we can capture a larger area. Note that because we used a larger `height` and `width`, we also increased the `webshot_delay` time.
+By using a smaller `zoom`, we can capture a larger area.
 ```r  
 ## Make raster
 r <- gt_make_raster(location    = c(38.744324, -85.511534),
-                  height        = 5000,
-                  width         = 5000,
+                  height        = 1000,
+                  width         = 1000,
                   zoom          = 7,
-                  webshot_delay = 20,
+                  webshot_delay = 4,
                   google_key    = google_key)
 
 ## Map raster
@@ -100,14 +111,20 @@ rasterVis::levelplot(r,
 
 ![USA Example](images/usa.jpg)
 
-## Raster from polygon
+## Query Granular Traffic Information for Large Spatial Extent
 
-The above raster shows traffic across multiple U.S. states. However, the height/width of each pixel is over 300 meters; the above data may be useful if focusing on a larger scale (e.g., where a unit would be a city, not a road). To have high granularity and also cover a larger area, we could increase the `zoom` and further increase the `height` and `width`; however, traffic data will not render if the `height` and `width` are too large. Instead, we can increase the `zoom`, use a smaller `height` and `width`, and call the function across a grid that covers our study area. The `gt_make_raster_from_polygon()` facilitates this process; instead of specifying the centroid location, we can use a polygon; multiple rasters are created and mosaiced together to create a raster that covers the polygon.
+The above example illustrates a trade off between resolution and spatial extent. For small `zoom` levels, we can capture a large areas, but the pixels values are also large --- so we may only be able to detect overall traffic for large roads or cities. For large `zoom` levels, we can detect traffic on specific roads, but can only capture traffic for a smaller area. We could set a large `zoom` and a large `height` and `width`, but Google traffic information will fail to render if we set the `height` and `width` values too large (no matter the `webshot_delay` we specify).
 
-In the first example, we captured traffic in lower Manhattan using a `zoom` of 16. Now, we create traffic data across all of Manhattan using the same zoom.
+The package provides functions that allow querying granular traffic information for large spatial extents. Here, we simply make multiple queries to obtain traffic information for multiple areas, then the information is merged together into one raster file. The `gt_make_raster_from_polygon()` and `gt_make_raster_from_grid()` provide two different approaches for querying granular traffic information for spatial extents where multiple Google queries are needed.
+
+### Raster from Polygon
+
+The above example showed querying traffic information for lower Manhattan. Here, we show querying traffic information for all of Manhattan using the same resolution (a `zoom` level of 16, where each pixel is 2-3 meters long). Using the `gt_make_raster_from_polygon()`, we input a polygon of Manhattan. We still specify the `height` and `width`. Large `height` and `width` values will result in fewer Google queries, while smaller `height` and `width` values will require more queries to cover the same spatial area.
+
+In the below example, we use a `height` and `width` of 2000, which results in needing to make 14 Google API queries to cover all of Manhattan. Given a `height` and `width` of 2000 is still a bit large, we use a `webshot_delay` of 10 seconds.
 
 ```r  
-## Grab polygon
+## Grab polygon of Manhattan
 us_sp <- getData('GADM', country='USA', level=2)
 ny_sp <- us_sp[us_sp$NAME_2 %in% "New York",]
 
@@ -132,7 +149,7 @@ rasterVis::levelplot(r,
 
 ![NYC Example 2](images/nyc_large.jpg)
 
-## Raster from Grid
+### Raster from Grid
 
 `gt_make_raster_from_polygon()` creates a grid that covers a polygon, creates a traffic raster for each grid, and mosaics them together. Some may prefer to first create and see the grid, then create a traffic raster using this grid. For example, one could (1) create a grid that covers a polygon then (2) remove certain grid tiles that cover areas that may not be of interest. The `gt_make_point_grid()` and `gt_make_raster_from_grid()` functions facilitate this process; `gt_make_point_grid()` creates a grid, then `gt_make_raster_from_grid()` uses a grid as an input to create a traffic raster.
 
@@ -151,7 +168,7 @@ leaflet() %>%
 ![NYC Grid](images/nyc_grid.jpg)
 
 
-We notice that the tile in the bottom left corner just covers water and some land outside of Manhattan (the Manhattan polygon includes water area). To reduce the number of API queries we need to make, we can remove this tile.
+We notice that the tile in the bottom left corner just covers water and some land outside of Manhattan. To reduce the number of API queries we need to make, we can remove this tile.
 
 ```r
 grid_clean_df <- grid_df[-12,]
