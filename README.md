@@ -30,7 +30,7 @@ google_key <- "GOOGLE-KEY-HERE"
 
 # Examples
 
-## Raster from lat/lon
+## Raster around lat/lon
 
 The `gt_make_raster` function produces a raster, using a centroid location and height/width to specify the location where data is queried. The height/width are in terms of pixels, where pixel size primarily depends on the [zoom level](https://wiki.openstreetmap.org/wiki/Zoom_levels). For example, with a zoom level 13, each pixel will be about 20 meters (at the equator); with a zoom level of 16, each pixel will be about 2.5 meters (at the equator). Consequently, larger zoom values will give a more granular depiction of a location (e.g., for small streets within a city).
 
@@ -50,21 +50,19 @@ r <- gt_make_raster(location      = c(-1.286389, 36.817222),
 pal <- colorNumeric(c("green", "orange", "red", "#660000"), values(r),
                         na.color = "transparent")
 
-m <- leaflet() %>%
+leaflet() %>%
   addProviderTiles("Esri.WorldGrayCanvas") %>%
-  addRasterImage(r, colors = pal_all, opacity = 1,project=F)
+  addRasterImage(r, colors = pal, opacity = 1,project=F)
 
 ```
 
 <p align="center">
-<img src="images/nyc_small_leaflet.png" width="550">
+<img src="img/nyc_small.png" width="550">
 </p>
 
 By using a smaller `zoom` and larger `height` and `width`, we can capture a larger area. Note that because we used a larger zoom, we also increased the `webshot_delay` time.
 ```r  
 ## Make raster
-google_key <- "GOOGLE-KEY-HERE"
-
 r <- gt_make_raster(location    = c(38.744324, -85.511534),
                   height        = 5000,
                   width         = 5000,
@@ -73,17 +71,18 @@ r <- gt_make_raster(location    = c(38.744324, -85.511534),
                   google_key    = google_key)
 
 ## Map raster
-pal <- colorNumeric(c("green", "orange", "red", "#660000"), values(r),
-                        na.color = "transparent")
-
-m <- leaflet() %>%
-  addProviderTiles("Esri.WorldGrayCanvas") %>%
-  addRasterImage(r, colors = pal_all, opacity = 1,project=F)
-
+rasterVis::levelplot(r,
+                     col.regions = c("green", "orange", "red", "#660000"),
+                     par.settings = list(axis.line = list(col = "transparent")),
+                     scales = list(col = "black"),
+                     colorkey = F,
+                     xlab = NULL,
+                     ylab = NULL,
+                     margin = F)
 ```
 
 <p align="center">
-<img src="images/usa_small_leaflet.png" width="550">
+<img src="img/usa.png" width="550">
 </p>
 
 ## Raster from polygon
@@ -93,17 +92,31 @@ The above raster shows traffic across multiple U.S. states. However, the height/
 In the first example, we captured traffic in lower Manhattan using a `zoom` of 15. Now, we create traffic data across all of Manhattan using the same zoom.
 
 ```r  
-r <- gt_make_raster_from_polygon(polygon       = nbo,
-                                 height        = 500,
-                                 width         = 500,
-                                 zoom          = 12,
-                                 webshot_delay = 5,
-                                 reduce_hw     = 100,
+## Grab polygon
+us_sp <- getData('GADM', country='USA', level=2)
+ny_sp <- us_sp[us_sp$NAME_2 %in% "New York",]
+
+## Make raster
+r <- gt_make_raster_from_polygon(polygon       = ny_sp,
+                                 height        = 2000,
+                                 width         = 2000,
+                                 zoom          = 16,
+                                 webshot_delay = 10,
                                  google_key    = google_key)
+
+## Plot raster
+rasterVis::levelplot(r,
+                     col.regions = c("green", "orange", "red", "#660000"),
+                     par.settings = list(axis.line = list(col = "transparent")),
+                     scales = list(col = "black"),
+                     colorkey = F,
+                     xlab = NULL,
+                     ylab = NULL,
+                     margin = F)
 ```
 
 <p align="center">
-<img src="images/nyc_large.png" width="550">
+<img src="img/nyc_large.png" width="550">
 </p>
 
 ## Raster from Grid
@@ -113,27 +126,31 @@ r <- gt_make_raster_from_polygon(polygon       = nbo,
 Here, we create a grid.
 ```r
 grid_df <- gt_make_point_grid(polygon = ny_sp,
-                              height = 2000,
-                              width = 2000,
-                              zoom = 16)
+                              height  = 2000,
+                              width   = 2000,
+                              zoom    = 16)
+
+leaflet() %>%
+  addTiles() %>%
+  addPolygons(data = grid_df)
 ```
 
 <p align="center">
-<img src="images/nyc_grid.png" width="550">
+<img src="img/nyc_grid.png" width="550">
 </p>
 
-We notice that the tile in the bottom left corner just covers water and some land outside or Manhattan (the Manhattan polygon includes water area). To reduce the number of API queries we need to make, we can remove this tile.
+We notice that the tile in the bottom left corner just covers water and some land outside of Manhattan (the Manhattan polygon includes water area). To reduce the number of API queries we need to make, we can remove this tile.
 
 ```r
 grid_clean_df <- grid_df[-12,]
 
 leaflet() %>%
   addTiles() %>%
-  addPolygons(data =grid_clean_df)
+  addPolygons(data = grid_clean_df)
 ```
 
 <p align="center">
-<img src="images/nyc_grid_clean.png" width="550">
+<img src="img/nyc_grid_clean.png" width="550">
 </p>
 
 We can then use the grid to make a traffic raster.
@@ -142,9 +159,6 @@ r <- gt_make_raster_from_grid(grid_param_df = grid_clean_df,
                               webshot_delay = 10,
                               google_key = google_key)
 
-png("nyc_large_from_grid.png",
-    width = 480*6,
-    height = 480*6)
 rasterVis::levelplot(r,
                      col.regions = c("green", "orange", "red", "#660000"),
                      par.settings = list(axis.line = list(col = "transparent")),
@@ -152,13 +166,11 @@ rasterVis::levelplot(r,
                      colorkey = F,
                      xlab = NULL,
                      ylab = NULL,
-                     margin = F,
-                     maxpixels = 1e10)
-dev.off()
+                     margin = F)
 ```
 
 <p align="center">
-<img src="images/nyc_large_from_grid.png" width="550">
+<img src="img/nyc_large_from_grid.png" width="550">
 </p>
 
 Note that the above raster includes traffic in areas outside of Manhattan; the image is not cropped or masked to just the Manhattan polygon. This result can also be achieved when using the `gt_make_raster_from_polygon()` function by setting `crop_to_polygon` to `FALSE`.
