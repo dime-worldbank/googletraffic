@@ -143,8 +143,8 @@ r <- gt_make_raster(location = c(38.901649, -77.036589),
                     google_key = google_key)
 
 jpeg("dc.jpg",
-     width = 480*4,
-     height = 480*4)
+     width = 480*2,
+     height = 480*2)
 rasterVis::levelplot(r, 
                      col.regions = c("green", "orange", "red", "#660000"),
                      par.settings = list(axis.line = list(col = "transparent")), 
@@ -153,7 +153,7 @@ rasterVis::levelplot(r,
                      xlab = NULL,
                      ylab = NULL,
                      margin = F,
-                     maxpixels = 1e8)
+                     maxpixels = 1e10)
 dev.off()
 
 
