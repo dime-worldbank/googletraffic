@@ -145,6 +145,9 @@ leaflet() %>%
 <images src="images/nyc_grid.jpg?raw=true">
 </p>
 
+![alt text](images/nyc_grid.jpg)
+
+
 We notice that the tile in the bottom left corner just covers water and some land outside of Manhattan (the Manhattan polygon includes water area). To reduce the number of API queries we need to make, we can remove this tile.
 
 ```r
