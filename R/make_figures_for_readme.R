@@ -26,7 +26,7 @@ google_key <- api_keys_df %>%
                 Account == "ramarty@email.wm.edu") %>%
   pull(Key)
 
-setwd("~/Documents/Github/googletraffic/images")
+setwd("~/Documents/Github/googletraffic/img")
 
 # Point example 1 -----------------------------------------------------------------
 r <- gt_make_raster(location = c(40.712778, -74.006111),
@@ -43,19 +43,19 @@ m <- leaflet() %>%
   addProviderTiles("Esri.WorldGrayCanvas") %>%
   addRasterImage(r, colors = pal, opacity = 1,project=F)
 
-mapshot(m, file = "nyc_small.png")
+mapshot(m, file = "nyc_small.jpeg")
 
 # Point example 2 -----------------------------------------------------------------
 r <- gt_make_raster(location    = c(38.744324, -85.511534),
                     height        = 5000,
                     width         = 5000,
-                    zoom          = 9,
+                    zoom          = 7,
                     webshot_delay = 20,
                     google_key    = google_key)
 
-png("usa.png",
-    width = 480*4,
-    height = 480*4)
+jpeg("usa.jpeg",
+     width = 480*4,
+     height = 480*4)
 rasterVis::levelplot(r, 
                      col.regions = c("green", "orange", "red", "#660000"),
                      par.settings = list(axis.line = list(col = "transparent")), 
@@ -78,9 +78,9 @@ r <- gt_make_raster_from_polygon(polygon       = ny_sp,
                                  webshot_delay = 10,
                                  google_key    = google_key)
 
-png("nyc_large.png",
-    width = 480*4,
-    height = 480*4)
+jpeg("nyc_large.jpeg",
+     width = 480*4,
+     height = 480*4)
 rasterVis::levelplot(r, 
                      col.regions = c("green", "orange", "red", "#660000"),
                      par.settings = list(axis.line = list(col = "transparent")), 
@@ -103,7 +103,7 @@ m <- leaflet() %>%
   addTiles() %>%
   addPolygons(data =grid_df)
 
-mapshot(m, file = "nyc_grid.png")
+mapshot(m, file = "nyc_grid.jpeg")
 
 ## Remove part of grid
 grid_clean_df <- grid_df[-12,]
@@ -112,16 +112,16 @@ m <- leaflet() %>%
   addTiles() %>%
   addPolygons(data =grid_clean_df)
 
-mapshot(m, file = "nyc_grid_clean.png")
+mapshot(m, file = "nyc_grid_clean.jpeg")
 
 ## Make raster
 r <- gt_make_raster_from_grid(grid_param_df = grid_clean_df,
                               webshot_delay = 10,
                               google_key = google_key)
 
-png("nyc_large_from_grid.png",
-    width = 480*4,
-    height = 480*4)
+jpeg("nyc_large_from_grid.jpeg",
+     width = 480*4,
+     height = 480*4)
 rasterVis::levelplot(r, 
                      col.regions = c("green", "orange", "red", "#660000"),
                      par.settings = list(axis.line = list(col = "transparent")), 
@@ -132,4 +132,31 @@ rasterVis::levelplot(r,
                      margin = F,
                      maxpixels = 1e10)
 dev.off()
+
+# Washington DC Example --------------------------------------------------------
+us_sp <- getData('GADM', country='USA', level=1)
+dc_sp <- us_sp[us_sp$NAME_1 %in% "Washington DC",]
+
+r <- gt_make_raster_from_polygon(polygon       = dc_sp,
+                                 height        = 3000,
+                                 width         = 3000,
+                                 zoom          = 16,
+                                 webshot_delay = 10,
+                                 google_key    = google_key)
+
+jpeg("dc.jpeg",
+     width = 480*4,
+     height = 480*4)
+rasterVis::levelplot(r, 
+                     col.regions = c("green", "orange", "red", "#660000"),
+                     par.settings = list(axis.line = list(col = "transparent")), 
+                     scales = list(col = "black"),
+                     colorkey = F,
+                     xlab = NULL,
+                     ylab = NULL,
+                     margin = F,
+                     maxpixels = 1e10)
+dev.off()
+
+
 
