@@ -103,7 +103,7 @@ m <- leaflet() %>%
   addTiles() %>%
   addPolygons(data =grid_df)
 
-mapshot(m, file = "nyc_grid.jpeg")
+mapshot(m, file = "nyc_grid.jpg")
 
 ## Remove part of grid
 grid_clean_df <- grid_df[-12,]
@@ -112,7 +112,7 @@ m <- leaflet() %>%
   addTiles() %>%
   addPolygons(data =grid_clean_df)
 
-mapshot(m, file = "nyc_grid_clean.jpeg")
+mapshot(m, file = "nyc_grid_clean.jpg")
 
 ## Make raster
 r <- gt_make_raster_from_grid(grid_param_df = grid_clean_df,
