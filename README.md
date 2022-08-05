@@ -7,7 +7,7 @@ Create data from Google Maps Traffic data
 
 ```r  
 # install.packages("devtools")
-devtools::install_github("ramarty/googletraffic")
+devtools::install_github("dime-worldbank/googletraffic")
 ```
 
 # Examples
