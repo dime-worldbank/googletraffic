@@ -13,12 +13,14 @@ The below image shows an example raster produced using the package showing [traf
 
 Pixel values in rasters can be one of four values, as described in the below table:
 
+<center>
 | Google Traffic Color | Description | Raster Value |
 | -------------------- | ----------- | ------------ |
 | Green                | No traffic       | 1       |
 | Orange               | Light traffic    | 2       |
 | Red                  | Moderate traffic | 3       |
 | Dark Red             | Heavy traffic    | 4       |
+</center>
 
 # Installation
 
