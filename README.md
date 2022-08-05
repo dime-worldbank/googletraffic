@@ -62,9 +62,7 @@ leaflet() %>%
 
 ```
 
-<p align="center">
-<images src="images/nyc_small.jpg" width="550">
-</p>
+![NYC Example 1](images/nyc_small.jpg)
 
 By using a smaller `zoom` and larger `height` and `width`, we can capture a larger area. Note that because we used a larger zoom, we also increased the `webshot_delay` time.
 ```r  
@@ -87,9 +85,7 @@ rasterVis::levelplot(r,
                      margin = F)
 ```
 
-<p align="center">
-<images src="images/usa.jpg" width="550">
-</p>
+![USA Example](images/usa.jpg)
 
 ## Raster from polygon
 
@@ -121,9 +117,7 @@ rasterVis::levelplot(r,
                      margin = F)
 ```
 
-<p align="center">
-<images src="images/nyc_large.jpg">
-</p>
+![NYC Example 2](images/nyc_large.jpg)
 
 ## Raster from Grid
 
@@ -141,11 +135,7 @@ leaflet() %>%
   addPolygons(data = grid_df)
 ```
 
-<p align="center">
-<images src="images/nyc_grid.jpg?raw=true">
-</p>
-
-![alt text](images/nyc_grid.jpg)
+![NYC Grid](images/nyc_grid.jpg)
 
 
 We notice that the tile in the bottom left corner just covers water and some land outside of Manhattan (the Manhattan polygon includes water area). To reduce the number of API queries we need to make, we can remove this tile.
@@ -158,9 +148,7 @@ leaflet() %>%
   addPolygons(data = grid_clean_df)
 ```
 
-<p align="center">
-<images src="images/nyc_grid_clean.jpg?raw=true" width="550">
-</p>
+![NYC Grid Clean](images/nyc_grid_clean.jpg)
 
 We can then use the grid to make a traffic raster.
 ```r
@@ -178,8 +166,6 @@ rasterVis::levelplot(r,
                      margin = F)
 ```
 
-<p align="center">
-<images src="images/nyc_large_from_grid.jpg" width="550">
-</p>
+![NYC Example 3](images/nyc_large_from_grid.jpg)
 
 Note that the above raster includes traffic in areas outside of Manhattan; the image is not cropped or masked to just the Manhattan polygon. This result can also be achieved when using the `gt_make_raster_from_polygon()` function by setting `crop_to_polygon` to `FALSE`.
