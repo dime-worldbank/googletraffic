@@ -86,10 +86,14 @@
 #!/**/*.yml
 #!/**/*.yaml
 
-#Images
+# Images
 !/**/*.png
 !/**/*.jpeg
 !/**/*.jpg
+
+# R Package Files
+!/**/*DESCRIPTION
+!/**/*NAMESPACE
 
 #######################
 # Include some additional file formats in any output folder. You might have
