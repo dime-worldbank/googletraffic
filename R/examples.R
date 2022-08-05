@@ -58,9 +58,7 @@ pal <- colorNumeric(c("green", "orange", "red", "#660000"), values(r),
 m <- leaflet() %>% 
   #addProviderTiles(providers$Stadia.AlidadeSmoothDark) %>%
   addProviderTiles("Esri.WorldGrayCanvas") %>%
-  addRasterImage(r, colors = pal_all, opacity = 1,project=F) %>%
-  addLegend(pal = pal, values = values(r),
-            title = "Traffic")
+  addRasterImage(r, colors = pal_all, opacity = 1,project=F)
 
 mapshot(m, file = "nyc_small_leaflet.png")
 

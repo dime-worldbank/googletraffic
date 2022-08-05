@@ -25,18 +25,30 @@ devtools::install_github("dime-worldbank/googletraffic")
 
 The `gt_make_raster` function produces a raster, using a centroid location and height/width to specify the location where data is queried. The height/width are in terms of pixels, where pixel size primarily depends on the [zoom level](https://wiki.openstreetmap.org/wiki/Zoom_levels). For example, with a zoom level 13, each pixel will be about 20 meters (at the equator); with a zoom level of 16, each pixel will be about 2.5 meters (at the equator). Consequently, larger zoom values will give a more granular depiction of a location (e.g., for small streets within a city).
 
-The function captures traffic information that originally appears on an interactive map produced from Google; for large values of `height` and `width`, the traffic information can take some time to render on the map. Consequently, a delay (specified using `webshot_delay`) is introduced to ensure traffic information is fully rendered on the map before the map is transformed into data. The below example uses a delay time of 2 seconds. For a height/width of 5000, a delay of 20 seconds may need to be used.
+The function captures traffic information that originally appears on an interactive map produced from Google; for large values of `height` and `width`, the traffic information can take some time to render on the map. Consequently, a delay (specified using `webshot_delay`) is introduced to ensure traffic information is fully rendered on the map before the map is transformed into data. The below example uses a delay time of 2 seconds. For a height/width of 5000, a delay of up to 20 seconds may need to be used.
 
 ```r  
+## Make raster
 r <- gt_make_raster(location      = c(-1.286389, 36.817222),
                     height        = 500,
                     width         = 500,
                     zoom          = 16,
                     webshot_delay = 2,
                     google_key    = google_key)
+
+## Map raster
+pal <- colorNumeric(c("green", "orange", "red", "#660000"), values(r),
+                        na.color = "transparent")
+
+m <- leaflet() %>%
+  addProviderTiles("Esri.WorldGrayCanvas") %>%
+  addRasterImage(r, colors = pal_all, opacity = 1,project=F)
+
 ```
 
-![alt text](nyc_small_leaflet.png)
+<p align="center">
+<img src="nyc_small_leaflet.png" width="550">
+</p>
 
 ## Raster from grid
 ```r  
