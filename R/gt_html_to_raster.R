@@ -20,8 +20,11 @@ gt_html_to_raster <- function(filename,
                               height = NULL,
                               width = NULL,
                               zoom = NULL,
-                              webshot_delay = 10,
+                              webshot_delay = NULL,
                               save_png = F){
+  
+  ## Set webshot_delay if null
+  webshot_delay <- gt_estimate_webshot_delay(height, width, webshot_delay)
   
   ## Grab parameters from dataframe
   if(is.null(location) | is.null(height) | is.null(width) | is.null(zoom)){

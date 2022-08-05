@@ -19,6 +19,9 @@ gt_make_png <- function(location,
                         google_key,
                         out_filename){
   
+  ## Set webshot_delay if null
+  webshot_delay <- gt_estimate_webshot_delay(height, width, webshot_delay)
+  
   #### Filename; as html
   filename_html <- tempfile(pattern = "file", tmpdir = tempdir(), fileext = ".html")
   

@@ -98,17 +98,5 @@ gt_make_point_grid <- function(polygon,
   
   points_sf <- st_sf(points_df, geometry = geom$geometry)
   
-  # points_df <- p_inter %>%
-  #   coordinates() %>%
-  #   as.data.frame() %>%
-  #   dplyr::rename(longitude = V1,
-  #                 latitude = V2) %>%
-  #   mutate(id = 1:n(),
-  #          height = height,
-  #          width = width,
-  #          zoom = zoom) 
-  
-  #out <- bind_cols(points_df, p_inter)
-  
   return(points_sf)
 }
