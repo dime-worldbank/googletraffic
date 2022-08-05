@@ -5,18 +5,22 @@ Create data from Google Maps Traffic
 
 Google Maps Traffic provides valuable information about traffic conditions across an area. This package provides functions to produce georeferenced rasters from live Google Maps traffic information. Providing Google Traffic information in a georeferenced data format facilitates analysis of traffic information (e.g., merging traffic information with other data sources, observing trends over time, etc).
 
-The below image shows an example raster produced using the package showing [traffic near the White House.](https://www.google.com/maps/place/38%C2%B054'05.9%22N+77%C2%B002'11.7%22W/@38.9010952,-77.0350844,16.08z/data=!4m6!3m5!1s0x0:0xdfa7b78027c7aac6!7e2!8m2!3d38.9016494!4d-77.0365891!5m1!1e1)
+The below image shows an example raster produced using the package showing [traffic in lower Manhattan.](https://www.google.com/maps/place/40%C2%B042'46.8%22N+74%C2%B000'26.0%22W/@40.712993,-74.00942,17z/data=!3m1!4b1!4m6!3m5!1s0x0:0x7f21802cb308cc80!7e2!8m2!3d40.7129887!4d-74.0072258!5m1!1e1)
 
+<p align="center">
 <img src="images/top_example.jpg" alt="Example" width="500"/>
+</p>
 
 Pixel values in rasters can be one of four values, as described in the below table:
 
+<p align="center">
 | Google Traffic Color | Description | Raster Value |
 | -------------------- | ----------- | ------------ |
 | Green                | No traffic       | 1       |
 | Orange               | Light traffic    | 2       |
 | Red                  | Moderate traffic | 3       |
 | Dark Red             | Heavy traffic    | 4       |
+</p>
 
 # Installation
 
