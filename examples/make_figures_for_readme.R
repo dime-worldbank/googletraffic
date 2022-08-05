@@ -46,7 +46,7 @@ if(F){
     addProviderTiles("Esri.WorldGrayCanvas") %>%
     addRasterImage(r, colors = pal, opacity = 1,project=F)
   
-  mapshot(m, file = "nyc_small.jpeg")
+  mapshot(m, file = "nyc_small.jpg")
   
   # Point example 2 -----------------------------------------------------------------
   r <- gt_make_raster(location    = c(38.744324, -85.511534),
@@ -56,7 +56,7 @@ if(F){
                       webshot_delay = 20,
                       google_key    = google_key)
   
-  jpeg("usa.jpeg",
+  jpg("usa.jpg",
        width = 480*4,
        height = 480*4)
   rasterVis::levelplot(r, 
@@ -81,7 +81,7 @@ if(F){
                                    webshot_delay = 10,
                                    google_key    = google_key)
   
-  jpeg("nyc_large.jpeg",
+  jpg("nyc_large.jpg",
        width = 480*4,
        height = 480*4)
   rasterVis::levelplot(r, 
@@ -122,7 +122,7 @@ if(F){
                                 webshot_delay = 10,
                                 google_key = google_key)
   
-  jpeg("nyc_large_from_grid.jpeg",
+  jpg("nyc_large_from_grid.jpg",
        width = 480*4,
        height = 480*4)
   rasterVis::levelplot(r, 
@@ -145,7 +145,7 @@ if(F){
                       webshot_delay = 5,
                       google_key = google_key)
   
-  jpeg("top_example.jpg",
+  jpg("top_example.jpg",
        width = 480*1.5,
        height = 480*1.5)
   rasterVis::levelplot(r, 
