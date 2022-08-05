@@ -19,6 +19,15 @@ Google Maps Traffic provides valuable information about traffic conditions acros
 devtools::install_github("dime-worldbank/googletraffic")
 ```
 
+# Google API Key
+
+Querying Google traffic information requires a Google API key with the [Maps Javascript API](https://developers.google.com/maps/documentation/javascript/overview) enabled.
+
+```r
+# The functions that query Google traffic information require a Google API key.
+google_key <- "GOOGLE-KEY-HERE"
+```
+
 # Examples
 
 ## Raster from lat/lon
@@ -30,8 +39,6 @@ The function captures traffic information that originally appears on an interact
 The below example shows traffic in lower Manhattan, NYC.
 ```r  
 ## Make raster
-google_key <- "GOOGLE-KEY-HERE"
-
 r <- gt_make_raster(location      = c(-1.286389, 36.817222),
                     height        = 500,
                     width         = 500,
@@ -50,7 +57,7 @@ m <- leaflet() %>%
 ```
 
 <p align="center">
-<img src="nyc_small_leaflet.png" width="550">
+<img src="images/nyc_small_leaflet.png" width="550">
 </p>
 
 By using a smaller `zoom` and larger `height` and `width`, we can capture a larger area. Note that because we used a larger zoom, we also increased the `webshot_delay` time.
@@ -76,7 +83,7 @@ m <- leaflet() %>%
 ```
 
 <p align="center">
-<img src="usa_small_leaflet.png" width="550">
+<img src="images/usa_small_leaflet.png" width="550">
 </p>
 
 ## Raster from polygon
@@ -95,6 +102,10 @@ r <- gt_make_raster_from_polygon(polygon       = nbo,
                                  google_key    = google_key)
 ```
 
+<p align="center">
+<img src="images/nyc_large.png" width="550">
+</p>
+
 ## Raster from Grid
 
 `gt_make_raster_from_polygon()` creates a grid that covers a polygon, creates a traffic raster for each grid, and mosaics them together. Some may prefer to first create and see the grid, then create a traffic raster using this grid. For example, one could (1) create a grid that covers a polygon then (2) remove certain grid tiles that cover areas that may not be of interest. The `gt_make_point_grid()` and `gt_make_raster_from_grid()` functions facilitate this process; `gt_make_point_grid()` creates a grid, then `gt_make_raster_from_grid()` uses a grid as an input to create a traffic raster.
@@ -108,7 +119,7 @@ grid_df <- gt_make_point_grid(polygon = ny_sp,
 ```
 
 <p align="center">
-<img src="nyc_grid.png" width="550">
+<img src="images/nyc_grid.png" width="550">
 </p>
 
 We notice that the tile in the bottom left corner just covers water and some land outside or Manhattan (the Manhattan polygon includes water area). To reduce the number of API queries we need to make, we can remove this tile.
@@ -122,7 +133,7 @@ leaflet() %>%
 ```
 
 <p align="center">
-<img src="nyc_grid_clean.png" width="550">
+<img src="images/nyc_grid_clean.png" width="550">
 </p>
 
 We can then use the grid to make a traffic raster.
@@ -147,7 +158,7 @@ dev.off()
 ```
 
 <p align="center">
-<img src="nyc_large_from_grid.png" width="550">
+<img src="images/nyc_large_from_grid.png" width="550">
 </p>
 
 Note that the above raster includes traffic in areas outside of Manhattan; the image is not cropped or masked to just the Manhattan polygon. This result can also be achieved when using the `gt_make_raster_from_polygon()` function by setting `crop_to_polygon` to `FALSE`.
