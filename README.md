@@ -63,7 +63,7 @@ leaflet() %>%
 ```
 
 <p align="center">
-<images src="images/nyc_small.png" width="550">
+<images src="images/nyc_small.jpeg" width="550">
 </p>
 
 By using a smaller `zoom` and larger `height` and `width`, we can capture a larger area. Note that because we used a larger zoom, we also increased the `webshot_delay` time.
@@ -88,7 +88,7 @@ rasterVis::levelplot(r,
 ```
 
 <p align="center">
-<images src="images/usa.png" width="550">
+<images src="images/usa.jpeg" width="550">
 </p>
 
 ## Raster from polygon
@@ -122,7 +122,7 @@ rasterVis::levelplot(r,
 ```
 
 <p align="center">
-<images src="images/nyc_large.png" width="550">
+<images src="images/nyc_large.jpeg" width="550">
 </p>
 
 ## Raster from Grid
@@ -176,7 +176,7 @@ rasterVis::levelplot(r,
 ```
 
 <p align="center">
-<images src="images/nyc_large_from_grid.jpeg" width="550">
+<images src="nyc_large_from_grid.jpeg" width="550">
 </p>
 
 Note that the above raster includes traffic in areas outside of Manhattan; the image is not cropped or masked to just the Manhattan polygon. This result can also be achieved when using the `gt_make_raster_from_polygon()` function by setting `crop_to_polygon` to `FALSE`.
