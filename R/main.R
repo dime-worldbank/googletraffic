@@ -362,6 +362,7 @@ gt_make_png <- function(location,
   filename_dir <- filename_root %>% str_replace_all(paste0("/", filename_only), "")
   
   current_dir <- getwd()
+  
   setwd(filename_dir)
   webshot(paste0(filename_only,".html"),
           file = paste0(filename_only,".png"),
@@ -438,6 +439,7 @@ gt_html_to_raster <- function(filename,
   filename_only <- basename(filename_root)
   filename_dir <- filename_root %>% str_replace_all(paste0("/", filename_only), "")
   
+  current_dir <- getwd()
   setwd(filename_dir)
   webshot(paste0(filename_only,".html"),
           file = paste0(filename_only,".png"),
@@ -463,6 +465,7 @@ gt_html_to_raster <- function(filename,
   ## Delete png from temp file
   unlink(file.path(filename_dir, paste0(filename_only,".png")))
   
+  setwd(current_dir)
   return(r)
 }
 

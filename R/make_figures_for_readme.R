@@ -17,8 +17,7 @@ library(leaflet.providers)
 library(scales)
 library(mapview)
 
-source("https://github.com/dime-worldbank/googletraffic/blob/main/R/main.R")
-
+#source("https://github.com/dime-worldbank/googletraffic/blob/main/R/main.R")
 
 api_keys_df <- read_csv("~/Dropbox/World Bank/Webscraping/Files for Server/api_keys.csv")
 
@@ -27,7 +26,7 @@ google_key <- api_keys_df %>%
                 Account == "ramarty@email.wm.edu") %>%
   pull(Key)
 
-setwd("~/Documents/Github/googletraffic")
+setwd("~/Documents/Github/googletraffic/images")
 
 # Point example 1 -----------------------------------------------------------------
 r <- gt_make_raster(location = c(40.712778, -74.006111),
@@ -42,9 +41,9 @@ pal <- colorNumeric(c("green", "orange", "red", "#660000"), values(r),
 
 m <- leaflet() %>% 
   addProviderTiles("Esri.WorldGrayCanvas") %>%
-  addRasterImage(r, colors = pal_all, opacity = 1,project=F)
+  addRasterImage(r, colors = pal, opacity = 1,project=F)
 
-mapshot(m, file = "nyc_small_leaflet.png")
+mapshot(m, file = "nyc_small.png")
 
 # Point example 2 -----------------------------------------------------------------
 r <- gt_make_raster(location    = c(38.744324, -85.511534),
@@ -54,12 +53,19 @@ r <- gt_make_raster(location    = c(38.744324, -85.511534),
                     webshot_delay = 20,
                     google_key    = google_key)
 
-m <- leaflet() %>% 
-  addProviderTiles("Esri.WorldGrayCanvas") %>%
-  addRasterImage(r, colors = pal_all, opacity = 1,project=F)
-
-setwd("~/Documents/Github/googletraffic")
-mapshot(m, file = "usa_small_leaflet.png")
+png("usa.png",
+    width = 480*4,
+    height = 480*4)
+rasterVis::levelplot(r, 
+                     col.regions = c("green", "orange", "red", "#660000"),
+                     par.settings = list(axis.line = list(col = "transparent")), 
+                     scales = list(col = "black"),
+                     colorkey = F,
+                     xlab = NULL,
+                     ylab = NULL,
+                     margin = F,
+                     maxpixels = 1e10)
+dev.off()
 
 # Polygon example -----------------------------------------------------------------
 us_sp <- getData('GADM', country='USA', level=2)
@@ -72,16 +78,9 @@ r <- gt_make_raster_from_polygon(polygon       = ny_sp,
                                  webshot_delay = 10,
                                  google_key    = google_key)
 
-m <- leaflet() %>% 
-  addProviderTiles("Esri.WorldGrayCanvas") %>%
-  addRasterImage(r, colors = pal_all, opacity = 1,project=F)
-
-setwd("~/Documents/Github/googletraffic")
-mapshot(m, file = "large_nyc_leaflet.png")
-
 png("nyc_large.png",
-    width = 480*6,
-    height = 480*6)
+    width = 480*4,
+    height = 480*4)
 rasterVis::levelplot(r, 
                      col.regions = c("green", "orange", "red", "#660000"),
                      par.settings = list(axis.line = list(col = "transparent")), 
@@ -104,7 +103,6 @@ m <- leaflet() %>%
   addTiles() %>%
   addPolygons(data =grid_df)
 
-setwd("~/Documents/Github/googletraffic")
 mapshot(m, file = "nyc_grid.png")
 
 ## Remove part of grid
@@ -114,7 +112,6 @@ m <- leaflet() %>%
   addTiles() %>%
   addPolygons(data =grid_clean_df)
 
-setwd("~/Documents/Github/googletraffic")
 mapshot(m, file = "nyc_grid_clean.png")
 
 ## Make raster
@@ -122,10 +119,9 @@ r <- gt_make_raster_from_grid(grid_param_df = grid_clean_df,
                               webshot_delay = 10,
                               google_key = google_key)
 
-setwd("~/Documents/Github/googletraffic")
 png("nyc_large_from_grid.png",
-    width = 480*6,
-    height = 480*6)
+    width = 480*4,
+    height = 480*4)
 rasterVis::levelplot(r, 
                      col.regions = c("green", "orange", "red", "#660000"),
                      par.settings = list(axis.line = list(col = "transparent")), 
@@ -136,22 +132,4 @@ rasterVis::levelplot(r,
                      margin = F,
                      maxpixels = 1e10)
 dev.off()
-
-# OTHER ========================================================================
-print(r)
-png("nyc_small.png",
-    width = 480*2,
-    height = 480*2)
-rasterVis::levelplot(r, 
-                     col.regions = c("green", "orange", "red", "#660000"),
-                     par.settings = list(axis.line = list(col = "transparent")), 
-                     scales = list(col = "black"),
-                     colorkey = F,
-                     xlab = NULL,
-                     ylab = NULL,
-                     margin = F,
-                     maxpixels = 1e7)
-dev.off()
-
-
 
