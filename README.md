@@ -66,7 +66,7 @@ By using a smaller `zoom` and larger `height` and `width`, we can capture a larg
 r <- gt_make_raster(location    = c(38.744324, -85.511534),
                   height        = 5000,
                   width         = 5000,
-                  zoom          = 9,
+                  zoom          = 7,
                   webshot_delay = 20,
                   google_key    = google_key)
 
@@ -136,7 +136,7 @@ leaflet() %>%
 ```
 
 <p align="center">
-<img src="img/nyc_grid.png" width="550">
+<img src="img/nyc_grid.jpeg" width="550">
 </p>
 
 We notice that the tile in the bottom left corner just covers water and some land outside of Manhattan (the Manhattan polygon includes water area). To reduce the number of API queries we need to make, we can remove this tile.
@@ -150,7 +150,7 @@ leaflet() %>%
 ```
 
 <p align="center">
-<img src="img/nyc_grid_clean.png" width="550">
+<img src="img/nyc_grid_clean.jpeg" width="550">
 </p>
 
 We can then use the grid to make a traffic raster.
