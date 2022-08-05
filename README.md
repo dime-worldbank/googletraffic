@@ -38,6 +38,18 @@ google_key <- "GOOGLE-KEY-HERE"
 
 # Examples
 
+This section provides examples of using the function
+
+To run the examples, the following packages should be loaded.
+```r
+library(googletraffic)
+library(leaflet)
+library(leaflet.extras)
+library(leaflet.providers)
+library(scales)
+library(mapview)
+```
+
 ## Raster around lat/lon
 
 The `gt_make_raster` function produces a raster, using a centroid location and height/width to specify the location where data is queried. The height/width are in terms of pixels, where pixel size primarily depends on the [zoom level](https://wiki.openstreetmap.org/wiki/Zoom_levels). For example, with a zoom level 13, each pixel will be about 20 meters (at the equator); with a zoom level of 16, each pixel will be about 2.5 meters (at the equator). Consequently, larger zoom values will give a more granular depiction of a location (e.g., for small streets within a city).
@@ -61,12 +73,11 @@ pal <- colorNumeric(c("green", "orange", "red", "#660000"), values(r),
 leaflet() %>%
   addProviderTiles("Esri.WorldGrayCanvas") %>%
   addRasterImage(r, colors = pal, opacity = 1,project=F)
-
 ```
 
 ![NYC Example 1](images/nyc_small.jpg)
 
-By using a smaller `zoom` and larger `height` and `width`, we can capture a larger area. Note that because we used a larger `zoom`, we also increased the `webshot_delay` time.
+By using a smaller `zoom` and larger `height` and `width`, we can capture a larger area. Note that because we used a larger `height` and `width`, we also increased the `webshot_delay` time.
 ```r  
 ## Make raster
 r <- gt_make_raster(location    = c(38.744324, -85.511534),
