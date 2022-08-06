@@ -120,7 +120,7 @@ leaflet() %>%
 
 ## Query Granular Traffic Information for Large Spatial Extent <a name="large-extent"></a>
 
-__The above example illustrates a trade off between resolution and spatial extent.__ For small `zoom` levels, we can capture a large areas, but the pixels values are also large --- so we may only be able to detect overall traffic for large roads or cities. For large `zoom` levels, we can detect traffic on specific roads, but can only capture traffic for a smaller area. We could set a large `zoom` and a large `height` and `width`, but Google traffic information will fail to render if we set the `height` and `width` values too large (no matter the `webshot_delay` specified).
+__The above example illustrates a trade off between resolution and spatial extent.__ For small `zoom` levels, we can capture large areas, but the pixels values are also large --- so we may only be able to detect overall traffic for large roads or cities. For large `zoom` levels, we can detect traffic on specific roads, but can only capture traffic for a smaller area. We could set a large `zoom` and a large `height` and `width`, but Google traffic information will fail to render if we set the `height` and `width` values too large (no matter the `webshot_delay` specified).
 
 __The package provides functions that allow querying granular traffic information for large spatial extents.__ Here, we simply make multiple queries to obtain traffic information for multiple areas, then the information is merged together into one raster file. The `gt_make_raster_from_polygon()` and `gt_make_raster_from_grid()` provide two different approaches for querying granular traffic information for spatial extents where multiple Google queries are needed.
 
