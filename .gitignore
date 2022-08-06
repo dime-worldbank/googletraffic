@@ -47,6 +47,7 @@
 !/**/*.R
 !/**/*.Rmd
 !/**/*.Rproj
+!/**/*.Rd
 # Still ignore user file for R projects
 .Rproj.user
 
