@@ -1,6 +1,6 @@
 # Examples used for readme
 
-if(T){
+if(F){
   
   # Setup ------------------------------------------------------------------------
   library(googletraffic)
