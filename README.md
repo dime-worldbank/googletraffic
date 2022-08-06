@@ -43,12 +43,12 @@ google_key <- "GOOGLE-KEY-HERE"
 
 # Quickstart <a name="quickstart"></a>
 
-The package enables querying Google traffic information around a specific location and for specific or larger spatial extents. In this section, key parameters relevant across functions are defined; then examples are shown querying traffic around a point, polygon, and grid.
+The package enables querying Google traffic information around a specific location and for larger spatial extents. In this section, key parameters relevant across functions are defined; then examples are shown querying traffic around a point, polygon, and grid.
 
 * [Key parameters](#key-parameters)
 * [Query Traffic Around a Specific Location: `gt_make_raster()`](#raster-from-location)
 * [Query Granular Traffic Information for Large Spatial Extent](#large-extent)
-  - [Query Traffic From a Polygon: `gt_make_raster_from_polygon()``](#raster-from-polygon)
+  - [Query Traffic From a Polygon: `gt_make_raster_from_polygon()`](#raster-from-polygon)
   - [Query Traffic From a Grid: `gt_make_raster_from_grid()`](#raster-from-grid)
 
 To run the below examples, the following packages should be also be loaded for visualizing the rasters.
