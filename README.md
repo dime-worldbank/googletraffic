@@ -1,4 +1,4 @@
-# googletraffic
+# googletraffic  <img src="images/hex.png" align="right" width="200" />
 Create data from Google Maps Traffic
 
 * [Overview](#overview)
@@ -10,7 +10,7 @@ Create data from Google Maps Traffic
 
 Google Maps Traffic provides valuable information about traffic conditions across an area. This package provides functions to produce georeferenced rasters from live Google Maps traffic information. Providing Google Traffic information in a georeferenced data format facilitates analysis of traffic information (e.g., merging traffic information with other data sources, observing trends over time, etc).
 
-The below image shows an example raster produced using the package showing [traffic in lower Manhattan.](https://www.google.com/maps/place/40%C2%B042'46.8%22N+74%C2%B000'26.0%22W/@40.712993,-74.00942,17z/data=!3m1!4b1!4m6!3m5!1s0x0:0x7f21802cb308cc80!7e2!8m2!3d40.7129887!4d-74.0072258!5m1!1e1)
+The below image shows an example raster produced using the package showing [traffic in Washington, DC.](https://www.google.com/maps/@38.9022138,-77.0505589,16.81z/data=!5m1!1e1)
 
 <p align="center">
 <img src="images/top_example.jpg" alt="Example" width="500"/>
@@ -46,10 +46,10 @@ google_key <- "GOOGLE-KEY-HERE"
 The package enables querying Google traffic information around a specific location and for specific or larger spatial extents. In this section, key parameters relevant across functions are defined; then examples are shown querying traffic around a point, polygon, and grid.
 
 * [Key parameters](#key-parameters)
-* [Query Traffic Around a Specific Location](#raster-from-location)
+* [Query Traffic Around a Specific Location: `gt_make_raster()`](#raster-from-location)
 * [Query Granular Traffic Information for Large Spatial Extent](#large-extent)
-  - [Query Traffic From a Polygon](#raster-from-polygon)
-  - [Query Traffic From a Grid](#raster-from-grid)
+  - [Query Traffic From a Polygon: `gt_make_raster_from_polygon()``](#raster-from-polygon)
+  - [Query Traffic From a Grid: `gt_make_raster_from_grid()`](#raster-from-grid)
 
 To run the below examples, the following packages should be also be loaded for visualizing the rasters.
 ```r
@@ -76,11 +76,11 @@ The `gt_make_raster` function produces a raster, using a centroid location and h
 
 ```r  
 ## Make raster
-r <- gt_make_raster(location      = c(-1.286389, 36.817222),
-                    height        = 1000,
-                    width         = 1000,
-                    zoom          = 16,
-                    google_key    = google_key)
+r <- gt_make_raster(location   = c(-1.286389, 36.817222),
+                    height     = 1000,
+                    width      = 1000,
+                    zoom       = 16,
+                    google_key = google_key)
 
 ## Map raster
 pal <- colorNumeric(c("green", "orange", "red", "#660000"), values(r),
@@ -91,29 +91,31 @@ leaflet() %>%
   addRasterImage(r, colors = pal, opacity = 1,project=F)
 ```
 
-![NYC Example 1](images/nyc_small.jpg)
+<p align="center">
+<img src="images/nyc_small.jpg" alt="Example" width="500"/>
+</p>
 
 By using a smaller `zoom`, we can capture a larger area.
 ```r  
 ## Make raster
-r <- gt_make_raster(location    = c(38.744324, -85.511534),
-                  height        = 1000,
-                  width         = 1000,
-                  zoom          = 7,
-                  google_key    = google_key)
+r <- gt_make_raster(location = c(38.744324, -85.511534),
+                  height     = 1000,
+                  width      = 1000,
+                  zoom       = 7,
+                  google_key = google_key)
 
 ## Map raster
-rasterVis::levelplot(r,
-                     col.regions = c("green", "orange", "red", "#660000"),
-                     par.settings = list(axis.line = list(col = "transparent")),
-                     scales = list(col = "black"),
-                     colorkey = F,
-                     xlab = NULL,
-                     ylab = NULL,
-                     margin = F)
+pal <- colorNumeric(c("green", "orange", "red", "#660000"), values(r),
+                        na.color = "transparent")
+
+leaflet() %>%
+  addProviderTiles("Esri.WorldGrayCanvas") %>%
+  addRasterImage(r, colors = pal, opacity = 1,project=F)
 ```
 
-![USA Example](images/usa.jpg)
+<p align="center">
+<img src="images/usa.jpg" alt="Example" width="500"/>
+</p>
 
 ## Query Granular Traffic Information for Large Spatial Extent <a name="large-extent"></a>
 
@@ -133,24 +135,26 @@ us_sp <- getData('GADM', country='USA', level=2)
 ny_sp <- us_sp[us_sp$NAME_2 %in% "New York",]
 
 ## Make raster
-r <- gt_make_raster_from_polygon(polygon       = ny_sp,
-                                 height        = 2000,
-                                 width         = 2000,
-                                 zoom          = 16,
-                                 google_key    = google_key)
+r <- gt_make_raster_from_polygon(polygon    = ny_sp,
+                                 height     = 2000,
+                                 width      = 2000,
+                                 zoom       = 16,
+                                 google_key = google_key)
 
 ## Plot raster
 rasterVis::levelplot(r,
-                     col.regions = c("green", "orange", "red", "#660000"),
+                     col.regions  = c("green", "orange", "red", "#660000"),
                      par.settings = list(axis.line = list(col = "transparent")),
-                     scales = list(col = "black"),
-                     colorkey = F,
-                     xlab = NULL,
-                     ylab = NULL,
-                     margin = F)
+                     scales       = list(col = "black"),
+                     colorkey     = F,
+                     xlab         = NULL,
+                     ylab         = NULL,
+                     margin       = F)
 ```
 
-![NYC Example 2](images/nyc_large.jpg)
+<p align="center">
+<img src="images/nyc_large.jpg" alt="Example" width="500"/>
+</p>
 
 ### Raster from Grid <a name="raster-from-grid"></a>
 
@@ -168,8 +172,9 @@ leaflet() %>%
   addPolygons(data = grid_df)
 ```
 
-![NYC Grid](images/nyc_grid.jpg)
-
+<p align="center">
+<img src="images/nyc_grid.jpg" alt="Example" width="500"/>
+</p>
 
 We notice that the tile in the bottom left corner just covers water and some land outside of Manhattan. To reduce the number of API queries we need to make, we can remove this tile.
 
@@ -181,23 +186,27 @@ leaflet() %>%
   addPolygons(data = grid_clean_df)
 ```
 
-![NYC Grid Clean](images/nyc_grid_clean.jpg)
+<p align="center">
+<img src="images/nyc_grid_clean.jpg" alt="Example" width="500"/>
+</p>
 
 We can then use the grid to make a traffic raster.
 ```r
 r <- gt_make_raster_from_grid(grid_param_df = grid_clean_df,
-                              google_key = google_key)
+                              google_key    = google_key)
 
 rasterVis::levelplot(r,
-                     col.regions = c("green", "orange", "red", "#660000"),
+                     col.regions  = c("green", "orange", "red", "#660000"),
                      par.settings = list(axis.line = list(col = "transparent")),
-                     scales = list(col = "black"),
-                     colorkey = F,
-                     xlab = NULL,
-                     ylab = NULL,
-                     margin = F)
+                     scales       = list(col = "black"),
+                     colorkey     = F,
+                     xlab         = NULL,
+                     ylab         = NULL,
+                     margin       = F)
 ```
 
-![NYC Example 3](images/nyc_large_from_grid.jpg)
+<p align="center">
+<img src="images/nyc_large_from_grid.jpg" alt="Example" width="500"/>
+</p>
 
 Note that the above raster includes traffic in areas outside of Manhattan; the image is not cropped or masked to just the Manhattan polygon. This result can also be achieved when using the `gt_make_raster_from_polygon()` function by setting `crop_to_polygon` to `FALSE`.

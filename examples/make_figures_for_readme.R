@@ -35,7 +35,7 @@ if(T){
   r <- gt_make_raster(location = c(40.712778, -74.006111),
                       height = 1000,
                       width = 1000,
-                      zoom = 15,
+                      zoom = 16,
                       webshot_delay = 5,
                       google_key = google_key)
   
@@ -49,26 +49,21 @@ if(T){
   mapshot(m, file = "nyc_small.jpg")
   
   # Point example 2 -----------------------------------------------------------------
-  r <- gt_make_raster(location    = c(38.744324, -85.511534),
-                      height        = 5000,
-                      width         = 5000,
+  r <- gt_make_raster(location    = c(41.384900, -78.891302),
+                      height        = 1000,
+                      width         = 1000,
                       zoom          = 7,
-                      webshot_delay = 20,
+                      webshot_delay = 5,
                       google_key    = google_key)
   
-  jpeg("usa.jpg",
-       width = 480*4,
-       height = 480*4)
-  rasterVis::levelplot(r, 
-                       col.regions = c("green", "orange", "red", "#660000"),
-                       par.settings = list(axis.line = list(col = "transparent")), 
-                       scales = list(col = "black"),
-                       colorkey = F,
-                       xlab = NULL,
-                       ylab = NULL,
-                       margin = F,
-                       maxpixels = 1e8)
-  dev.off()
+  pal <- colorNumeric(c("green", "orange", "red", "#660000"), values(r),
+                      na.color = "transparent")
+  
+  m <- leaflet() %>% 
+    addProviderTiles("Esri.WorldGrayCanvas") %>%
+    addRasterImage(r, colors = pal, opacity = 1,project=F)
+  
+  mapshot(m, file = "usa.jpg")
   
   # Polygon example -----------------------------------------------------------------
   us_sp <- getData('GADM', country='USA', level=2)
@@ -78,7 +73,7 @@ if(T){
                                    height        = 2000,
                                    width         = 2000,
                                    zoom          = 16,
-                                   webshot_delay = 10,
+                                   webshot_delay = 20,
                                    google_key    = google_key)
   
   jpeg("nyc_large.jpg",
@@ -119,7 +114,7 @@ if(T){
   
   ## Make raster
   r <- gt_make_raster_from_grid(grid_param_df = grid_clean_df,
-                                webshot_delay = 10,
+                                webshot_delay = 15,
                                 google_key = google_key)
   
   jpeg("nyc_large_from_grid.jpg",
@@ -138,7 +133,7 @@ if(T){
   
   # Example for Top of Package -------------------------------------------------
   # https://www.google.com/maps/place/38%C2%B054'05.9%22N+77%C2%B002'11.7%22W/@38.9010952,-77.0350844,16.08z/data=!4m6!3m5!1s0x0:0xdfa7b78027c7aac6!7e2!8m2!3d38.9016494!4d-77.0365891!5m1!1e1
-  r <- gt_make_raster(location = c(40.712989, -74.007226),
+  r <- gt_make_raster(location = c(38.902542, -77.050142),
                       height = 700,
                       width = 700,
                       zoom = 16,
