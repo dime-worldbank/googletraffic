@@ -59,6 +59,7 @@ library(leaflet.extras)
 library(leaflet.providers)
 library(scales)
 library(mapview)
+library(rasterVis)
 ```
 
 ## Key parameters <a name="key-parameters"></a>
@@ -142,14 +143,14 @@ r <- gt_make_raster_from_polygon(polygon    = ny_sp,
                                  google_key = google_key)
 
 ## Plot raster
-rasterVis::levelplot(r,
-                     col.regions  = c("green", "orange", "red", "#660000"),
-                     par.settings = list(axis.line = list(col = "transparent")),
-                     scales       = list(col = "black"),
-                     colorkey     = F,
-                     xlab         = NULL,
-                     ylab         = NULL,
-                     margin       = F)
+levelplot(r,
+          col.regions  = c("green", "orange", "red", "#660000"),
+          par.settings = list(axis.line = list(col = "transparent")),
+          scales       = list(col = "black"),
+          colorkey     = F,
+          xlab         = NULL,
+          ylab         = NULL,
+          margin       = F)
 ```
 
 <p align="center">
@@ -195,14 +196,14 @@ We can then use the grid to make a traffic raster.
 r <- gt_make_raster_from_grid(grid_param_df = grid_clean_df,
                               google_key    = google_key)
 
-rasterVis::levelplot(r,
-                     col.regions  = c("green", "orange", "red", "#660000"),
-                     par.settings = list(axis.line = list(col = "transparent")),
-                     scales       = list(col = "black"),
-                     colorkey     = F,
-                     xlab         = NULL,
-                     ylab         = NULL,
-                     margin       = F)
+levelplot(r,
+          col.regions  = c("green", "orange", "red", "#660000"),
+          par.settings = list(axis.line = list(col = "transparent")),
+          scales       = list(col = "black"),
+          colorkey     = F,
+          xlab         = NULL,
+          ylab         = NULL,
+          margin       = F)
 ```
 
 <p align="center">
