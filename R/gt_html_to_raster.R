@@ -2,57 +2,37 @@
 #' 
 #' Converts a Google HTML file into a spatially referenced raster file. 
 #'
-#' @param polygon `SpatialPolygonsDataframe` the defines region to be queried.
-#'
-#' ## If `save_params` is set to `FALSE` in `` or `gt_make_htmls_from_grid`, then the following must be specified
+#' @param filename HTML filename to convert into raster
+#' @param location Vector of latitude and longitude
 #' @param height Height
 #' @param width Width
 #' @param zoom Zoom level
-#'
-#' ## Other parameters
-#' @param webshot_delay How long to wait for .html file to load. Larger .html files will require more time to fully load.
-#' @param save_png The function creates a .png file as an intermediate step. Specify whether the .png file should be kept (default: `FALSE`)
+#' @param webshot_delay How long to wait for .html file to load. Larger .html files will require more time to fully load. If `NULL`, the following delay time (in seconds) is used: `delay = max(height,width)/200`.
 #'
 #' @return Returns a georeferenced raster file. The file can contain the following values: 1 = no traffic; 2 = light traffic; 3 = moderate traffic; 4 = heavy traffic.
 #' @export
 gt_html_to_raster <- function(filename,
-                              location = NULL,
-                              height = NULL,
-                              width = NULL,
-                              zoom = NULL,
-                              webshot_delay = NULL,
-                              save_png = F){
+                              location,
+                              height,
+                              width,
+                              zoom,
+                              webshot_delay = NULL){
   
-  ## Set webshot_delay if null
+  #### Set webshot_delay if null
   webshot_delay <- gt_estimate_webshot_delay(height, width, webshot_delay)
   
-  ## Grab parameters from dataframe
-  if(is.null(location) | is.null(height) | is.null(width) | is.null(zoom)){
-    param_df_filename <- filename %>% str_replace_all(".html$", "_params.Rds")
-    
-    if(file.exists(param_df_filename)){
-      param_df <- readRDS(param_df_filename)
-      
-      location = param_df$location
-      height   = param_df$height
-      width    = param_df$width
-      zoom     = param_df$zoom
-      
-    } else{
-      stop("location, height, width, or zoom not specified and parameter dataframe doesn't exist")
-    }
-    
-  }
-  
-  #### Make lat/lon
-  latitude = location[1]
-  longitude = location[2]
+  #### Make lat/lon from location vector
+  latitude  <- location[1]
+  longitude <- location[2]
   
   #### Convert .html to png
   filename_root <- filename %>% str_replace_all(".html$", "")
   filename_only <- basename(filename_root)
   filename_dir <- filename_root %>% str_replace_all(paste0("/", filename_only), "")
   
+  # webshot() exports into current directory, so need to set working directory
+  # to directory where the html file is located. We grab the current directory
+  # so we can switch the directory back.
   current_dir <- getwd()
   setwd(filename_dir)
   webshot(paste0(filename_only,".html"),

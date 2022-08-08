@@ -59,7 +59,6 @@ library(leaflet.extras)
 library(leaflet.providers)
 library(scales)
 library(mapview)
-library(rasterVis)
 ```
 
 ## Key parameters <a name="key-parameters"></a>
@@ -143,14 +142,17 @@ r <- gt_make_raster_from_polygon(polygon    = ny_sp,
                                  google_key = google_key)
 
 ## Plot raster
-levelplot(r,
-          col.regions  = c("green", "orange", "red", "#660000"),
-          par.settings = list(axis.line = list(col = "transparent")),
-          scales       = list(col = "black"),
-          colorkey     = F,
-          xlab         = NULL,
-          ylab         = NULL,
-          margin       = F)
+r_df <- rasterToPoints(r, spatial = TRUE) %>% as.data.frame()
+names(r_df) <- c("value", "x", "y")
+
+ggplot() +
+  geom_raster(data = r_df, 
+              aes(x = x, y = y, 
+                  fill = as.factor(value))) +
+  labs(fill = "Traffic\nLevel") +
+  scale_fill_manual(values = c("green2", "orange", "red", "#660000")) +
+  coord_quickmap() + 
+  theme_void()
 ```
 
 <p align="center">
@@ -193,17 +195,22 @@ leaflet() %>%
 
 We can then use the grid to make a traffic raster.
 ```r
+## Make raster
 r <- gt_make_raster_from_grid(grid_param_df = grid_clean_df,
                               google_key    = google_key)
 
-levelplot(r,
-          col.regions  = c("green", "orange", "red", "#660000"),
-          par.settings = list(axis.line = list(col = "transparent")),
-          scales       = list(col = "black"),
-          colorkey     = F,
-          xlab         = NULL,
-          ylab         = NULL,
-          margin       = F)
+## Plot raster
+r_df <- rasterToPoints(r, spatial = TRUE) %>% as.data.frame()
+names(r_df) <- c("value", "x", "y")
+
+ggplot() +
+  geom_raster(data = r_df, 
+              aes(x = x, y = y, 
+                  fill = as.factor(value))) +
+  labs(fill = "Traffic\nLevel") +
+  scale_fill_manual(values = c("green2", "orange", "red", "#660000")) +
+  coord_quickmap() + 
+  theme_void()
 ```
 
 <p align="center">

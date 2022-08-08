@@ -19,6 +19,7 @@ if(F){
   library(leaflet.providers)
   library(scales)
   library(mapview)
+  library(ggpubr)
   
   #source("https://github.com/dime-worldbank/googletraffic/blob/main/R/main.R")
   
@@ -76,19 +77,37 @@ if(F){
                                    webshot_delay = 20,
                                    google_key    = google_key)
   
-  jpeg("nyc_large.jpg",
-       width = 480*4,
-       height = 480*4)
-  rasterVis::levelplot(r, 
-                       col.regions = c("green", "orange", "red", "#660000"),
-                       par.settings = list(axis.line = list(col = "transparent")), 
-                       scales = list(col = "black"),
-                       colorkey = F,
-                       xlab = NULL,
-                       ylab = NULL,
-                       margin = F,
-                       maxpixels = 1e8)
-  dev.off()
+  r_df <- rasterToPoints(r, spatial = TRUE) %>% as.data.frame()
+  names(r_df) <- c("value", "x", "y")
+  
+  p <- ggplot() +
+    geom_raster(data = r_df, 
+                aes(x = x, y = y, 
+                    fill = as.factor(value))) +
+    labs(fill = "Traffic\nLevel") +
+    scale_fill_manual(values = c("green2", "orange", "red", "#660000")) +
+    coord_quickmap() + 
+    theme_void() +
+    theme(legend.key.size = unit(1, 'cm'),
+          legend.title = element_text(size=20),
+          legend.text = element_text(size=20))
+  ggsave(p, filename = "nyc_large.jpg",
+         height = 20*0.8,
+         width = 12*0.8)
+  
+  # jpeg("nyc_large.jpg",
+  #      width = 480*4,
+  #      height = 480*4)
+  # rasterVis::levelplot(r, 
+  #                      col.regions = c("green", "orange", "red", "#660000"),
+  #                      par.settings = list(axis.line = list(col = "transparent")), 
+  #                      scales = list(col = "black"),
+  #                      colorkey = F,
+  #                      xlab = NULL,
+  #                      ylab = NULL,
+  #                      margin = F,
+  #                      maxpixels = 1e8)
+  # dev.off()
   
   # Grid example -----------------------------------------------------------------
   ## Make initial grid
@@ -117,19 +136,37 @@ if(F){
                                 webshot_delay = 15,
                                 google_key = google_key)
   
-  jpeg("nyc_large_from_grid.jpg",
-       width = 480*4,
-       height = 480*4)
-  rasterVis::levelplot(r, 
-                       col.regions = c("green", "orange", "red", "#660000"),
-                       par.settings = list(axis.line = list(col = "transparent")), 
-                       scales = list(col = "black"),
-                       colorkey = F,
-                       xlab = NULL,
-                       ylab = NULL,
-                       margin = F,
-                       maxpixels = 1e8)
-  dev.off()
+  r_df <- rasterToPoints(r, spatial = TRUE) %>% as.data.frame()
+  names(r_df) <- c("value", "x", "y")
+  
+  p <- ggplot() +
+    geom_raster(data = r_df, 
+                aes(x = x, y = y, 
+                    fill = as.factor(value))) +
+    labs(fill = "Traffic\nLevel") +
+    scale_fill_manual(values = c("green2", "orange", "red", "#660000")) +
+    coord_quickmap() + 
+    theme_void() +
+    theme(legend.key.size = unit(1, 'cm'),
+          legend.title = element_text(size=20),
+          legend.text = element_text(size=20))
+  ggsave(p, filename = "nyc_large_from_grid.jpg",
+         height = 20*0.8,
+         width = 12*0.8)
+  
+  # jpeg("nyc_large_from_grid.jpg",
+  #      width = 480*4,
+  #      height = 480*4)
+  # rasterVis::levelplot(r, 
+  #                      col.regions = c("green", "orange", "red", "#660000"),
+  #                      par.settings = list(axis.line = list(col = "transparent")), 
+  #                      scales = list(col = "black"),
+  #                      colorkey = F,
+  #                      xlab = NULL,
+  #                      ylab = NULL,
+  #                      margin = F,
+  #                      maxpixels = 1e8)
+  # dev.off()
   
   # Example for Top of Package -------------------------------------------------
   # https://www.google.com/maps/place/38%C2%B054'05.9%22N+77%C2%B002'11.7%22W/@38.9010952,-77.0350844,16.08z/data=!4m6!3m5!1s0x0:0xdfa7b78027c7aac6!7e2!8m2!3d38.9016494!4d-77.0365891!5m1!1e1
@@ -140,19 +177,32 @@ if(F){
                       webshot_delay = 5,
                       google_key = google_key)
   
-  jpeg("top_example.jpg",
-       width = 480*1.5,
-       height = 480*1.5)
-  rasterVis::levelplot(r, 
-                       col.regions = c("green", "orange", "red", "#660000"),
-                       par.settings = list(axis.line = list(col = "transparent")), 
-                       scales = list(col = "black"),
-                       colorkey = F,
-                       xlab = NULL,
-                       ylab = NULL,
-                       margin = F,
-                       maxpixels = 1e10)
-  dev.off()
+  r_df <- rasterToPoints(r, spatial = TRUE) %>% as.data.frame()
+  names(r_df) <- c("value", "x", "y")
+  
+  p <- ggplot() +
+    geom_raster(data = r_df, 
+                aes(x = x, y = y, 
+                    fill = as.factor(value))) +
+    labs(fill = "Traffic\nLevel") +
+    scale_fill_manual(values = c("green2", "orange", "red", "#660000")) +
+    coord_quickmap() + 
+    theme_void()
+  ggsave(p, filename = "top_example.jpg")
+  
+  # jpeg("top_example.jpg",
+  #      width = 480*1.5,
+  #      height = 480*1.5)
+  # rasterVis::levelplot(r, 
+  #                      col.regions = c("green", "orange", "red", "#660000"),
+  #                      par.settings = list(axis.line = list(col = "transparent")), 
+  #                      scales = list(col = "black"),
+  #                      colorkey = F,
+  #                      xlab = NULL,
+  #                      ylab = NULL,
+  #                      margin = F,
+  #                      maxpixels = 1e10)
+  # dev.off()
   
 }
 
