@@ -16,7 +16,7 @@ The below image shows an example raster produced using the package showing [traf
 <img src="images/top_example.jpg" alt="Example" width="500"/>
 </p>
 
-Pixel values in rasters can be one of four values, as described in the below table:
+Pixel values in rasters can be one of four values:
 
 | Google Traffic Color | Description | Raster Value |
 | -------------------- | ----------- | ------------ |
@@ -146,12 +146,12 @@ r_df <- rasterToPoints(r, spatial = TRUE) %>% as.data.frame()
 names(r_df) <- c("value", "x", "y")
 
 ggplot() +
-  geom_raster(data = r_df, 
-              aes(x = x, y = y, 
+  geom_raster(data = r_df,
+              aes(x = x, y = y,
                   fill = as.factor(value))) +
   labs(fill = "Traffic\nLevel") +
   scale_fill_manual(values = c("green2", "orange", "red", "#660000")) +
-  coord_quickmap() + 
+  coord_quickmap() +
   theme_void()
 ```
 
@@ -204,12 +204,12 @@ r_df <- rasterToPoints(r, spatial = TRUE) %>% as.data.frame()
 names(r_df) <- c("value", "x", "y")
 
 ggplot() +
-  geom_raster(data = r_df, 
-              aes(x = x, y = y, 
+  geom_raster(data = r_df,
+              aes(x = x, y = y,
                   fill = as.factor(value))) +
   labs(fill = "Traffic\nLevel") +
   scale_fill_manual(values = c("green2", "orange", "red", "#660000")) +
-  coord_quickmap() + 
+  coord_quickmap() +
   theme_void()
 ```
 
