@@ -5,7 +5,7 @@
 #' Make a raster from Google traffic data, where each pixel has one of four values
 #' indicating traffic volume (no traffic, light, moderate, and heavy).
 #' 
-#' @param grid_param_df Grid parameter dataframe produced from \link{gt_make_grid}
+#' @param grid_param_df Grid parameter dataframe produced from \link[gt_make_grid()]{gt_make_grid}
 #' @param webshot_delay How long to wait for google traffic layer to render. Larger height/widths require longer delay times.
 #' @param google_key Google API key
 #' @param print_progress Show progress for which tile has been processed.
