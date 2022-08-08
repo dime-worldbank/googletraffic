@@ -1,3 +1,5 @@
+# gt_make_html()
+
 #' Make traffic html from Google
 #'
 #' This function returns an html of traffic from Google. The `gt_html_to_raster()` can

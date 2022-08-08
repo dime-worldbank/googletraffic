@@ -1,10 +1,18 @@
+# gt_load_png_as_traffic_raster()
+
 #' Converts png to raster
 #'
 #' Converts PNG to raster and translates color values to traffic values
 #'
-#' @param img PNG object from `readPNG`
+#' @param filename Filename/path of png file
+#' @param latitude Latitude used to create png file using `gt_make_png()`
+#' @param longitude Longitude used to create png file using `gt_make_png()`
+#' @param height Height used to create png file using `gt_make_png()`
+#' @param width Width used to create png file using `gt_make_png()`
+#' @param zoom Zoom used to create png file using `gt_make_png()`
 #'
 #' @return Returns a raster
+#' @export
 gt_load_png_as_traffic_raster <- function(filename,
                                           latitude,
                                           longitude,

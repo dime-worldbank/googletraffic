@@ -17,7 +17,7 @@ gt_make_raster_from_polygon(
 )
 }
 \arguments{
-\item{polygon}{\code{SpatialPolygonsDataframe} in WGS84 CRS.}
+\item{polygon}{Polygon (\code{sf} object or \code{SpatialPolygonsDataframe}) in WGS84 CRS}
 
 \item{height}{Height}
 
@@ -27,7 +27,9 @@ gt_make_raster_from_polygon(
 
 \item{webshot_delay}{How long to wait for google traffic layer to render. Larger height/widths require longer delay times.}
 
-\item{reduce_hw}{Number of pixels to reduce height/width by. The tiles produced by the function may not exactly overlap. Reducing the height and width ensures overlap to eventually remove any blank space.}
+\item{google_key}{Google API key}
+
+\item{reduce_hw}{Number of pixels to reduce height/width by. Doing so creates some overlap between tiles to ensure there is not blank space between tiles (default = 10 pixels).}
 
 \item{print_progress}{Show progress for which tile has been processed.}
 }

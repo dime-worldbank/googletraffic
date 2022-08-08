@@ -164,14 +164,14 @@ ggplot() +
 
 ### Raster from Grid <a name="raster-from-grid"></a>
 
-`gt_make_raster_from_polygon()` creates a grid that covers a polygon, creates a traffic raster for each grid, and merges the rasters together. Some may prefer to first create and see the grid, then create a traffic raster using this grid. For example, one could (1) create a grid that covers a polygon then (2) remove certain grid tiles that cover areas that may not be of interest. The `gt_make_point_grid()` and `gt_make_raster_from_grid()` functions facilitate this process; `gt_make_point_grid()` creates a grid, then `gt_make_raster_from_grid()` uses a grid as an input to create a traffic raster.
+`gt_make_raster_from_polygon()` creates a grid that covers a polygon, creates a traffic raster for each grid, and merges the rasters together. Some may prefer to first create and see the grid, then create a traffic raster using this grid. For example, one could (1) create a grid that covers a polygon then (2) remove certain grid tiles that cover areas that may not be of interest. The `gt_make_grid()` and `gt_make_raster_from_grid()` functions facilitate this process; `gt_make_grid()` creates a grid, then `gt_make_raster_from_grid()` uses a grid as an input to create a traffic raster.
 
-First, we create a grid using `gt_make_point_grid()`.
+First, we create a grid using `gt_make_grid()`.
 ```r
-grid_df <- gt_make_point_grid(polygon = ny_sp,
-                              height  = 2000,
-                              width   = 2000,
-                              zoom    = 16)
+grid_df <- gt_make_grid(polygon = ny_sp,
+                        height  = 2000,
+                        width   = 2000,
+                        zoom    = 16)
 
 leaflet() %>%
   addTiles() %>%

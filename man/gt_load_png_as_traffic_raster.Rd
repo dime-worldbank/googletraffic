@@ -14,7 +14,17 @@ gt_load_png_as_traffic_raster(
 )
 }
 \arguments{
-\item{img}{PNG object from \code{readPNG}}
+\item{filename}{Filename/path of png file}
+
+\item{latitude}{Latitude used to create png file using \code{gt_make_png()}}
+
+\item{longitude}{Longitude used to create png file using \code{gt_make_png()}}
+
+\item{height}{Height used to create png file using \code{gt_make_png()}}
+
+\item{width}{Width used to create png file using \code{gt_make_png()}}
+
+\item{zoom}{Zoom used to create png file using \code{gt_make_png()}}
 }
 \value{
 Returns a raster

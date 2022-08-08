@@ -6,30 +6,25 @@
 \usage{
 gt_html_to_raster(
   filename,
-  location = NULL,
-  height = NULL,
-  width = NULL,
-  zoom = NULL,
-  webshot_delay = 10,
-  save_png = F
+  location,
+  height,
+  width,
+  zoom,
+  webshot_delay = NULL
 )
 }
 \arguments{
+\item{filename}{HTML filename to convert into raster}
+
+\item{location}{Vector of latitude and longitude}
+
 \item{height}{Height}
 
 \item{width}{Width}
 
-\item{zoom}{Zoom level
-\subsection{Other parameters}{
-}}
+\item{zoom}{Zoom level}
 
-\item{webshot_delay}{How long to wait for .html file to load. Larger .html files will require more time to fully load.}
-
-\item{save_png}{The function creates a .png file as an intermediate step. Specify whether the .png file should be kept (default: \code{FALSE})}
-
-\item{polygon}{\code{SpatialPolygonsDataframe} the defines region to be queried.
-\subsection{If \code{save_params} is set to \code{FALSE} in `` or \code{gt_make_htmls_from_grid}, then the following must be specified}{
-}}
+\item{webshot_delay}{How long to wait for .html file to load. Larger .html files will require more time to fully load. If \code{NULL}, the following delay time (in seconds) is used: \code{delay = max(height,width)/200}.}
 }
 \value{
 Returns a georeferenced raster file. The file can contain the following values: 1 = no traffic; 2 = light traffic; 3 = moderate traffic; 4 = heavy traffic.
