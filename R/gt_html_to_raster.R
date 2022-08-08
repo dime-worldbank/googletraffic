@@ -1,3 +1,5 @@
+# gt_html_to_raster()
+
 #' Converts Google HTML file to Raster
 #' 
 #' Converts a Google HTML file into a spatially referenced raster file. 
@@ -34,7 +36,9 @@ gt_html_to_raster <- function(filename,
   # to directory where the html file is located. We grab the current directory
   # so we can switch the directory back.
   current_dir <- getwd()
+  
   setwd(filename_dir)
+  
   webshot(paste0(filename_only,".html"),
           file = paste0(filename_only,".png"),
           vheight = height,
@@ -53,12 +57,10 @@ gt_html_to_raster <- function(filename,
                                      width,
                                      zoom)
   
-  ## Save PNG
-  #img <- readPNG(file.path(filename_dir, paste0(filename_only, ".png")))
-  
   ## Delete png from temp file
   unlink(file.path(filename_dir, paste0(filename_only,".png")))
   
   setwd(current_dir)
+  
   return(r)
 }

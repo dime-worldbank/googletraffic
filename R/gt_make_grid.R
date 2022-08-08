@@ -1,20 +1,22 @@
-#' Creates grid of points to query Google Traffic 
+# gt_make_grid()
+
+#' Creates grid to query Google Traffic 
 #'
-#' Querying too large of a location may be unfeasible; consequently, it may be necessary to query multiple smaller locations. Based on the location to be queried and the height, width and zoom parameters, determines the points that should be queried.
+#' Querying too large of a location may be unfeasible; consequently, it may be necessary to query multiple smaller locations to cover a large location. Based on the location to be queried and the height, width and zoom parameters, determines the points that should be queried.
 #'
-#' @param polygon `SpatialPolygonsDataframe` the defines region to be queried.
+#' @param polygon Polygon (`sf` object or `SpatialPolygonsDataframe`) in WGS84 CRS the defines region to be queried.
 #' @param height Height
 #' @param width Width
 #' @param zoom Zoom level
-#' @param reduce_hw Number of pixels to reduce height/width by. The tiles produced by the function may not exactly overlap. Reducing the height and width ensures overlap to eventually remove any blank space.
+#' @param reduce_hw Number of pixels to reduce height/width by. Doing so creates some overlap between tiles to ensure there is not blank space between tiles (default = 10 pixels).
 #'
 #' @return Returns a dataframe with the locations to query and parameters.
 #' @export
-gt_make_point_grid <- function(polygon,
-                               height,
-                               width,
-                               zoom,
-                               reduce_hw = 10){
+gt_make_grid <- function(polygon,
+                         height,
+                         width,
+                         zoom,
+                         reduce_hw = 10){
   
   ## Polygon should be sf object
   if(class(polygon)[1] %in% "SpatialPolygonsDataFrame"){

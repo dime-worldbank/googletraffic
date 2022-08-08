@@ -1,3 +1,6 @@
+# gt_make_extent()
+
+# Helper functions -------------------------------------------------------------
 latLngToPoint <- function(mapWidth, mapHeight, lat, lng){
   # Adapted from: https://stackoverflow.com/questions/12507274/how-to-get-bounds-of-a-google-static-map
   
@@ -40,6 +43,7 @@ getImageBounds <- function(mapWidth, mapHeight, xScale, yScale, lat, lng){
   return(c(SWlat, SWlng, NElat, NElng))
 }
 
+# Main function ----------------------------------------------------------------
 #' Determine the spatial extent of a Google traffic tile
 #'
 #' Based on the location, height, width, and zoom, determines the spatial extent of the Google traffic tile

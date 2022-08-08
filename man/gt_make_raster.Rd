@@ -4,7 +4,7 @@
 \alias{gt_make_raster}
 \title{Make Google Traffic Raster}
 \usage{
-gt_make_raster(location, height, width, zoom, webshot_delay, google_key)
+gt_make_raster(location, height, width, zoom, google_key, webshot_delay)
 }
 \arguments{
 \item{location}{Vector of latitude and longitude}
@@ -14,6 +14,8 @@ gt_make_raster(location, height, width, zoom, webshot_delay, google_key)
 \item{width}{Width}
 
 \item{zoom}{Zoom level; integer from 0 to 20. For more information, see \href{https://wiki.openstreetmap.org/wiki/Zoom_levels}{here}}
+
+\item{google_key}{Google API key}
 
 \item{webshot_delay}{How long to wait for google traffic layer to render. Larger height/widths require longer delay times.}
 }

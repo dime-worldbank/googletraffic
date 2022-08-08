@@ -13,6 +13,8 @@ if(F){
   roxygen2::roxygenise("~/Documents/github/googletraffic")
 }
 
+# gt_make_raster()
+
 #' Make Google Traffic Raster
 #' 
 #' Make a raster from Google traffic data, where each pixel has one of four values
@@ -22,6 +24,7 @@ if(F){
 #' @param height Height
 #' @param width Width
 #' @param zoom Zoom level; integer from 0 to 20. For more information, see [here](https://wiki.openstreetmap.org/wiki/Zoom_levels)
+#' @param google_key Google API key
 #' @param webshot_delay How long to wait for google traffic layer to render. Larger height/widths require longer delay times.
 #'
 #' @return Returns a georeferenced raster file. The file can contain the following values: 1 = no traffic; 2 = light traffic; 3 = moderate traffic; 4 = heavy traffic.
