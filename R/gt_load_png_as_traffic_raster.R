@@ -11,7 +11,7 @@
 #' @param width Width used to create png file using `gt_make_png()`
 #' @param zoom Zoom used to create png file using `gt_make_png()`
 #'
-#' @return Returns a raster
+#' @return Returns a raster where each pixel represents traffic level (1 = no traffic, 2 = medium traffic, 3 = traffic delays, 4 = heavy traffic)
 #' @export
 gt_load_png_as_traffic_raster <- function(filename,
                                           latitude,

@@ -27,7 +27,7 @@ gt_load_png_as_traffic_raster(
 \item{zoom}{Zoom used to create png file using \code{gt_make_png()}}
 }
 \value{
-Returns a raster
+Returns a raster where each pixel represents traffic level (1 = no traffic, 2 = medium traffic, 3 = traffic delays, 4 = heavy traffic)
 }
 \description{
 Converts PNG to raster and translates color values to traffic values

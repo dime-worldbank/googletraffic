@@ -12,7 +12,7 @@ gt_make_raster_from_grid(
 )
 }
 \arguments{
-\item{grid_param_df}{Grid parameter dataframe produced from \link{gt_make_grid}}
+\item{grid_param_df}{Grid parameter dataframe produced from \link[gt_make_grid()]{gt_make_grid}}
 
 \item{webshot_delay}{How long to wait for google traffic layer to render. Larger height/widths require longer delay times.}
 
