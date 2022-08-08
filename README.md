@@ -102,10 +102,10 @@ By using a smaller `zoom`, we can capture a larger area.
 ```r  
 ## Make raster
 r <- gt_make_raster(location = c(38.744324, -85.511534),
-                  height     = 1000,
-                  width      = 1000,
-                  zoom       = 7,
-                  google_key = google_key)
+                    height     = 1000,
+                    width      = 1000,
+                    zoom       = 7,
+                    google_key = google_key)
 
 ## Map raster
 pal <- colorNumeric(c("green", "orange", "red", "#660000"), values(r),
