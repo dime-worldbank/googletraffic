@@ -80,10 +80,10 @@ gt_make_grid <- function(polygon,
     as.data.frame() %>%
     dplyr::rename(longitude = X,
                   latitude = Y) %>%
-    mutate(id = 1:n(),
-           height = height,
-           width = width,
-           zoom = zoom) 
+    dplyr::mutate(id = 1:n(),
+                  height = height,
+                  width = width,
+                  zoom = zoom) 
   
   geom <- lapply(1:nrow(points_df), function(i){
     param <- points_df[i,]

@@ -111,10 +111,10 @@ if(F){
   
   # Grid example -----------------------------------------------------------------
   ## Make initial grid
-  grid_df <- gt_make_point_grid(polygon = ny_sp,
-                                height = 2000,
-                                width = 2000,
-                                zoom = 16)
+  grid_df <- gt_make_grid(polygon = ny_sp,
+                          height = 2000,
+                          width = 2000,
+                          zoom = 16)
   
   m <- leaflet() %>%
     addTiles() %>%
