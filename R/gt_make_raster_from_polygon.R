@@ -41,9 +41,10 @@ gt_make_raster_from_polygon <- function(polygon,
                  " Google traffic tiles."))
   }
   
-  r <- gt_make_raster_from_grid(grid_param_df = grid_param_df,
-                                webshot_delay = webshot_delay,
-                                google_key    = google_key)
+  r <- gt_make_raster_from_grid(grid_param_df  = grid_param_df,
+                                webshot_delay  = webshot_delay,
+                                google_key     = google_key,
+                                print_progress = print_progress)
   
   if(crop_to_polygon){
     r <- r %>%

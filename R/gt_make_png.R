@@ -10,6 +10,7 @@
 #' @param webshot_delay How long to wait for google traffic layer to render. Larger height/widths require longer delay times.
 #' @param google_key Google API key
 #' @param out_filename Filename/path of png file to make
+#' @param print_progress Whether to print function progress
 #'
 #' @return Returns a georeferenced raster file. The file can contain the following values: 1 = no traffic; 2 = light traffic; 3 = moderate traffic; 4 = heavy traffic.
 #' @export
@@ -19,7 +20,8 @@ gt_make_png <- function(location,
                         zoom,
                         webshot_delay,
                         google_key,
-                        out_filename){
+                        out_filename,
+                        print_progress = T){
   
   ## Set webshot_delay if null
   webshot_delay <- gt_estimate_webshot_delay(height, width, webshot_delay)
@@ -48,6 +50,11 @@ gt_make_png <- function(location,
   current_dir <- getwd()
   
   setwd(filename_dir)
+  
+  if(print_progress){
+    cat(paste0("Pausing for ", webshot_delay, " seconds to allow traffic data to render"))
+  }
+  
   webshot(paste0(filename_only,".html"),
           file = paste0(filename_only,".png"),
           vheight = height,

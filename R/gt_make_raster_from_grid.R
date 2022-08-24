@@ -8,7 +8,7 @@
 #' @param grid_param_df Grid parameter dataframe produced from \link[gt_make_grid()]{gt_make_grid}
 #' @param webshot_delay How long to wait for google traffic layer to render. Larger height/widths require longer delay times.
 #' @param google_key Google API key
-#' @param print_progress Show progress for which tile has been processed.
+#' @param print_progress Whether to print function progress
 #'
 #' @return Returns a georeferenced raster file. The file can contain the following values: 1 = no traffic; 2 = light traffic; 3 = moderate traffic; 4 = heavy traffic.
 #' @export
@@ -24,17 +24,19 @@ gt_make_raster_from_grid <- function(grid_param_df,
   r_list <- lapply(1:nrow(grid_param_df), function(i){
     
     if(print_progress){
-      print(paste0("Processing tile ",i," out of ",nrow(grid_param_df)))
+      print(paste0("Processing tile ",i," out of ",nrow(grid_param_df), 
+                   "; pausing for ", webshot_delay, " seconds to allow traffic data to render"))
     } 
     
     param_i <- grid_param_df[i,]
     
-    r_i <- gt_make_raster(location      = c(param_i$latitude, param_i$longitude),
-                          height        = param_i$height,
-                          width         = param_i$width,
-                          zoom          = param_i$zoom,
-                          webshot_delay = webshot_delay,
-                          google_key    = google_key)
+    r_i <- gt_make_raster(location       = c(param_i$latitude, param_i$longitude),
+                          height         = param_i$height,
+                          width          = param_i$width,
+                          zoom           = param_i$zoom,
+                          webshot_delay  = webshot_delay,
+                          google_key     = google_key,
+                          print_progress = F)
     
     return(r_i)
   })

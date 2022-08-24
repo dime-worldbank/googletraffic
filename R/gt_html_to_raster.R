@@ -10,6 +10,7 @@
 #' @param width Width
 #' @param zoom Zoom level
 #' @param webshot_delay How long to wait for .html file to load. Larger .html files will require more time to fully load. If `NULL`, the following delay time (in seconds) is used: `delay = max(height,width)/200`.
+#' @param print_progress Whether to print function progress
 #'
 #' @return Returns a georeferenced raster file. The file can contain the following values: 1 = no traffic; 2 = light traffic; 3 = moderate traffic; 4 = heavy traffic.
 #' @export
@@ -18,7 +19,8 @@ gt_html_to_raster <- function(filename,
                               height,
                               width,
                               zoom,
-                              webshot_delay = NULL){
+                              webshot_delay = NULL,
+                              print_progress = T){
   
   #### Set webshot_delay if null
   webshot_delay <- gt_estimate_webshot_delay(height, width, webshot_delay)
@@ -38,6 +40,10 @@ gt_html_to_raster <- function(filename,
   current_dir <- getwd()
   
   setwd(filename_dir)
+  
+  if(print_progress){
+    cat(paste0("Pausing for ", webshot_delay, " seconds to allow traffic data to render"))
+  }
   
   webshot(paste0(filename_only,".html"),
           file = paste0(filename_only,".png"),
