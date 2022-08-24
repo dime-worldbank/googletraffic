@@ -10,7 +10,7 @@
 #' @import sf
 
 if(F){
-  roxygen2::roxygenise("~/Documents/github/googletraffic")
+  roxygen2::roxygenise("~/Documents/Github/googletraffic")
 }
 
 # gt_make_raster()
