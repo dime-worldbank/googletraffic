@@ -41,10 +41,11 @@ gt_make_raster_from_grid <- function(grid_param_df,
   
   ## Mosaic rasters together
   names(r_list)    <- NULL
-  r_list$fun       <- max
-  r_list$tolerance <- 1
+  #r_list$fun       <- max
+  r_list$tolerance <- 9999999
   
-  r <- do.call(raster::mosaic, r_list)
+  r_list_out <<- r_list
+  r <- do.call(raster::merge, r_list)
   r[r[] %in% 0] <- NA
   
   return(r)
