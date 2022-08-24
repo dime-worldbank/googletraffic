@@ -25,6 +25,8 @@ library(httr)
 library(sp)
 library(sf)
 
+library(plyr)
+
 api_keys_df <- read_csv("~/Dropbox/World Bank/Webscraping/Files for Server/api_keys.csv")
 
 google_key <- api_keys_df %>%
