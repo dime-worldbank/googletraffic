@@ -26,6 +26,7 @@ if(F){
 #' @param zoom Zoom level; integer from 0 to 20. For more information, see [here](https://wiki.openstreetmap.org/wiki/Zoom_levels)
 #' @param google_key Google API key
 #' @param webshot_delay How long to wait for google traffic layer to render. Larger height/widths require longer delay times.
+#' @param print_progress Whether to print function progress
 #'
 #' @return Returns a georeferenced raster file. The file can contain the following values: 1 = no traffic; 2 = light traffic; 3 = moderate traffic; 4 = heavy traffic.
 #' @export
@@ -34,7 +35,8 @@ gt_make_raster <- function(location,
                            width,
                            zoom,
                            google_key,
-                           webshot_delay){
+                           webshot_delay,
+                           print_progress = T){
   
   ## Set webshot_delay if null
   webshot_delay <- gt_estimate_webshot_delay(height, width, webshot_delay)
@@ -56,7 +58,8 @@ gt_make_raster <- function(location,
                          height = height,
                          width = width,
                          zoom = zoom,
-                         webshot_delay = webshot_delay)
+                         webshot_delay = webshot_delay,
+                         print_progress = print_progress)
   
   ## Delete html file
   unlink(filename_html)
