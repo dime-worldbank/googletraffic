@@ -4,7 +4,15 @@
 \alias{gt_make_raster}
 \title{Make Google Traffic Raster}
 \usage{
-gt_make_raster(location, height, width, zoom, google_key, webshot_delay)
+gt_make_raster(
+  location,
+  height,
+  width,
+  zoom,
+  google_key,
+  webshot_delay,
+  print_progress = T
+)
 }
 \arguments{
 \item{location}{Vector of latitude and longitude}
@@ -18,6 +26,8 @@ gt_make_raster(location, height, width, zoom, google_key, webshot_delay)
 \item{google_key}{Google API key}
 
 \item{webshot_delay}{How long to wait for google traffic layer to render. Larger height/widths require longer delay times.}
+
+\item{print_progress}{Whether to print function progress}
 }
 \value{
 Returns a georeferenced raster file. The file can contain the following values: 1 = no traffic; 2 = light traffic; 3 = moderate traffic; 4 = heavy traffic.

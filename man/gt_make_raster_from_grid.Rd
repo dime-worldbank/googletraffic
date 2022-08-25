@@ -18,7 +18,7 @@ gt_make_raster_from_grid(
 
 \item{google_key}{Google API key}
 
-\item{print_progress}{Show progress for which tile has been processed.}
+\item{print_progress}{Whether to print function progress}
 }
 \value{
 Returns a georeferenced raster file. The file can contain the following values: 1 = no traffic; 2 = light traffic; 3 = moderate traffic; 4 = heavy traffic.
