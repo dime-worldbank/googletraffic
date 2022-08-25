@@ -11,7 +11,8 @@ gt_make_png(
   zoom,
   webshot_delay,
   google_key,
-  out_filename
+  out_filename,
+  print_progress = T
 )
 }
 \arguments{
@@ -28,6 +29,8 @@ gt_make_png(
 \item{google_key}{Google API key}
 
 \item{out_filename}{Filename/path of png file to make}
+
+\item{print_progress}{Whether to print function progress}
 }
 \value{
 Returns a georeferenced raster file. The file can contain the following values: 1 = no traffic; 2 = light traffic; 3 = moderate traffic; 4 = heavy traffic.

@@ -10,7 +10,8 @@ gt_html_to_raster(
   height,
   width,
   zoom,
-  webshot_delay = NULL
+  webshot_delay = NULL,
+  print_progress = T
 )
 }
 \arguments{
@@ -25,6 +26,8 @@ gt_html_to_raster(
 \item{zoom}{Zoom level}
 
 \item{webshot_delay}{How long to wait for .html file to load. Larger .html files will require more time to fully load. If \code{NULL}, the following delay time (in seconds) is used: \code{delay = max(height,width)/200}.}
+
+\item{print_progress}{Whether to print function progress}
 }
 \value{
 Returns a georeferenced raster file. The file can contain the following values: 1 = no traffic; 2 = light traffic; 3 = moderate traffic; 4 = heavy traffic.
