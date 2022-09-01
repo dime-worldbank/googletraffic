@@ -54,7 +54,7 @@ getImageBounds <- function(mapWidth, mapHeight, xScale, yScale, lat, lng){
 #' @param width Width
 #' @param zoom Zoom level
 #'
-#' @return Returns an extent object
+#' @return Returns an extent object in WGS84
 gt_make_extent <- function(latitude,
                            longitude,
                            height,

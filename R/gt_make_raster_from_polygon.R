@@ -23,6 +23,7 @@ gt_make_raster_from_polygon <- function(polygon,
                                         webshot_delay,
                                         google_key,
                                         reduce_hw = 10,
+                                        return_list_of_tiles = F,
                                         crop_to_polygon = T,
                                         print_progress = T){
   
@@ -44,12 +45,44 @@ gt_make_raster_from_polygon <- function(polygon,
   r <- gt_make_raster_from_grid(grid_param_df  = grid_param_df,
                                 webshot_delay  = webshot_delay,
                                 google_key     = google_key,
+                                return_list_of_tiles = return_list_of_tiles,
                                 print_progress = print_progress)
-  
-  if(crop_to_polygon){
+
+  if(crop_to_polygon & !return_list_of_tiles){
     r <- r %>%
       crop(polygon) %>%
       mask(polygon)
+  }
+  
+  if(crop_to_polygon & return_list_of_tiles){
+    
+    if("SpatialPolygonsDataFrame" %in% class(polygon)){
+      polygon <- polygon %>% st_as_sf()
+    }
+    
+    for(i in 1:length(r)){
+      if(print_progress){
+        print(paste0("Cropping tile ", i, " of ", length(r)))
+      }
+
+      ## Weird issue where visually does not intersect, but says intersects - likely
+      ## due to curvature of each issues?
+      # inter_df <- st_intersects(r[[i]] %>% st_bbox() %>% st_as_sfc(), 
+      #                           polygon %>% st_bbox() %>% st_as_sfc(),
+      #                           sparse = F)[1]
+      
+      ## Issue doesn't occur with rgeos::gIntersects
+      inter_df <- gIntersects(r[[i]] %>% st_bbox() %>% st_as_sfc() %>% as("Spatial"), 
+                                polygon %>% st_bbox() %>% st_as_sfc() %>% as("Spatial"))
+      
+      if(inter_df){
+        r[[i]] <- r[[i]] %>% crop(polygon) #%>% mask(polygon)
+      } else{
+        r[[i]] <- NA
+      }
+    }
+    
+    r <- r[!is.na(r)]
   }
   
   return(r)
