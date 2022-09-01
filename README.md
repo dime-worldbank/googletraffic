@@ -1,5 +1,5 @@
 # googletraffic  <img src="images/hex.png" align="right" width="200" />
-Create data from Google Maps Traffic
+Create traffic data from the [Google Maps Javascript API](https://developers.google.com/maps/documentation/javascript/trafficlayer) Traffic Layer
 
 * [Overview](#overview)
 * [Installation](#installation)
@@ -8,7 +8,7 @@ Create data from Google Maps Traffic
 
 # Overview <a name="overview"></a>
 
-Google Maps Traffic provides information about traffic conditions across an area. This package provides functions to produce georeferenced rasters from live Google Maps traffic information. Providing Google Traffic information in a georeferenced data format facilitates analysis of traffic information (e.g., spatially merging traffic information with other data sources, observing trends over time, etc).
+Google Maps provides information about traffic conditions across an area. This package provides functions to produce georeferenced rasters from live Google Maps traffic information. Providing Google traffic information in a georeferenced data format facilitates analysis of traffic information (e.g., spatially merging traffic information with other data sources, observing trends over time, etc).
 
 The below image shows an example raster produced using the package showing [traffic in Washington, DC.](https://www.google.com/maps/@38.9022138,-77.0505589,16.81z/data=!5m1!1e1)
 
@@ -22,7 +22,7 @@ Pixel values in rasters are derived from Google [traffic colors](https://support
 | -------------------- | ----------- | ------------ |
 | Green                | No traffic delays | 1      |
 | Orange               | Medium traffic    | 2      |
-| Red                  | Traffic delays    | 3      |
+| Red                  | High traffic    | 3      |
 | Dark Red             | Heavy traffic     | 4      |
 
 # Installation <a name="installation"></a>
@@ -36,7 +36,7 @@ devtools::install_github("dime-worldbank/googletraffic")
 
 # Google API Key <a name="google-api-key"></a>
 
-Querying Google traffic information requires a Google API key with the [Maps Javascript API](https://developers.google.com/maps/documentation/javascript/overview) enabled.
+Querying Google traffic information requires a Google API key with the [Maps Javascript API](https://developers.google.com/maps/documentation/javascript/overview) enabled. To create a Google API key, [follow these instructions](https://developers.google.com/maps/get-started#create-project).
 
 # Quickstart <a name="quickstart"></a>
 
@@ -70,7 +70,7 @@ The following are key parameters used when querying Google Traffic data.
 
 * __zoom:__ The [zoom level](https://wiki.openstreetmap.org/wiki/Zoom_levels) defines the resolution of the traffic image. Values can range from 0 to 20. At the equator, with a zoom level 10, each pixel will be about 150 meters; with a zoom level 20, each pixel will be about 0.15 meters. Consequently, smaller zoom levels can be used if only larger roads are of interest (e.g., highways), while larger zoom levels will be needed for capturing smaller roads.
 * __height/width:__ The `height` and `width` parameters define the height and width of the raster in terms of pixels. The kilometer height/width of pixels depends primarily on the `zoom` level.
-<!--- 
+<!---
 * __webshot_delay:__ Google maps information is originally rendered on an interactive map. For large values of `height` and `width`, traffic information can take some time to render on a map. Consequently, a delay (specified using `webshot_delay`) is introduced to ensure traffic information is fully rendered on the map before traffic data is extracted. For example, when using a `height` and `width` of 500, a delay time of 2 seconds works well. For a `height` and `width` of 5000, a delay of up to 20 seconds may be needed. Traffic information cannot be rendered for very large `height` and `width` values, no matter the `webshot_delay` specified.
   - __Note that `webshot_delay` does not need to be specified.__ If it is not specified, the function estimates an appropriate delay length given the `height` and `width`. However, `webshot_delay` can be manually specified to (1) attempt to make faster queries or (2) or introduce longer delays if traffic information fails to render.
 --->
@@ -124,7 +124,7 @@ leaflet() %>%
 
 ## Query Granular Traffic Information for Large Spatial Extent <a name="large-extent"></a>
 
-__The above example illustrates a trade off between resolution and spatial extent.__ For small `zoom` levels, we can capture large areas, but the pixels values are also large --- so we may only be able to detect overall traffic for large roads or cities. For large `zoom` levels, we can detect traffic on specific roads, but can only capture traffic for a smaller area. We could set a large `zoom` and a large `height` and `width`, but Google traffic information will fail to render if we set the `height` and `width` values too large (no matter the `webshot_delay` specified).
+__The above example illustrates a trade off between resolution and spatial extent.__ For small `zoom` levels, we can capture large areas, but the pixels values are also large --- so we may only be able to detect overall traffic for large roads or cities. For large `zoom` levels, we can detect traffic on specific roads, but can only capture traffic for a smaller area. We could set a large `zoom` and a large `height` and `width`, but Google traffic information will fail to render if we set the `height` and `width` values too large.
 
 __The package provides functions that allow querying granular traffic information for large spatial extents.__ Here, we make multiple queries to obtain traffic information for multiple areas, then the information is merged together into one raster file. The `gt_make_raster_from_polygon()` and `gt_make_raster_from_grid()` provide two different approaches for querying granular traffic information for spatial extents where multiple Google API queries are needed.
 
