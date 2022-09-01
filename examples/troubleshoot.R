@@ -46,168 +46,94 @@ bing_key <- api_keys_df %>%
   pull(Key)
 
 # Setup ------------------------------------------------------------------------
-## Make raster
-latitude <- 59.328911
-longitude <- 18.066045
-height = 2000
-width = 2000
-zoom = 8
-r <- gt_make_raster(location   = c(latitude, longitude),
-                    height     = height,
-                    width      = width,
-                    zoom       = zoom,
-                    google_key = google_key)
+if(F){
+  library(rgeos)
+  
+  us_adm0_sp <- getData('GADM', country='USA', level=1)
+  us_adm0_sp <- us_adm0_sp[!(us_adm0_sp$NAME_1 %in% c("Alaska", "Hawaii")),]
+  us_adm0_sp <- gBuffer(us_adm0_sp, width = 0)
+  us_adm0_sp$id <- 1
+  
+  us_adm0_sp_s <- gSimplify(us_adm0_sp, tol = 20/111.21)
+  us_adm0_sp_s$id <- 1
+  
+  r_us <- gt_make_raster_from_polygon(polygon       = us_adm0_sp_s,
+                                      height        = 2000,
+                                      width         = 2000,
+                                      zoom          = 7,
+                                      google_key    = google_key,
+                                      return_list_of_tiles = F,
+                                      webshot_delay = NULL)
+  
+  saveRDS(r_us, "~/Desktop/gt_data_list_new.Rds")
+}
 
-ext_wgs84 <- gt_make_extent(latitude,
-                            longitude,
-                            height,
-                            width,
-                            zoom)
+r_list <- readRDS("~/Desktop/gt_data_list_new.Rds")
 
-ext_wgs84 <- ext_wgs84 %>% as("SpatialPolygons") 
-crs(ext_wgs84) <- CRS("+init=epsg:4326")
-ext_merc <- ext_wgs84 %>% spTransform(CRS("+init=epsg:3857")) %>% extent()
+## Make template raster
+r_list_temp <- r_list
 
-extent(r) <- ext_merc
-crs(r) <- CRS("+init=epsg:3857")
+names(r_list_temp)    <- NULL
+#r_list_temp$fun       <- max
+r_list_temp$tolerance <- 9999999
 
-r_nn <- r %>% projectRaster(crs = CRS("+init=epsg:4326"))
+r_temp <- do.call(raster::merge, r_list_temp)
+r_temp[] <- NA
 
-r_poly <- 
-leaflet() %>%
-  addTiles() %>%
-  addRasterImage(r, opacity = 0.5)
-
-
-#%>% spTransform(CRS("+init=epsg:3857"))
-
-e <- as(e, "SpatialPolygons")
-
-
-#### Create URLs to query
-# https://docs.microsoft.com/en-us/bingmaps/rest-services/imagery/get-a-static-map
-style <- paste("me|sc:ffffff;lv:0;lbc:ffffff;loc:000000;bv:0",
-               "trs|sc:ffffff;fc:ffffff;bsc:ffffff;boc:ffffff;lv:0;bv:0",
-               "pl|v:0;bv:0",
-               "pt|v:0;bv:0",
-               "ad|v:0;bv:0",
-               "ar|v:0;bv:0",
-               "wt|sc:ffffff;fc:ffffff;lv:0;bv:0",
-               "rd|sc:ffffff;fc:ffffff;lv:0;lbc:0;bv:0",
-               "str|v:0;bv:0",
-               "np|fc:ffffff;sc:ffffff;lv:0;bv:0",
-               "hg|fc:ffffff;sc:ffffff;lv:0;bv:0",
-               "cah|fc:ffffff;sc:ffffff;lv:0;bv:0",
-               "ard|fc:ffffff;sc:ffffff;lv:0;bv:0",
-               "mr|fc:ffffff;sc:ffffff;lv:0;bv:0",
-               "rl|fc:ffffff;sc:ffffff;lv:0;bv:0;v:0",
-               "transit|v:0;bv:0;fc:ffffff;sc:ffffff",
-               "g|lv:0;sc:ffffff;lc:ffffff;bsc:ffffff;boc:ffffff;bv:0",
-               sep="_")
-
-bing_metadata_url <- paste0("https://dev.virtualearth.net/REST/v1/Imagery/Map/Road/",
-                            latitude,",",longitude,"/",zoom,
-                            "?mapSize=",height,",",width,
-                            "&style=",style,
-                            "&mmd=1",
-                            "&mapLayer=TrafficFlow&format=png&key=",bing_key)
-
-bing_map_url <- paste0("https://dev.virtualearth.net/REST/v1/Imagery/Map/Road/",
-                       latitude,",",longitude,"/",zoom,
-                       "?mapSize=",height,",",width,
-                       "&style=",style,
-                       "&mapLayer=TrafficFlow&format=png&key=",bing_key)
-
-#### Grab bbox from metadata
-library(rjson)
-md <- bing_metadata_url %>% GET() %>% content(as="text") %>% fromJSON 
-bbox <- md$resourceSets[[1]]$resources[[1]]$bbox
-n_extent <- extent(c(bbox[2], bbox[4], bbox[1], bbox[3]))
-
-r_n <- r
-extent(r_n) <- n_extent
-
-leaflet() %>%
-  addTiles() %>%
-  addRasterImage(r_n, opacity = 0.5, project = F)
-
-r_list <- readRDS("~/Desktop/gt_data_list.Rds")
-
-r <- r_list[[5]]
-r <- projectRaster(r, crs = CRS("+init=epsg:3395"))
-crs(r) <- CRS("+init=epsg:3857")
-
-r[][is.na(r[])] <- 0
-leaflet() %>%
-  addTiles() %>%
-  addRasterImage(r, opacity = 0.5, project = T)
-
-## Map raster
-pal <- colorNumeric(c("green", "orange", "red", "#660000"), values(r),
-                    na.color = "transparent")
-
-leaflet() %>%
-  addProviderTiles("Esri.WorldGrayCanvas") %>%
-  addRasterImage(r, colors = pal, opacity = 1, project=F)
-
-us_adm0_sp <- getData('GADM', country='USA', level=1)
-dc_sp <- us_adm0_sp[us_adm0_sp$NAME_1 %in% "District of Columbia",]
-
-
-
-r <- gt_make_raster(location = c(38.744324, -85.511534),
-                    height     = 1000,
-                    width      = 1000,
-                    zoom       = 7,
-                    google_key = google_key)
-
-r_poly <- r %>% rasterToPolygons(dissolve=T)
-
-us_adm0_sp <- getData('GADM', country='USA', level=1)
-us_adm0_sp <- us_adm0_sp[!(us_adm0_sp$NAME_1 %in% c("Alaska", "Hawaii")),]
-#us_adm0_sp <- gBuffer(us_adm0_sp, width = 0)
-#us_adm0_sp$id <- 1
-us_adm0_sp_s <- gSimplify(us_adm0_sp, tol = 1/111.21)
-us_adm0_sp_s$id <- 1:length(us_adm0_sp_s)
-
-ggplot() +
-  geom_polygon(data = us_adm0_sp_s,
-               aes(x = long, y=lat, group=group),
-               fill = "white",
-               color = "black") +
-  geom_polygon(data = r_poly[1,],
-               aes(x = long, y=lat, group=group),
-               color = "green") +
-  coord_quickmap()
-
-plot(r_poly[1,])
-plot(us_adm0_sp_s,add=T)
-plot(r_poly[1,],add=T)
-
-leaflet() %>%
-  addTiles() %>%
-  addPolygons(data = us_adm0_sp_s) %>%
-  addRasterImage(r, project=F, opacity=0.5)
-
-plot(r)
-plot(us_adm0_sp_s,add=T)
-plot(r,add=T)
-plot(us_adm0_sp_s,add=T)
-
-
-crs(r) <- CRS("+init=epsg:3857")
-
-
-
-r_list_a <- readRDS("~/Desktop/gt_data_list.Rds")
+## Resample to template
+for(i in 1:length(r_list)) r_list[[i]] <- raster::resample(r_list[[i]], r_temp, method = "ngb")
 
 ## Mosaic rasters together
-r_list <- r_list_a
+names(r_list)    <- NULL
+r_list$fun       <- max
+#r_list_temp$tolerance <- 9999999
 
-r1 <- r_list[[5]]
-r2 <- r_list[[8]]
+r <- do.call(raster::mosaic, r_list) 
 
-crs(r1) <- CRS("+init=epsg:3857")
+r[][!is.na(r[])]
+
+r_list[[1]][] 
+
+## Check!
+leaflet() %>% 
+  addTiles() %>%
+  addRasterImage(r, opacity = 0.8)
+
+r1_adj <- resample(r1, r_temp, method = "ngb")
+r2_adj <- resample(r2, r_temp, method = "ngb")
+
+r12 <- merge(r1_adj, r2_adj)
+
+leaflet() %>% 
+  addTiles() %>%
+  addRasterImage(r1_adj, opacity = 0.8) %>%
+  addRasterImage(r2_adj, opacity = 0.8)  
+
+leaflet() %>% 
+  addTiles() %>%
+  addRasterImage(r12, opacity = 0.8)
+
+
+r1 <- r_list[[7]]
+leaflet() %>% 
+  addTiles() %>%
+  addRasterImage(r, opacity = 0.8) 
+
+leaflet() %>% 
+  addTiles() %>%
+  addRasterImage(r8c, opacity = 0.8) 
+
+
+
+
+
+
+
+
+
+
+
+
 
 r1_poly <- rasterToPolygons(r1, dissolve = T)
 r1_poly <- spTransform(r1_poly, CRS("+init=epsg:4326"))

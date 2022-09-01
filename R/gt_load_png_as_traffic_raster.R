@@ -82,7 +82,7 @@ gt_load_png_as_traffic_raster <- function(filename,
   crs(r) <- CRS("+init=epsg:3857")
   
   ## Convert back to EPSG:4326
-  r <- projectRaster(r, crs = CRS("+init=epsg:4326"))
+  r <- projectRaster(r, crs = CRS("+init=epsg:4326"), method = "ngb")
   
   return(r)
 }
