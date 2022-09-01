@@ -60,9 +60,9 @@ if(F){
   r_us <- gt_make_raster_from_polygon(polygon       = us_adm0_sp_s,
                                       height        = 2000,
                                       width         = 2000,
-                                      zoom          = 7,
+                                      zoom          = 8,
                                       google_key    = google_key,
-                                      return_list_of_tiles = F,
+                                      return_list_of_tiles = T,
                                       webshot_delay = NULL)
   
   saveRDS(r_us, "~/Desktop/gt_data_list_new.Rds")

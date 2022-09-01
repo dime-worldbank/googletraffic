@@ -1,4 +1,4 @@
-# gt_make_raster_from_grid()
+# Make Raster from Grid
 
 #' Make Google Traffic Raster Based on Grid of Coordinates
 #' 
@@ -58,7 +58,9 @@ gt_make_raster_from_grid <- function(grid_param_df,
       r_temp[] <- NA
       
       ## Resample to template
-      for(i in 1:length(r_list)) r_list[[i]] <- raster::resample(r_list[[i]], r_temp, method = "ngb")
+      for(i in 1:length(r_list)) r_list[[i]] <- raster::resample(r_list[[i]], 
+                                                                 r_temp, 
+                                                                 method = "ngb")
       
       ## Mosaic rasters together
       names(r_list)    <- NULL
@@ -67,7 +69,7 @@ gt_make_raster_from_grid <- function(grid_param_df,
       
       r <- do.call(raster::mosaic, r_list) 
       
-      r[r[] %in% 0] <- NA # TODO: Needed?
+      #r[r[] %in% 0] <- NA
       
     } else{
       r <- r_list[[1]]

@@ -4,8 +4,8 @@
 #' be used to convert the png into a traffic raster
 #' 
 #' @param location Vector of latitude and longitude
-#' @param height Height
-#' @param width Width
+#' @param height Height (in pixels; pixel length depends on zoom)
+#' @param width Width (in pixels; pixel length depends on zoom)
 #' @param zoom Zoom level; integer from 0 to 20. For more information, see [here](https://wiki.openstreetmap.org/wiki/Zoom_levels)
 #' @param webshot_delay How long to wait for google traffic layer to render. Larger height/widths require longer delay times.
 #' @param google_key Google API key

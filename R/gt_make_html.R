@@ -1,4 +1,4 @@
-# gt_make_html()
+# Make Google Traffic HTML
 
 #' Make traffic html from Google
 #'
@@ -6,12 +6,11 @@
 #' then be used to convert this html into a georeferenced raster file. 
 #'
 #' @param location Vector of latitude and longitude
-#' @param height Height
-#' @param width Width
+#' @param height Height (in pixels; pixel length depends on zoom)
+#' @param width Width (in pixels; pixel length depends on zoom)
 #' @param zoom Zoom; integer from 0 to 20. For more information, see [here](https://wiki.openstreetmap.org/wiki/Zoom_levels)
 #' @param filename Path and filename to save file
 #' @param google_key Google API key
-#' @param save_params Save an .Rds file that contains the parameters (location, height, width and zoom). This file can then be used by the `gt_html_to_raster()` function.
 #' 
 #' @return Returns an html file of Google traffic
 #' @export
@@ -20,8 +19,7 @@ gt_make_html <- function(location,
                          width,
                          zoom,
                          filename,
-                         google_key,
-                         save_params = F){
+                         google_key){
   
   #### Define style; all white background
   # Adapted from: https://snazzymaps.com/style/95/roadie
@@ -82,7 +80,6 @@ gt_make_html <- function(location,
                      rotate_control = F,
                      street_view_control = F) %>%
     add_traffic() 
-  
   
   saveWidget(gmap, 
              filename, 

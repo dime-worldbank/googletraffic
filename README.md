@@ -93,7 +93,7 @@ pal <- colorNumeric(c("green", "orange", "red", "#660000"), values(r),
 
 leaflet() %>%
   addProviderTiles("Esri.WorldGrayCanvas") %>%
-  addRasterImage(r, colors = pal, opacity = 1, project=F)
+  addRasterImage(r, colors = pal, opacity = 1)
 ```
 
 <p align="center">
@@ -115,7 +115,7 @@ pal <- colorNumeric(c("green", "orange", "red", "#660000"), values(r),
 
 leaflet() %>%
   addProviderTiles("Esri.WorldGrayCanvas") %>%
-  addRasterImage(r, colors = pal, opacity = 1, project=F)
+  addRasterImage(r, colors = pal, opacity = 1)
 ```
 
 <p align="center">
@@ -222,4 +222,4 @@ ggplot() +
 <img src="images/nyc_large_from_grid.jpg" alt="Example" width="500"/>
 </p>
 
-Note that the above raster includes traffic in areas outside of Manhattan; the image is not masked to just the Manhattan polygon. This result can also be achieved when using the `gt_make_raster_from_polygon()` function by setting `crop_to_polygon` to `FALSE`.
+Note that the above raster includes traffic in areas outside of Manhattan; the image is not masked to just the Manhattan polygon. This result can also be achieved when using the `gt_make_raster_from_polygon()` function by setting `mask_to_polygon` to `FALSE`.

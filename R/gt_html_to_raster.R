@@ -1,4 +1,4 @@
-# gt_html_to_raster()
+# HTML to Raster
 
 #' Converts Google HTML file to Raster
 #' 
@@ -6,10 +6,10 @@
 #'
 #' @param filename HTML filename to convert into raster
 #' @param location Vector of latitude and longitude
-#' @param height Height
-#' @param width Width
+#' @param height Height (in pixels; pixel length depends on zoom)
+#' @param width Width (in pixels; pixel length depends on zoom)
 #' @param zoom Zoom level
-#' @param webshot_delay How long to wait for .html file to load. Larger .html files will require more time to fully load. If `NULL`, the following delay time (in seconds) is used: `delay = max(height,width)/200`.
+#' @param webshot_delay How long to wait for .html file to load. Larger .html files (large height/widths) will require more time to fully load. If `NULL`, the following delay time (in seconds) is used: `delay = max(height,width)/200`.
 #' @param print_progress Whether to print function progress
 #'
 #' @return Returns a georeferenced raster file. The file can contain the following values: 1 = no traffic; 2 = light traffic; 3 = moderate traffic; 4 = heavy traffic.
