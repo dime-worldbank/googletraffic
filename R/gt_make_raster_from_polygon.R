@@ -9,8 +9,8 @@
 #' @param height Height (in pixels; pixel length depends on zoom)
 #' @param width Width (in pixels; pixel length depends on zoom)
 #' @param zoom Zoom level; integer from 0 to 20. For more information, see [here](https://wiki.openstreetmap.org/wiki/Zoom_levels)
-#' @param webshot_delay How long to wait for google traffic layer to render. Larger height/widths require longer delay times.
 #' @param google_key Google API key
+#' @param webshot_delay How long to wait for google traffic layer to render. Larger height/widths require longer delay times.
 #' @param reduce_hw Number of pixels to reduce height/width by. Doing so creates some overlap between tiles to ensure there is not blank space between tiles (default: 10).
 #' @param return_list_of_tiles Whether to return a list of raster tiles instead of mosaicing together (default: `FALSE`).
 #' @param mask_to_polygon Whether to mask raster to `polygon` (default: `TRUE`).
@@ -22,8 +22,8 @@ gt_make_raster_from_polygon <- function(polygon,
                                         height,
                                         width,
                                         zoom,
-                                        webshot_delay,
                                         google_key,
+                                        webshot_delay = NULL,
                                         reduce_hw = 10,
                                         return_list_of_tiles = F,
                                         mask_to_polygon = T,

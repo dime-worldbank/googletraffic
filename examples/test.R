@@ -15,7 +15,6 @@ r <- gt_make_raster(location   = c(40.712778, -74.006111),
                     zoom       = 16,
                     google_key = google_key)
 
-
 #### From Polygon
 us_sp <- raster::getData('GADM', country='USA', level=2)
 ny_sp <- us_sp[us_sp$NAME_2 %in% "New York",]
