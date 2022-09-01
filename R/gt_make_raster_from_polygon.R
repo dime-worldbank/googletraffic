@@ -1,4 +1,4 @@
-# gt_make_raster_from_polygon()
+# Make Raster from Polygon
 
 #' Make Google Traffic Raster Based on Polygon
 #' 
@@ -6,13 +6,15 @@
 #' indicating traffic volume (no traffic, light, moderate, and heavy).
 #' 
 #' @param polygon Polygon (`sf` object or `SpatialPolygonsDataframe`) in WGS84 CRS
-#' @param height Height
-#' @param width Width
+#' @param height Height (in pixels; pixel length depends on zoom)
+#' @param width Width (in pixels; pixel length depends on zoom)
 #' @param zoom Zoom level; integer from 0 to 20. For more information, see [here](https://wiki.openstreetmap.org/wiki/Zoom_levels)
 #' @param webshot_delay How long to wait for google traffic layer to render. Larger height/widths require longer delay times.
 #' @param google_key Google API key
-#' @param reduce_hw Number of pixels to reduce height/width by. Doing so creates some overlap between tiles to ensure there is not blank space between tiles (default = 10 pixels).
-#' @param print_progress Show progress for which tile has been processed.
+#' @param reduce_hw Number of pixels to reduce height/width by. Doing so creates some overlap between tiles to ensure there is not blank space between tiles (default: 10).
+#' @param return_list_of_tiles Whether to return a list of raster tiles instead of mosaicing together (default: `FALSE`).
+#' @param mask_to_polygon Whether to mask raster to `polygon` (default: `TRUE`).
+#' @param print_progress Show progress for which tile has been processed (default: `TRUE`).
 #'
 #' @return Returns a georeferenced raster file. The file can contain the following values: 1 = no traffic; 2 = light traffic; 3 = moderate traffic; 4 = heavy traffic.
 #' @export
@@ -24,7 +26,7 @@ gt_make_raster_from_polygon <- function(polygon,
                                         google_key,
                                         reduce_hw = 10,
                                         return_list_of_tiles = F,
-                                        crop_to_polygon = T,
+                                        mask_to_polygon = T,
                                         print_progress = T){
   
   ## Set webshot_delay if null
@@ -48,13 +50,13 @@ gt_make_raster_from_polygon <- function(polygon,
                                 return_list_of_tiles = return_list_of_tiles,
                                 print_progress = print_progress)
   
-  if(crop_to_polygon & !return_list_of_tiles){
+  if(mask_to_polygon & !return_list_of_tiles){
     r <- r %>%
       crop(polygon) %>%
       mask(polygon)
   }
   
-  if(crop_to_polygon & return_list_of_tiles){
+  if(mask_to_polygon & return_list_of_tiles){
     
     if("SpatialPolygonsDataFrame" %in% class(polygon)){
       polygon <- polygon %>% st_as_sf()
@@ -65,15 +67,18 @@ gt_make_raster_from_polygon <- function(polygon,
         print(paste0("Cropping tile ", i, " of ", length(r)))
       }
       
-      ## Weird issue where visually does not intersect, but says intersects - likely
-      ## due to curvature of each issues?
-      # inter_df <- st_intersects(r[[i]] %>% st_bbox() %>% st_as_sfc(), 
-      #                           polygon %>% st_bbox() %>% st_as_sfc(),
-      #                           sparse = F)[1]
+      ## Check intersection using planar geometry
+      sf_use_s2_default <- sf_use_s2()
       
-      ## Issue doesn't occur with rgeos::gIntersects
-      inter_df <- gIntersects(r[[i]] %>% st_bbox() %>% st_as_sfc() %>% as("Spatial"), 
-                              polygon %>% st_bbox() %>% st_as_sfc() %>% as("Spatial"))
+      sf_use_s2(FALSE)
+      inter_df <- st_intersects(r[[i]] %>% st_bbox() %>% st_as_sfc(),
+                                polygon %>% st_bbox() %>% st_as_sfc(),
+                                sparse = F)[1]
+      sf_use_s2(sf_use_s2_default)
+      
+      ## Could also use rgeos approach
+      # inter_df <- gIntersects(r[[i]] %>% st_bbox() %>% st_as_sfc() %>% as("Spatial"), 
+      #                         polygon %>% st_bbox() %>% st_as_sfc() %>% as("Spatial"))
       
       if(inter_df){
         r[[i]] <- r[[i]] %>% crop(polygon) %>% mask(polygon)

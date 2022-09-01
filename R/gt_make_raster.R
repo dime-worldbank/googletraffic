@@ -13,7 +13,7 @@ if(F){
   roxygen2::roxygenise("~/Documents/Github/googletraffic")
 }
 
-# gt_make_raster()
+# Make Google Traffic Raster
 
 #' Make Google Traffic Raster
 #' 
@@ -21,8 +21,8 @@ if(F){
 #' indicating traffic volume (no traffic, light, moderate, and heavy).
 #' 
 #' @param location Vector of latitude and longitude
-#' @param height Height
-#' @param width Width
+#' @param height Height (in pixels; pixel length depends on zoom)
+#' @param width Width (in pixels; pixel length depends on zoom)
 #' @param zoom Zoom level; integer from 0 to 20. For more information, see [here](https://wiki.openstreetmap.org/wiki/Zoom_levels)
 #' @param google_key Google API key
 #' @param webshot_delay How long to wait for google traffic layer to render. Larger height/widths require longer delay times.

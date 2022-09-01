@@ -1,12 +1,12 @@
-# gt_make_grid()
+# Make Grid
 
 #' Creates grid to query Google Traffic 
 #'
 #' Querying too large of a location may be unfeasible; consequently, it may be necessary to query multiple smaller locations to cover a large location. Based on the location to be queried and the height, width and zoom parameters, determines the points that should be queried.
 #'
 #' @param polygon Polygon (`sf` object or `SpatialPolygonsDataframe`) in WGS84 CRS the defines region to be queried.
-#' @param height Height
-#' @param width Width
+#' @param height Height (in pixels; pixel length depends on zoom)
+#' @param width Width (in pixels; pixel length depends on zoom)
 #' @param zoom Zoom level
 #' @param reduce_hw Number of pixels to reduce height/width by. Doing so creates some overlap between tiles to ensure there is not blank space between tiles (default = 10 pixels).
 #'
@@ -23,6 +23,7 @@ gt_make_grid <- function(polygon,
     polygon <- polygon %>% st_as_sf()
   }
   
+  ## If polygon is more than one row, make one polygon
   if(nrow(polygon) > 1){
     polygon$id <- 1
     polygon <- polygon %>%
@@ -58,8 +59,6 @@ gt_make_grid <- function(polygon,
   x_degree <- (most_extreme_lat_ext@xmax - most_extreme_lat_ext@xmin) / width
   y_degree <- (most_extreme_lat_ext@ymax - most_extreme_lat_ext@ymin) / height
   
-  #pixel_dist_deg   <- det_google_pixel_dist_deg(zoom)
-  
   ## Make raster and convert to polygon
   poly_ext <- extent(polygon)
   
@@ -67,9 +66,9 @@ gt_make_grid <- function(polygon,
                                     height_use*y_degree))
   r <- raster::extend(r, c(1,1)) #Expand by one cell, to ensure covers all study area
   
-  p <- as(r, "SpatialPolygonsDataFrame") %>% st_as_sf()
+  p <- r %>% rasterToPolygons() %>% st_as_sf()
   
-  ## Only keep polygons (boxes) that intersect with original polygon
+  ## Only keep polygons that intersect with original polygon
   p_inter_tf <- st_intersects(p, polygon, sparse=F) %>% as.vector()
   p_inter <- p[p_inter_tf,]
   
@@ -94,11 +93,12 @@ gt_make_grid <- function(polygon,
                           param$width,
                           param$zoom)
     
-    as(ext, "SpatialPolygons") %>% st_as_sf()
+    ext %>% st_bbox() %>% st_as_sfc() %>% st_as_sf(crs = CRS("+init=epsg:4326"))
+    #as(ext, "SpatialPolygons") %>% st_as_sf()
   }) %>%
     bind_rows()
   
-  points_sf <- st_sf(points_df, geometry = geom$geometry)
+  points_sf <- st_sf(points_df, geometry = geom$x)
   
   return(points_sf)
 }

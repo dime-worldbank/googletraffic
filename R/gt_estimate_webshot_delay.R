@@ -1,4 +1,4 @@
-# gt_estimate_webshot_delay()
+# Webshot Delay
 
 #' If not specified, estimate webshot_delay using height and width
 #' 

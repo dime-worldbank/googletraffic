@@ -1,8 +1,8 @@
-# gt_make_extent()
+# Make Extent
 
 # Helper functions -------------------------------------------------------------
 latLngToPoint <- function(mapWidth, mapHeight, lat, lng){
-  # Adapted from: https://stackoverflow.com/questions/12507274/how-to-get-bounds-of-a-google-static-map
+  # Adapted from: https://stackoverflow.com/a/66077896/8729174
   
   x = (lng + 180) * (mapWidth/360)
   y = ((1 - log(tan(lat * pi / 180) + 1 / cos(lat * pi / 180)) / pi) / 2) * mapHeight
@@ -11,8 +11,7 @@ latLngToPoint <- function(mapWidth, mapHeight, lat, lng){
 }
 
 pointToLatLng <- function(mapWidth, mapHeight, x, y){
-  # Adapted from: https://stackoverflow.com/questions/12507274/how-to-get-bounds-of-a-google-static-map
-  
+  # Adapted from: https://stackoverflow.com/a/66077896/8729174
   lng = x / mapWidth * 360 - 180
   
   n = pi - 2 * pi * y / mapHeight
@@ -22,7 +21,7 @@ pointToLatLng <- function(mapWidth, mapHeight, x, y){
 }
 
 getImageBounds <- function(mapWidth, mapHeight, xScale, yScale, lat, lng){
-  # Adapted from: https://stackoverflow.com/questions/12507274/how-to-get-bounds-of-a-google-static-map
+  # Adapted from: https://stackoverflow.com/a/66077896/8729174
   
   centreX_Y <- latLngToPoint(mapWidth, mapHeight, lat, lng)
   centreX   <- centreX_Y[1]
@@ -50,11 +49,11 @@ getImageBounds <- function(mapWidth, mapHeight, xScale, yScale, lat, lng){
 #'
 #' @param latitude Latitude
 #' @param longitude Longitude
-#' @param height Height
-#' @param width Width
+#' @param height Height (in pixels; pixel length depends on zoom)
+#' @param width Width (in pixels; pixel length depends on zoom)
 #' @param zoom Zoom level
 #'
-#' @return Returns an extent object in WGS84
+#' @return Returns an extent object in WGS84 (EPSG:4326)
 gt_make_extent <- function(latitude,
                            longitude,
                            height,
