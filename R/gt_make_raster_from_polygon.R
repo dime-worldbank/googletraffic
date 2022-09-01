@@ -47,7 +47,7 @@ gt_make_raster_from_polygon <- function(polygon,
                                 google_key     = google_key,
                                 return_list_of_tiles = return_list_of_tiles,
                                 print_progress = print_progress)
-
+  
   if(crop_to_polygon & !return_list_of_tiles){
     r <- r %>%
       crop(polygon) %>%
@@ -64,7 +64,7 @@ gt_make_raster_from_polygon <- function(polygon,
       if(print_progress){
         print(paste0("Cropping tile ", i, " of ", length(r)))
       }
-
+      
       ## Weird issue where visually does not intersect, but says intersects - likely
       ## due to curvature of each issues?
       # inter_df <- st_intersects(r[[i]] %>% st_bbox() %>% st_as_sfc(), 
@@ -73,10 +73,10 @@ gt_make_raster_from_polygon <- function(polygon,
       
       ## Issue doesn't occur with rgeos::gIntersects
       inter_df <- gIntersects(r[[i]] %>% st_bbox() %>% st_as_sfc() %>% as("Spatial"), 
-                                polygon %>% st_bbox() %>% st_as_sfc() %>% as("Spatial"))
+                              polygon %>% st_bbox() %>% st_as_sfc() %>% as("Spatial"))
       
       if(inter_df){
-        r[[i]] <- r[[i]] %>% crop(polygon) #%>% mask(polygon)
+        r[[i]] <- r[[i]] %>% crop(polygon) %>% mask(polygon)
       } else{
         r[[i]] <- NA
       }

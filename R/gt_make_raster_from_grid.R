@@ -52,7 +52,7 @@ gt_make_raster_from_grid <- function(grid_param_df,
       #r_list$fun       <- max
       r_list$tolerance <- 9999999
       
-      r <- do.call(raster::merge, r_list)
+      r <- do.call(raster::merge, r_list) # TODO: Causes decimal values???
       r[r[] %in% 0] <- NA
     } else{
       r <- r_list[[1]]
