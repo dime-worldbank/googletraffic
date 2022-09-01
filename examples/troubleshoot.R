@@ -97,7 +97,7 @@ r_list[[1]][]
 ## Check!
 leaflet() %>% 
   addTiles() %>%
-  addRasterImage(r, opacity = 0.8)
+  addRasterImage(r_us, opacity = 0.8)
 
 r1_adj <- resample(r1, r_temp, method = "ngb")
 r2_adj <- resample(r2, r_temp, method = "ngb")
