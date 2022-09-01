@@ -10,7 +10,7 @@ gt_make_raster(
   width,
   zoom,
   google_key,
-  webshot_delay,
+  webshot_delay = NULL,
   print_progress = T
 )
 }
