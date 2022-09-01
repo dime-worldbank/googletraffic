@@ -12,6 +12,7 @@ gt_make_raster_from_polygon(
   webshot_delay,
   google_key,
   reduce_hw = 10,
+  return_list_of_tiles = F,
   crop_to_polygon = T,
   print_progress = T
 )
