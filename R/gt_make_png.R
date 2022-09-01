@@ -39,13 +39,13 @@ gt_make_png <- function(location,
   
   #### Webshot; save png
   ## Make lat/lon
-  latitude = location[1]
-  longitude = location[2]
+  latitude  <- location[1]
+  longitude <- location[2]
   
   ## Convert .html to png
-  filename_root <- filename_html %>% str_replace_all(".html$", "")
+  filename_root <- filename_html %>% stringr::str_replace_all(".html$", "")
   filename_only <- basename(filename_root)
-  filename_dir <- filename_root %>% str_replace_all(paste0("/", filename_only), "")
+  filename_dir  <- filename_root %>% stringr::str_replace_all(paste0("/", filename_only), "")
   
   current_dir <- getwd()
   
@@ -55,17 +55,17 @@ gt_make_png <- function(location,
     cat(paste0("Pausing for ", webshot_delay, " seconds to allow traffic data to render"))
   }
   
-  webshot(paste0(filename_only,".html"),
-          file = paste0(filename_only,".png"),
-          vheight = height,
-          vwidth = width,
-          cliprect = "viewport",
-          delay = webshot_delay,
-          zoom = 1)
+  webshot::webshot(paste0(filename_only,".html"),
+                   file = paste0(filename_only,".png"),
+                   vheight = height,
+                   vwidth = width,
+                   cliprect = "viewport",
+                   delay = webshot_delay,
+                   zoom = 1)
   
   ## Read/Write png to file
-  img <- readPNG(file.path(paste0(filename_only,".png")))
-  writePNG(img, out_filename)
+  img <- png::readPNG(file.path(paste0(filename_only,".png")))
+  png::writePNG(img, out_filename)
   
   ## Delete html file
   unlink(filename_html)

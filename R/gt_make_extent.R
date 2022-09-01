@@ -71,10 +71,10 @@ gt_make_extent <- function(latitude,
   point_bottom <- corners[1]
   point_top    <- corners[3]
   
-  r_extent <- extent(point_left,
-                     point_right,
-                     point_bottom,
-                     point_top)
+  r_extent <- raster::extent(point_left,
+                             point_right,
+                             point_bottom,
+                             point_top)
   
   return(r_extent)
 }

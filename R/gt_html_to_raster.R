@@ -32,7 +32,8 @@ gt_html_to_raster <- function(filename,
   #### Convert .html to png
   filename_root <- filename %>% str_replace_all(".html$", "")
   filename_only <- basename(filename_root)
-  filename_dir <- filename_root %>% str_replace_all(paste0("/", filename_only), "")
+  filename_dir  <- filename_root %>% 
+    stringr::str_replace_all(paste0("/", filename_only), "")
   
   # webshot() exports into current directory, so need to set working directory
   # to directory where the html file is located. We grab the current directory
@@ -45,13 +46,13 @@ gt_html_to_raster <- function(filename,
     cat(paste0("Pausing for ", webshot_delay, " seconds to allow traffic data to render"))
   }
   
-  webshot(paste0(filename_only,".html"),
-          file = paste0(filename_only,".png"),
-          vheight = height,
-          vwidth = width,
-          cliprect = "viewport",
-          delay = webshot_delay,
-          zoom = 1)
+  webshot::webshot(paste0(filename_only,".html"),
+                   file = paste0(filename_only,".png"),
+                   vheight = height,
+                   vwidth = width,
+                   cliprect = "viewport",
+                   delay = webshot_delay,
+                   zoom = 1)
   
   #### Load as raster and image
   png_filename <- file.path(filename_dir, paste0(filename_only, ".png"))

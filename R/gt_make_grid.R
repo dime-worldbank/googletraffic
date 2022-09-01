@@ -20,15 +20,15 @@ gt_make_grid <- function(polygon,
   
   ## Polygon should be sf object
   if(class(polygon)[1] %in% "SpatialPolygonsDataFrame"){
-    polygon <- polygon %>% st_as_sf()
+    polygon <- polygon %>% sf::st_as_sf()
   }
   
   ## If polygon is more than one row, make one polygon
   if(nrow(polygon) > 1){
     polygon$id <- 1
     polygon <- polygon %>%
-      group_by(id) %>%
-      summarize(geometry = st_union(geometry))
+      dplyr::group_by(id) %>%
+      dplyr::summarize(geometry = st_union(geometry))
   }
   
   ## Reduce height/width
@@ -39,10 +39,10 @@ gt_make_grid <- function(polygon,
   
   ## Decimal degree distance of pixel
   # Use most extreme latitude location
-  most_extreme_lat_point <- st_coordinates(polygon) %>%
+  most_extreme_lat_point <- sf::st_coordinates(polygon) %>%
     as.data.frame() %>%
-    mutate(Y_abs = abs(Y)) %>%
-    arrange(-Y_abs) %>%
+    dplyr::mutate(Y_abs = abs(Y)) %>%
+    dplyr::arrange(-Y_abs) %>%
     head(1)
   
   most_extreme_lat_ext <- gt_make_extent(latitude = most_extreme_lat_point$Y,
@@ -60,22 +60,22 @@ gt_make_grid <- function(polygon,
   y_degree <- (most_extreme_lat_ext@ymax - most_extreme_lat_ext@ymin) / height
   
   ## Make raster and convert to polygon
-  poly_ext <- extent(polygon)
+  poly_ext <- raster::extent(polygon)
   
-  r <- raster(ext = poly_ext, res=c(width_use*x_degree,
-                                    height_use*y_degree))
+  r <- raster::raster(ext = poly_ext, res=c(width_use*x_degree,
+                                            height_use*y_degree))
   r <- raster::extend(r, c(1,1)) #Expand by one cell, to ensure covers all study area
   
-  p <- r %>% rasterToPolygons() %>% st_as_sf()
+  p <- r %>% raster::rasterToPolygons() %>% sf::st_as_sf()
   
   ## Only keep polygons that intersect with original polygon
-  p_inter_tf <- st_intersects(p, polygon, sparse=F) %>% as.vector()
+  p_inter_tf <- sf::st_intersects(p, polygon, sparse=F) %>% as.vector()
   p_inter <- p[p_inter_tf,]
   
   ## Grab points
   points_df <- p_inter %>% 
-    st_centroid() %>%
-    st_coordinates() %>%
+    sf::st_centroid() %>%
+    sf::st_coordinates() %>%
     as.data.frame() %>%
     dplyr::rename(longitude = X,
                   latitude = Y) %>%
@@ -93,12 +93,15 @@ gt_make_grid <- function(polygon,
                           param$width,
                           param$zoom)
     
-    ext %>% st_bbox() %>% st_as_sfc() %>% st_as_sf(crs = CRS("+init=epsg:4326"))
+    ext %>% 
+      sf::st_bbox() %>% 
+      sf::st_as_sfc() %>% 
+      sf::st_as_sf(crs = CRS("+init=epsg:4326"))
     #as(ext, "SpatialPolygons") %>% st_as_sf()
   }) %>%
-    bind_rows()
+    dplyr::bind_rows()
   
-  points_sf <- st_sf(points_df, geometry = geom$x)
+  points_sf <- sf::st_sf(points_df, geometry = geom$x)
   
   return(points_sf)
 }
