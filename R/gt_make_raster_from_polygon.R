@@ -52,14 +52,14 @@ gt_make_raster_from_polygon <- function(polygon,
   
   if(mask_to_polygon & !return_list_of_tiles){
     r <- r %>%
-      crop(polygon) %>%
-      mask(polygon)
+      raster::crop(polygon) %>%
+      raster::mask(polygon)
   }
   
   if(mask_to_polygon & return_list_of_tiles){
     
     if("SpatialPolygonsDataFrame" %in% class(polygon)){
-      polygon <- polygon %>% st_as_sf()
+      polygon <- polygon %>% sf::st_as_sf()
     }
     
     for(i in 1:length(r)){
@@ -68,20 +68,24 @@ gt_make_raster_from_polygon <- function(polygon,
       }
       
       ## Check intersection using planar geometry
-      sf_use_s2_default <- sf_use_s2()
+      sf_use_s2_default <- sf::sf_use_s2()
       
-      sf_use_s2(FALSE)
-      inter_df <- st_intersects(r[[i]] %>% st_bbox() %>% st_as_sfc(),
-                                polygon %>% st_bbox() %>% st_as_sfc(),
-                                sparse = F)[1]
-      sf_use_s2(sf_use_s2_default)
+      sf::sf_use_s2(FALSE)
+      inter_df <- sf::st_intersects(r[[i]] %>% sf::st_bbox() %>% sf::st_as_sfc(),
+                                    polygon %>% sf::st_bbox() %>% sf::st_as_sfc(),
+                                    sparse = F)[1]
+      sf::sf_use_s2(sf_use_s2_default)
       
       ## Could also use rgeos approach
       # inter_df <- gIntersects(r[[i]] %>% st_bbox() %>% st_as_sfc() %>% as("Spatial"), 
       #                         polygon %>% st_bbox() %>% st_as_sfc() %>% as("Spatial"))
       
       if(inter_df){
-        r[[i]] <- r[[i]] %>% crop(polygon) %>% mask(polygon)
+        
+        r[[i]] <- r[[i]] %>% 
+          raster::crop(polygon) %>% 
+          raster::mask(polygon)
+        
       } else{
         r[[i]] <- NA
       }

@@ -21,26 +21,31 @@ gt_load_png_as_traffic_raster <- function(filename,
                                           zoom){
   
   #### Load
-  r   <- raster(filename,1)
-  img <- readPNG(filename)
+  r   <- raster::raster(filename,1)
+  img <- png::readPNG(filename)
   
   #### Assign traffic colors 
   ## Image to hex
-  rimg <- as.raster(img) 
-  colors_df <- rimg %>% table() %>% as.data.frame() %>%
+  rimg <- raster::as.raster(img) 
+  
+  colors_df <- rimg %>% 
+    table() %>% 
+    as.data.frame() %>%
     dplyr::rename(hex = ".")
-  colors_df$hex <- colors_df$hex %>% as.character()
+  
+  colors_df$hex <- colors_df$hex %>% 
+    as.character()
   
   ## Assign traffic colors based on hsl
   hsl_df <- colors_df$hex %>% 
-    col2hsl() %>%
+    plotwidgets::col2hsl() %>%
     t() %>%
     as.data.frame() 
   
-  colors_df <- bind_cols(colors_df, hsl_df)
+  colors_df <- dplyr::bind_cols(colors_df, hsl_df)
   
   colors_df <- colors_df %>%
-    mutate(color = case_when(#((H == 0) & (S < 0.2)) ~ "background",
+    dplyr::mutate(color = case_when(#((H == 0) & (S < 0.2)) ~ "background",
       ((H == 0) & (S >= 0.28) & (S < 0.7) & (L >= 0.3) & (L <= 0.42)) ~ "dark-red",
       H > 0 & H <= 5 & L <= 0.65 ~ "red", # L <= 0.80
       H >= 20 & H <= 28 & L <= 0.80 ~ "orange", # L <= 0.85
@@ -70,19 +75,22 @@ gt_load_png_as_traffic_raster <- function(filename,
   
   # Project extent to 3857
   ext_3857 <- ext_4326 %>% 
-    st_bbox() %>% 
-    st_as_sfc() %>% 
-    `st_crs<-`(4326) %>% 
-    st_transform(3857) %>% 
-    st_bbox() %>% 
-    extent()
+    sf::st_bbox() %>% 
+    sf::st_as_sfc() 
   
-  extent(r) <- ext_3857
+  sf::st_crs(ext_3857) <- 4326
   
-  crs(r) <- CRS("+init=epsg:3857")
+  ext_3857 <- ext_3857 %>%
+    sf::st_transform(3857) %>% 
+    sf::st_bbox() %>% 
+    raster::extent()
+  
+  raster::extent(r) <- ext_3857
+  
+  raster::crs(r) <- sp::CRS("+init=epsg:3857")
   
   ## Convert to EPSG:4326
-  r <- projectRaster(r, crs = CRS("+init=epsg:4326"), method = "ngb")
+  r <- raster::projectRaster(r, crs = CRS("+init=epsg:4326"), method = "ngb")
   
   return(r)
 }
