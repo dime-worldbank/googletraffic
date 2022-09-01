@@ -11,14 +11,14 @@ gt_make_extent(latitude, longitude, height, width, zoom)
 
 \item{longitude}{Longitude}
 
-\item{height}{Height}
+\item{height}{Height (in pixels; pixel length depends on zoom)}
 
-\item{width}{Width}
+\item{width}{Width (in pixels; pixel length depends on zoom)}
 
 \item{zoom}{Zoom level}
 }
 \value{
-Returns an extent object in WGS84
+Returns an extent object in WGS84 (EPSG:4326)
 }
 \description{
 Based on the location, height, width, and zoom, determines the spatial extent of the Google traffic tile

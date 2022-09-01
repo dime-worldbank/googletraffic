@@ -19,13 +19,13 @@ gt_html_to_raster(
 
 \item{location}{Vector of latitude and longitude}
 
-\item{height}{Height}
+\item{height}{Height (in pixels; pixel length depends on zoom)}
 
-\item{width}{Width}
+\item{width}{Width (in pixels; pixel length depends on zoom)}
 
 \item{zoom}{Zoom level}
 
-\item{webshot_delay}{How long to wait for .html file to load. Larger .html files will require more time to fully load. If \code{NULL}, the following delay time (in seconds) is used: \code{delay = max(height,width)/200}.}
+\item{webshot_delay}{How long to wait for .html file to load. Larger .html files (large height/widths) will require more time to fully load. If \code{NULL}, the following delay time (in seconds) is used: \code{delay = max(height,width)/200}.}
 
 \item{print_progress}{Whether to print function progress}
 }

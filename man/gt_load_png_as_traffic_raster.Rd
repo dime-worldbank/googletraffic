@@ -20,9 +20,9 @@ gt_load_png_as_traffic_raster(
 
 \item{longitude}{Longitude used to create png file using \code{gt_make_png()}}
 
-\item{height}{Height used to create png file using \code{gt_make_png()}}
+\item{height}{Height (in pixels; pixel length depends on zoom) used to create png file using \code{gt_make_png()}}
 
-\item{width}{Width used to create png file using \code{gt_make_png()}}
+\item{width}{Width (in pixels; pixel length depends on zoom) used to create png file using \code{gt_make_png()}}
 
 \item{zoom}{Zoom used to create png file using \code{gt_make_png()}}
 }

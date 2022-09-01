@@ -13,16 +13,16 @@ gt_make_raster_from_polygon(
   google_key,
   reduce_hw = 10,
   return_list_of_tiles = F,
-  crop_to_polygon = T,
+  mask_to_polygon = T,
   print_progress = T
 )
 }
 \arguments{
 \item{polygon}{Polygon (\code{sf} object or \code{SpatialPolygonsDataframe}) in WGS84 CRS}
 
-\item{height}{Height}
+\item{height}{Height (in pixels; pixel length depends on zoom)}
 
-\item{width}{Width}
+\item{width}{Width (in pixels; pixel length depends on zoom)}
 
 \item{zoom}{Zoom level; integer from 0 to 20. For more information, see \href{https://wiki.openstreetmap.org/wiki/Zoom_levels}{here}}
 
@@ -30,9 +30,13 @@ gt_make_raster_from_polygon(
 
 \item{google_key}{Google API key}
 
-\item{reduce_hw}{Number of pixels to reduce height/width by. Doing so creates some overlap between tiles to ensure there is not blank space between tiles (default = 10 pixels).}
+\item{reduce_hw}{Number of pixels to reduce height/width by. Doing so creates some overlap between tiles to ensure there is not blank space between tiles (default: 10).}
 
-\item{print_progress}{Show progress for which tile has been processed.}
+\item{return_list_of_tiles}{Whether to return a list of raster tiles instead of mosaicing together (default: \code{FALSE}).}
+
+\item{mask_to_polygon}{Whether to mask raster to \code{polygon} (default: \code{TRUE}).}
+
+\item{print_progress}{Show progress for which tile has been processed (default: \code{TRUE}).}
 }
 \value{
 Returns a georeferenced raster file. The file can contain the following values: 1 = no traffic; 2 = light traffic; 3 = moderate traffic; 4 = heavy traffic.
