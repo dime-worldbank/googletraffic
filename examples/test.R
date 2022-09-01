@@ -19,9 +19,26 @@ r <- gt_make_raster(location   = c(40.712778, -74.006111),
 us_sp <- raster::getData('GADM', country='USA', level=2)
 ny_sp <- us_sp[us_sp$NAME_2 %in% "New York",]
 
-## Make raster
 r <- gt_make_raster_from_polygon(polygon    = ny_sp,
                                  height     = 2000,
                                  width      = 2000,
-                                 zoom       = 16,
+                                 zoom       = 10,
                                  google_key = google_key)
+
+r <- gt_make_raster_from_polygon(polygon    = ny_sp,
+                                 height     = 2000,
+                                 width      = 2000,
+                                 zoom       = 10,
+                                 google_key = google_key,
+                                 return_list_of_tiles = T)
+
+#### From Grid
+grid_df <- gt_make_grid(polygon = ny_sp,
+                        height  = 500,
+                        width   = 500,
+                        zoom    = 16)
+
+grid_clean_df <- grid_df[1:2,]
+
+r <- gt_make_raster_from_grid(grid_param_df = grid_clean_df,
+                              google_key    = google_key)

@@ -7,7 +7,9 @@
 #' @param webshot_delay Webshot Delay
 #' 
 #' @return webshot_delay (in seconds).
-gt_estimate_webshot_delay <- function(height, width, webshot_delay){
+gt_estimate_webshot_delay <- function(height, 
+                                      width, 
+                                      webshot_delay){
   
   if(is.null(webshot_delay)){
     hw_max <- max(height, width)
