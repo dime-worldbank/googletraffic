@@ -81,7 +81,7 @@ The `gt_make_raster()` function produces a raster, using a centroid location and
 
 ```r  
 ## Make raster
-r <- gt_make_raster(location   = c(-1.286389, 36.817222),
+r <- gt_make_raster(location   = c(40.712778, -74.006111),
                     height     = 1000,
                     width      = 1000,
                     zoom       = 16,
@@ -103,7 +103,7 @@ leaflet() %>%
 By using a smaller `zoom`, we can capture a larger area.
 ```r  
 ## Make raster
-r <- gt_make_raster(location = c(38.744324, -85.511534),
+r <- gt_make_raster(location   = c(41.384900, -78.891302),
                     height     = 1000,
                     width      = 1000,
                     zoom       = 7,
