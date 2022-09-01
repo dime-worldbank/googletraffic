@@ -62,13 +62,27 @@ gt_load_png_as_traffic_raster <- function(filename,
   r[rimg %in% "dark-red"] <- 4
   
   ## Spatially define raster
-  extent(r) <- gt_make_extent(latitude,
-                              longitude,
-                              height,
-                              width,
-                              zoom)
+  ext_4326 <- gt_make_extent(latitude,
+                             longitude,
+                             height,
+                             width,
+                             zoom)
   
-  crs(r) <- CRS("+init=epsg:4326")
+  # Project extent to 3857
+  ext_3857 <- ext_4326 %>% 
+    st_bbox() %>% 
+    st_as_sfc() %>% 
+    `st_crs<-`(4326) %>% 
+    st_transform(3857) %>% 
+    st_bbox() %>% 
+    extent()
+  
+  extent(r) <- ext_3857
+  
+  crs(r) <- CRS("+init=epsg:3857")
+  
+  ## Convert back to EPSG:4326
+  r <- projectRaster(r, crs = CRS("+init=epsg:4326"))
   
   return(r)
 }

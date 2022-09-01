@@ -9,12 +9,14 @@
 #' @param webshot_delay How long to wait for google traffic layer to render. Larger height/widths require longer delay times.
 #' @param google_key Google API key
 #' @param print_progress Whether to print function progress
+#' @param return_list_of_tiles Instead of merging traffic tiles together into one large tile, return a list of tiles
 #'
 #' @return Returns a georeferenced raster file. The file can contain the following values: 1 = no traffic; 2 = light traffic; 3 = moderate traffic; 4 = heavy traffic.
 #' @export
 gt_make_raster_from_grid <- function(grid_param_df,
                                      webshot_delay,
                                      google_key,
+                                     return_list_of_tiles = F,
                                      print_progress = T){
   
   ## Set webshot_delay if null
@@ -43,13 +45,21 @@ gt_make_raster_from_grid <- function(grid_param_df,
     return(r_i)
   })
   
-  ## Mosaic rasters together
-  names(r_list)    <- NULL
-  #r_list$fun       <- max
-  r_list$tolerance <- 9999999
-  
-  r <- do.call(raster::merge, r_list)
-  r[r[] %in% 0] <- NA
+  if(!return_list_of_tiles){  
+    if(length(r_list) > 1){
+      ## Mosaic rasters together
+      names(r_list)    <- NULL
+      #r_list$fun       <- max
+      r_list$tolerance <- 9999999
+      
+      r <- do.call(raster::merge, r_list)
+      r[r[] %in% 0] <- NA
+    } else{
+      r <- r_list[[1]]
+    }
+  } else{
+    r <- r_list
+  }
   
   return(r)
 }
