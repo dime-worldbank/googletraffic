@@ -1,14 +1,13 @@
 #' @import dplyr
 #' @import googleway
 #' @import htmlwidgets
-#' @import webshot
-#' @import raster
-#' @import png
 #' @import plotwidgets
-#' @import httr
-#' @import sp
+#' @import png
+#' @import raster
 #' @import sf
+#' @import sp
 #' @import stringr
+#' @import webshot
 
 if(F){
   roxygen2::roxygenise("~/Documents/Github/googletraffic")
