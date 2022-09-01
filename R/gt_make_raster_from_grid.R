@@ -6,16 +6,16 @@
 #' indicating traffic volume (no traffic, light, moderate, and heavy).
 #' 
 #' @param grid_param_df Grid parameter dataframe produced from \link[gt_make_grid()]{gt_make_grid}
-#' @param webshot_delay How long to wait for google traffic layer to render. Larger height/widths require longer delay times.
 #' @param google_key Google API key
+#' @param webshot_delay How long to wait for google traffic layer to render. Larger height/widths require longer delay times.
 #' @param print_progress Whether to print function progress
 #' @param return_list_of_tiles Instead of merging traffic tiles together into one large tile, return a list of tiles
 #'
 #' @return Returns a georeferenced raster file. The file can contain the following values: 1 = no traffic; 2 = light traffic; 3 = moderate traffic; 4 = heavy traffic.
 #' @export
 gt_make_raster_from_grid <- function(grid_param_df,
-                                     webshot_delay,
                                      google_key,
+                                     webshot_delay = NULL,
                                      return_list_of_tiles = F,
                                      print_progress = T){
   

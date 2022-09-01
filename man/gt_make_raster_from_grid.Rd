@@ -6,8 +6,8 @@
 \usage{
 gt_make_raster_from_grid(
   grid_param_df,
-  webshot_delay,
   google_key,
+  webshot_delay = NULL,
   return_list_of_tiles = F,
   print_progress = T
 )
@@ -15,9 +15,9 @@ gt_make_raster_from_grid(
 \arguments{
 \item{grid_param_df}{Grid parameter dataframe produced from \link[gt_make_grid()]{gt_make_grid}}
 
-\item{webshot_delay}{How long to wait for google traffic layer to render. Larger height/widths require longer delay times.}
-
 \item{google_key}{Google API key}
+
+\item{webshot_delay}{How long to wait for google traffic layer to render. Larger height/widths require longer delay times.}
 
 \item{return_list_of_tiles}{Instead of merging traffic tiles together into one large tile, return a list of tiles}
 
