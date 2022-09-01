@@ -17,9 +17,9 @@ gt_make_raster(
 \arguments{
 \item{location}{Vector of latitude and longitude}
 
-\item{height}{Height}
+\item{height}{Height (in pixels; pixel length depends on zoom)}
 
-\item{width}{Width}
+\item{width}{Width (in pixels; pixel length depends on zoom)}
 
 \item{zoom}{Zoom level; integer from 0 to 20. For more information, see \href{https://wiki.openstreetmap.org/wiki/Zoom_levels}{here}}
 

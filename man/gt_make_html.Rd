@@ -4,30 +4,20 @@
 \alias{gt_make_html}
 \title{Make traffic html from Google}
 \usage{
-gt_make_html(
-  location,
-  height,
-  width,
-  zoom,
-  filename,
-  google_key,
-  save_params = F
-)
+gt_make_html(location, height, width, zoom, filename, google_key)
 }
 \arguments{
 \item{location}{Vector of latitude and longitude}
 
-\item{height}{Height}
+\item{height}{Height (in pixels; pixel length depends on zoom)}
 
-\item{width}{Width}
+\item{width}{Width (in pixels; pixel length depends on zoom)}
 
 \item{zoom}{Zoom; integer from 0 to 20. For more information, see \href{https://wiki.openstreetmap.org/wiki/Zoom_levels}{here}}
 
 \item{filename}{Path and filename to save file}
 
 \item{google_key}{Google API key}
-
-\item{save_params}{Save an .Rds file that contains the parameters (location, height, width and zoom). This file can then be used by the \code{gt_html_to_raster()} function.}
 }
 \value{
 Returns an html file of Google traffic

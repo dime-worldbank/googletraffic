@@ -8,6 +8,7 @@
 #' @import httr
 #' @import sp
 #' @import sf
+#' @import stringr
 
 if(F){
   roxygen2::roxygenise("~/Documents/Github/googletraffic")
