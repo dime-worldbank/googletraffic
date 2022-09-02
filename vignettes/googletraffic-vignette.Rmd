@@ -170,7 +170,7 @@ To support these workflows, the package provides the:
 * __`gt_load_png_as_traffic_raster()`__ function which converts a PNG file into a spatially-referenced traffic raster
 
 The below example illutrates the process.
-```{r png_1, include=TRUE, warning=FALSE, message=FALSE, eval=F}
+```{r png_1, include=TRUE, warning=FALSE, message=FALSE, eval=FALSE}
 #### Make png
 # The function does not output anything in R; it saves a png file, specified 
 # using the "out_filename" parameter
@@ -205,7 +205,7 @@ grid_df <- gt_make_grid(polygon = ny_sp,
 print(grid_df)
 ```
 
-```{r png_3, include=TRUE, warning=FALSE, message=FALSE, eval=F}
+```{r png_3, include=TRUE, warning=FALSE, message=FALSE, eval=FALSE}
 #### Make PNGs from grid
 # Exports PNGs
 for(i in 1:nrow(grid_df)){

@@ -88,11 +88,11 @@ gt_load_png_as_traffic_raster <- function(filename,
   r[rimg %in% "dark-red"] <- 4
   
   ## Spatially define raster
-  ext_4326 <- gt_make_extent(latitude,
-                             longitude,
-                             height,
-                             width,
-                             zoom)
+  ext_4326 <- gt_make_extent(latitude = latitude,
+                             longitude = longitude,
+                             height = height,
+                             width = width,
+                             zoom = zoom)
   
   # Project extent to 3857
   ext_3857 <- ext_4326 %>% 
