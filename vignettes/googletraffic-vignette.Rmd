@@ -166,6 +166,7 @@ leaflet(width = "100%") %>%
 To make a google traffic raster, the functions first makes a temporary png file then converts the png file to a raster---where only the raster is outputted. Some workflows may require separating the processes. For example, if querying Google traffic data on a regular basis on a server, a user with a small server may want to minimize the processes done on the server. Here, a user could create and save PNG files on a server, then download the PNG files and convert the PNGs to a raster locally.
 
 To support these workflows, the package provides the:
+
 * __`gt_make_png()`__ function which creates a PNG file with traffic data
 * __`gt_load_png_as_traffic_raster()`__ function which converts a PNG file into a spatially-referenced traffic raster
 

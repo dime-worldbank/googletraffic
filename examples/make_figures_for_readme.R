@@ -1,6 +1,6 @@
 # Examples used for readme
 
-if(F){
+if(T){
   
   # Setup ------------------------------------------------------------------------
   library(googletraffic)
@@ -30,14 +30,14 @@ if(F){
                   Account == "ramarty@email.wm.edu") %>%
     pull(Key)
   
-  setwd("~/Documents/Github/googletraffic/images")
+  readme_images <- "~/Documents/Github/googletraffic/images"
+  homepage_images <- "~/Documents/Github/googletraffic/man/figures"
   
   # Point example 1 -----------------------------------------------------------------
   r <- gt_make_raster(location = c(40.712778, -74.006111),
                       height = 1000,
                       width = 1000,
                       zoom = 16,
-                      webshot_delay = 5,
                       google_key = google_key)
   
   pal <- colorNumeric(c("green", "orange", "red", "#660000"), values(r),
@@ -47,14 +47,14 @@ if(F){
     addProviderTiles("Esri.WorldGrayCanvas") %>%
     addRasterImage(r, colors = pal, opacity = 1,project=F)
   
-  mapshot(m, file = "nyc_small.jpg")
+  mapshot(m, file = file.path(readme_images, "nyc_small.jpg"))
+  mapshot(m, file = file.path(homepage_images, "nyc_small.jpg"))
   
   # Point example 2 -----------------------------------------------------------------
   r <- gt_make_raster(location    = c(41.384900, -78.891302),
                       height        = 1000,
                       width         = 1000,
                       zoom          = 7,
-                      webshot_delay = 5,
                       google_key    = google_key)
   
   pal <- colorNumeric(c("green", "orange", "red", "#660000"), values(r),
@@ -64,7 +64,8 @@ if(F){
     addProviderTiles("Esri.WorldGrayCanvas") %>%
     addRasterImage(r, colors = pal, opacity = 1,project=F)
   
-  mapshot(m, file = "usa.jpg")
+  mapshot(m, file = file.path(readme_images, "usa.jpg"))
+  mapshot(m, file = file.path(homepage_images, "usa.jpg"))
   
   # Polygon example -----------------------------------------------------------------
   us_sp <- getData('GADM', country='USA', level=2)
@@ -74,7 +75,6 @@ if(F){
                                    height        = 2000,
                                    width         = 2000,
                                    zoom          = 16,
-                                   webshot_delay = 20,
                                    google_key    = google_key)
   
   r_df <- rasterToPoints(r, spatial = TRUE) %>% as.data.frame()
@@ -90,8 +90,13 @@ if(F){
     theme_void() +
     theme(legend.key.size = unit(1, 'cm'),
           legend.title = element_text(size=20),
-          legend.text = element_text(size=20))
-  ggsave(p, filename = "nyc_large.jpg",
+          legend.text = element_text(size=20),
+          plot.background = element_rect(fill = "white", color="white"))
+  ggsave(p, filename = file.path(readme_images, "nyc_large.jpg"),
+         height = 20*0.8,
+         width = 12*0.8)
+  
+  ggsave(p, filename = file.path(homepage_images, "nyc_large.jpg"),
          height = 20*0.8,
          width = 12*0.8)
   
@@ -120,7 +125,8 @@ if(F){
     addTiles() %>%
     addPolygons(data =grid_df)
   
-  mapshot(m, file = "nyc_grid.jpg")
+  mapshot(m, file = file.path(readme_images, "nyc_grid.jpg"))
+  mapshot(m, file = file.path(homepage_images, "nyc_grid.jpg"))
   
   ## Remove part of grid
   grid_clean_df <- grid_df[-12,]
@@ -129,11 +135,11 @@ if(F){
     addTiles() %>%
     addPolygons(data =grid_clean_df)
   
-  mapshot(m, file = "nyc_grid_clean.jpg")
+  mapshot(m, file = file.path(readme_images, "nyc_grid_clean.jpg"))
+  mapshot(m, file = file.path(homepage_images, "nyc_grid_clean.jpg"))
   
   ## Make raster
   r <- gt_make_raster_from_grid(grid_param_df = grid_clean_df,
-                                webshot_delay = 15,
                                 google_key = google_key)
   
   r_df <- rasterToPoints(r, spatial = TRUE) %>% as.data.frame()
@@ -149,8 +155,13 @@ if(F){
     theme_void() +
     theme(legend.key.size = unit(1, 'cm'),
           legend.title = element_text(size=20),
-          legend.text = element_text(size=20))
-  ggsave(p, filename = "nyc_large_from_grid.jpg",
+          legend.text = element_text(size=20),
+          plot.background = element_rect(fill = "white", color="white"))
+  ggsave(p, filename = file.path(readme_images, "nyc_large_from_grid.jpg"),
+         height = 20*0.8,
+         width = 12*0.8)
+  
+  ggsave(p, filename = file.path(homepage_images, "nyc_large_from_grid.jpg"),
          height = 20*0.8,
          width = 12*0.8)
   
@@ -174,7 +185,6 @@ if(F){
                       height = 700,
                       width = 700,
                       zoom = 16,
-                      webshot_delay = 5,
                       google_key = google_key)
   
   r_df <- rasterToPoints(r, spatial = TRUE) %>% as.data.frame()
@@ -187,8 +197,10 @@ if(F){
     labs(fill = "Traffic\nLevel") +
     scale_fill_manual(values = c("green2", "orange", "red", "#660000")) +
     coord_quickmap() + 
-    theme_void()
-  ggsave(p, filename = "top_example.jpg")
+    theme_void() +
+    theme(plot.background = element_rect(fill = "white", color="white"))
+  ggsave(p, filename = file.path(readme_images, "top_example.jpg"), height = 5, width = 5)
+  ggsave(p, filename = file.path(homepage_images, "top_example.jpg"), height = 5, width = 5)
   
   # jpeg("top_example.jpg",
   #      width = 480*1.5,
