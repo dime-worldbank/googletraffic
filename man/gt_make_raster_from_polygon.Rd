@@ -56,7 +56,7 @@ r <- gt_make_raster_from_polygon(polygon    = ny_sp,
                                  height     = 2000,
                                  width      = 2000,
                                  zoom       = 16,
-                                 google_key = google_key)
+                                 google_key = "GOOGLE-KEY-HERE")
 } 
 
 }
