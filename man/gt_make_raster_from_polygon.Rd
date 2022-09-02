@@ -28,7 +28,7 @@ gt_make_raster_from_polygon(
 
 \item{google_key}{Google API key}
 
-\item{webshot_delay}{How long to wait for google traffic layer to render. Larger height/widths require longer delay times.}
+\item{webshot_delay}{How long to wait for google traffic layer to render. Larger height/widths require longer delay times. If \code{NULL}, the following delay time (in seconds) is used: \code{delay = max(height,width)/200}.}
 
 \item{reduce_hw}{Number of pixels to reduce height/width by. Doing so creates some overlap between tiles to ensure there is not blank space between tiles (default: 10).}
 

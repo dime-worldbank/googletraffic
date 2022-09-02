@@ -17,7 +17,7 @@ gt_make_raster_from_grid(
 
 \item{google_key}{Google API key}
 
-\item{webshot_delay}{How long to wait for google traffic layer to render. Larger height/widths require longer delay times.}
+\item{webshot_delay}{How long to wait for google traffic layer to render. Larger height/widths require longer delay times. If \code{NULL}, the following delay time (in seconds) is used: \code{delay = max(height,width)/200}.}
 
 \item{return_list_of_tiles}{Instead of merging traffic tiles together into one large tile, return a list of tiles}
 

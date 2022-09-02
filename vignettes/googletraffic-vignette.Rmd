@@ -2,11 +2,17 @@
 title: "Google Traffic"
 author: "Rob Marty"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+#output: rmarkdown::html_vignette
+output:
+  html_document:
+    toc: true
+    toc_depth: 3
+    toc_float: true
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+
 ---
 
 ```{r init, include = FALSE}
@@ -18,11 +24,13 @@ knitr::opts_chunk$set(
 
 ## Setup
 
-```{r setup, include = TRUE, warning=FALSE, message=FALSE}
+First, we load packages, set the Google API key, and define a palette used for visualizing traffic data in leaflet.
+
+```{r setup, include=TRUE, warning=FALSE, message=FALSE}
 ## Load Google Traffic package
 library(googletraffic)
 
-## Load packages for visualizing data
+## Load packages for working with and visualizing data
 library(leaflet)
 library(leaflet.extras)
 library(leaflet.providers)
@@ -40,7 +48,7 @@ pal <- colorNumeric(c("green", "orange", "red", "#660000"),
                     na.color = "transparent")
 ```
 
-```{r loadkey, include = FALSE}
+```{r loadkey, include=FALSE}
 api_keys_df <- read_csv("~/Dropbox/World Bank/Webscraping/Files for Server/api_keys.csv")
 
 google_key <- api_keys_df %>%
@@ -51,7 +59,9 @@ google_key <- api_keys_df %>%
 
 ## Raster Around Point
 
-```{r point_small, include = TRUE, warning=FALSE, message=FALSE}
+The `gt_make_raster()` function produces a raster, using a centroid location and a height/width around the centroid to specify the location to query traffic information. The below example queries traffic for lower Manhattan, NYC.
+
+```{r point_small, include=TRUE, warning=FALSE, message=FALSE, eval=T}
 ## Make raster
 r <- gt_make_raster(location   = c(40.712778, -74.006111),
                     height     = 1000,
@@ -65,7 +75,9 @@ leaflet(width = "100%") %>%
   addRasterImage(r, colors = pal, opacity = 1)
 ```
 
-```{r point_large, include = TRUE, warning=FALSE, message=FALSE}
+By using a smaller `zoom`, we can capture a larger area; however, the pixels are more coarse.
+
+```{r point_large, include=TRUE, warning=FALSE, message=FALSE, eval=T}
 ## Make raster
 r <- gt_make_raster(location   = c(41.384900, -78.891302),
                     height     = 1000,
@@ -78,5 +90,70 @@ leaflet(width = "100%") %>%
   addProviderTiles("Esri.WorldGrayCanvas") %>%
   addRasterImage(r, colors = pal, opacity = 1)
 ```
+
+## Raster Around Polygon
+
+The above example showed querying traffic information for lower Manhattan. Here, we show querying traffic information for all of Manhattan while still using a relatively high zoom level (that allows capturing traffic on smaller streets). The `gt_make_raster_from_polygon()` accepts a polygon as an input; if needed, multiple API queries are made to query traffic for the full polygon. We still specify the `height` and `width`, which determines the height and width used for a single  API query. Large `height` and `width` values will result in fewer Google queries, while smaller `height` and `width` values will require more queries to cover the same spatial area; traffic data will fail to render if too large of `height` and `width` values are set.
+
+```{r polygon, include=TRUE, warning=FALSE, message=FALSE, eval=T}
+
+## Grab polygon of Manhattan
+us_sp <- getData('GADM', country='USA', level=2)
+ny_sp <- us_sp[us_sp$NAME_2 %in% "New York",]
+
+## Make raster
+r <- gt_make_raster_from_polygon(polygon    = ny_sp,
+                                 height     = 2000,
+                                 width      = 2000,
+                                 zoom       = 15,
+                                 google_key = google_key)
+
+## Map raster
+leaflet(width = "100%") %>%
+  addProviderTiles("Esri.WorldGrayCanvas") %>%
+  addRasterImage(r, colors = pal, opacity = 1)
+```
+
+## Raster Using Grid
+
+`gt_make_raster_from_polygon()` creates a grid that covers a polygon, creates a traffic raster for each grid, and merges the rasters together. Some may prefer to first create and see the grid, then create a traffic raster using this grid. For example, one could (1) create a grid that covers a polygon then (2) remove certain grid tiles that cover areas that may not be of interest. The `gt_make_grid()` and `gt_make_raster_from_grid()` functions facilitate this process; `gt_make_grid()` creates a grid, then `gt_make_raster_from_grid()` uses a grid as an input to create a traffic raster.
+
+First, we create a grid using `gt_make_grid()`.
+
+```{r grid_1, include=TRUE, warning=FALSE, message=FALSE, eval=T}
+grid_df <- gt_make_grid(polygon = ny_sp,
+                        height  = 2000,
+                        width   = 2000,
+                        zoom    = 15)
+
+leaflet(width = "100%") %>%
+  addTiles() %>%
+  addPolygons(data = grid_df, popup = ~as.character(id))
+```
+
+We notice that the tile in the bottom left corner just covers water and some land outside of Manhattan. To reduce the number of API queries we need to make, we can remove this tile.
+
+```{r grid_2, include=TRUE, warning=FALSE, message=FALSE, eval=T}
+grid_clean_df <- grid_df[-5,]
+
+leaflet(width = "100%") %>%
+  addTiles() %>%
+  addPolygons(data = grid_clean_df)
+```
+
+Second, we use the grid to make a traffic raster using `gt_make_raster_from_grid()`.
+
+```{r grid_3, include=TRUE, warning=FALSE, message=FALSE, eval=T}
+## Make raster
+r <- gt_make_raster_from_grid(grid_param_df = grid_clean_df,
+                              google_key    = google_key)
+
+## Map raster
+leaflet(width = "100%") %>%
+  addProviderTiles("Esri.WorldGrayCanvas") %>%
+  addRasterImage(r, colors = pal, opacity = 1)
+```
+
+
 
 

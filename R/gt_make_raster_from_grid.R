@@ -7,7 +7,7 @@
 #' 
 #' @param grid_param_df Grid parameter dataframe produced from \link[gt_make_grid()]{gt_make_grid}
 #' @param google_key Google API key
-#' @param webshot_delay How long to wait for google traffic layer to render. Larger height/widths require longer delay times.
+#' @param webshot_delay How long to wait for google traffic layer to render. Larger height/widths require longer delay times. If `NULL`, the following delay time (in seconds) is used: `delay = max(height,width)/200`.
 #' @param print_progress Whether to print function progress
 #' @param return_list_of_tiles Instead of merging traffic tiles together into one large tile, return a list of tiles
 #'

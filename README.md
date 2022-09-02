@@ -100,7 +100,7 @@ leaflet() %>%
 <img src="images/nyc_small.jpg" alt="Example" width="500"/>
 </p>
 
-By using a smaller `zoom`, we can capture a larger area.
+By using a smaller `zoom`, we can capture a larger area; however, the pixels are more coarse.
 ```r  
 ## Make raster
 r <- gt_make_raster(location   = c(41.384900, -78.891302),

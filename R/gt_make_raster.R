@@ -25,7 +25,7 @@ if(F){
 #' @param width Width (in pixels; pixel length depends on zoom)
 #' @param zoom Zoom level; integer from 0 to 20. For more information, see [here](https://wiki.openstreetmap.org/wiki/Zoom_levels)
 #' @param google_key Google API key
-#' @param webshot_delay How long to wait for google traffic layer to render. Larger height/widths require longer delay times.
+#' @param webshot_delay How long to wait for google traffic layer to render. Larger height/widths require longer delay times. If `NULL`, the following delay time (in seconds) is used: `delay = max(height,width)/200`.
 #' @param print_progress Whether to print function progress
 #'
 #' @return Returns a georeferenced raster file. The file can contain the following values: 1 = no traffic; 2 = light traffic; 3 = moderate traffic; 4 = heavy traffic.
