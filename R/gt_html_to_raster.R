@@ -13,7 +13,6 @@
 #' @param print_progress Whether to print function progress
 #'
 #' @return Returns a georeferenced raster file. The file can contain the following values: 1 = no traffic; 2 = light traffic; 3 = moderate traffic; 4 = heavy traffic.
-#' @export
 gt_html_to_raster <- function(filename,
                               location,
                               height,
