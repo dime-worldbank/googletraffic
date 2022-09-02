@@ -13,7 +13,6 @@
 #' @param google_key Google API key
 #' 
 #' @return Returns an html file of Google traffic
-#' @export
 gt_make_html <- function(location,
                          height,
                          width,

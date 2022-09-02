@@ -7,20 +7,31 @@
 #' @param height Height (in pixels; pixel length depends on zoom)
 #' @param width Width (in pixels; pixel length depends on zoom)
 #' @param zoom Zoom level; integer from 0 to 20. For more information, see [here](https://wiki.openstreetmap.org/wiki/Zoom_levels)
-#' @param webshot_delay How long to wait for google traffic layer to render. Larger height/widths require longer delay times. If `NULL`, the following delay time (in seconds) is used: `delay = max(height,width)/200`. 
-#' @param google_key Google API key
 #' @param out_filename Filename/path of png file to make
+#' @param google_key Google API key
+#' @param webshot_delay How long to wait for google traffic layer to render. Larger height/widths require longer delay times. If `NULL`, the following delay time (in seconds) is used: `delay = max(height,width)/200`. 
 #' @param print_progress Whether to print function progress
 #'
 #' @return Returns a georeferenced raster file. The file can contain the following values: 1 = no traffic; 2 = light traffic; 3 = moderate traffic; 4 = heavy traffic.
+#'
+#' @examples
+#' \dontrun{
+#' gt_make_png(location     = c(40.712778, -74.006111),
+#'             height       = 1000,
+#'             width        = 1000,
+#'             zoom         = 16,
+#'             out_filename = "google_traffic.png",
+#'             google_key   = "GOOGLE-KEY-HERE")
+#'}
+#'
 #' @export
 gt_make_png <- function(location,
                         height,
                         width,
                         zoom,
-                        webshot_delay,
-                        google_key,
                         out_filename,
+                        google_key,
+                        webshot_delay = NULL,
                         print_progress = T){
   
   ## Set webshot_delay if null

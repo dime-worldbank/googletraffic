@@ -29,6 +29,16 @@ if(F){
 #' @param print_progress Whether to print function progress
 #'
 #' @return Returns a georeferenced raster file. The file can contain the following values: 1 = no traffic; 2 = light traffic; 3 = moderate traffic; 4 = heavy traffic.
+#' 
+#' @examples
+#' \dontrun{
+#' r <- gt_make_raster(location   = c(40.712778, -74.006111),
+#'                     height     = 1000,
+#'                     width      = 1000,
+#'                     zoom       = 16,
+#'                     google_key = "GOOGLE-KEY-HERE")
+#'}
+#' 
 #' @export
 gt_make_raster <- function(location,
                            height,

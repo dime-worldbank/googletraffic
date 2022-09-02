@@ -57,6 +57,13 @@ google_key <- api_keys_df %>%
   pull(Key)
 ```
 
+## Key parameters <a name="key-parameters"></a>
+
+The following are key parameters used when querying Google Traffic data.
+
+* __zoom:__ The [zoom level](https://wiki.openstreetmap.org/wiki/Zoom_levels) defines the resolution of the traffic image. Values can range from 0 to 20. At the equator, with a zoom level 10, each pixel will be about 150 meters; with a zoom level 20, each pixel will be about 0.15 meters. Consequently, smaller zoom levels can be used if only larger roads are of interest (e.g., highways), while larger zoom levels will be needed for capturing smaller roads.
+* __height/width:__ The `height` and `width` parameters define the height and width of the raster in terms of pixels. The kilometer height/width of pixels depends primarily on the `zoom` level (larger `zoom` levels correspond to the `height` and `width` having a smaller kilometer distance). Google traffic data takes time to render on a map, and larger `height` and `width` values require more time needed for data to render. The functions automatically scale the delay time depending on the `height` and `width` values set, but the delay time can also be manually set using the `webshot_delay` parameter. Note that traffic data may fail to render for very large `height` and `width` values, no matter the `webshot_delay` set.
+
 ## Raster Around Point
 
 The `gt_make_raster()` function produces a raster, using a centroid location and a height/width around the centroid to specify the location to query traffic information. The below example queries traffic for lower Manhattan, NYC.
@@ -93,7 +100,7 @@ leaflet(width = "100%") %>%
 
 ## Raster Around Polygon
 
-The above example showed querying traffic information for lower Manhattan. Here, we show querying traffic information for all of Manhattan while still using a relatively high zoom level (that allows capturing traffic on smaller streets). The `gt_make_raster_from_polygon()` accepts a polygon as an input; if needed, multiple API queries are made to query traffic for the full polygon. We still specify the `height` and `width`, which determines the height and width used for a single  API query. Large `height` and `width` values will result in fewer Google queries, while smaller `height` and `width` values will require more queries to cover the same spatial area; traffic data will fail to render if too large of `height` and `width` values are set.
+The above example showed querying traffic information for lower Manhattan. Here, we show querying traffic information for all of Manhattan while still using a relatively high zoom level (that allows capturing traffic on smaller streets). The `gt_make_raster_from_polygon()` accepts a polygon as an input; if needed, multiple API queries are made to query traffic for the full polygon. We still specify the `height` and `width`, which determines the height and width used for a single  API query. Large `height` and `width` values will result in fewer Google queries, while smaller `height` and `width` values will require more queries to cover the same spatial area; traffic data will fail to render if too large of `height` and `width` values are set. 
 
 ```{r polygon, include=TRUE, warning=FALSE, message=FALSE, eval=T}
 
@@ -153,6 +160,80 @@ leaflet(width = "100%") %>%
   addProviderTiles("Esri.WorldGrayCanvas") %>%
   addRasterImage(r, colors = pal, opacity = 1)
 ```
+
+## Make PNG then Convert to Raster
+
+To make a google traffic raster, the functions first makes a temporary png file then converts the png file to a raster---where only the raster is outputted. Some workflows may require separating the processes. For example, if querying Google traffic data on a regular basis on a server, a user with a small server may want to minimize the processes done on the server. Here, a user could create and save PNG files on a server, then download the PNG files and convert the PNGs to a raster locally.
+
+To support these workflows, the package provides the:
+* __`gt_make_png()`__ function which creates a PNG file with traffic data
+* __`gt_load_png_as_traffic_raster()`__ function which converts a PNG file into a spatially-referenced traffic raster
+
+The below example illutrates the process.
+```{r png_1, include=TRUE, warning=FALSE, message=FALSE, eval=F}
+#### Make png
+# The function does not output anything in R; it saves a png file, specified using the "out_filename" parameter
+gt_make_png(location = c(40.712778, -74.006111),
+            height   = 1000,
+            width    = 1000,
+            zoom     = 16,
+            out_filename = "google_traffic.png",
+            google_key = google_key)
+
+#### Convert png to raster
+# We now convert the "google_traffic.png" created above into a raster. Because the png is not spatially referenced, we need to enter the same
+r <- gt_load_png_as_traffic_raster(filename = "google_traffic.png",
+                                   location = c(40.712778, -74.006111),
+                                   height   = 1000,
+                                   width    = 1000,
+                                   zoom     = 16)
+```
+
+We can also use this process when querying traffic data for a larger study area that requires making multiple API calls. The below example illustrates creating multiple pngs from a grid.
+
+```{r png_2, include=TRUE, warning=FALSE, message=FALSE, eval=T}
+#### Make grid
+# We first make a grid, which contains all the parameters needed to make a png then the raster
+grid_df <- gt_make_grid(polygon = ny_sp,
+                        height  = 2000,
+                        width   = 2000,
+                        zoom    = 15)
+
+print(grid_df)
+```
+
+```{r png_3, include=TRUE, warning=FALSE, message=FALSE, eval=F}
+#### Make PNGs from grid
+for(i in 1:nrow(grid_df)){
+  grid_i_df <- grid_df[i,]
+  
+  gt_make_png(location     = c(grid_i_df$latitude, grid_i_df$longitude),
+              height       = grid_i_df$height,
+              width        = grid_i_df$width,
+              zoom         = grid_i_df$zoom,
+              out_filename = paste0(i, "_google_traffic.png"),
+              google_key   = google_key)
+}
+
+#### Convert PNGs to rasters
+# Here we make a list of rasters
+r_list <- lapply(1 in 1:nrow(grid_df)){
+  
+  grid_i_df <- grid_df[i,]
+  
+  gt_load_png_as_traffic_raster(filename = paste0(i, "_google_traffic.png"),
+                                location = c(grid_i_df$latitude, grid_i_df$longitude),
+                                height   = grid_i_df$height,
+                                width    = grid_i_df$width,
+                                zoom     = grid_i_df$zoom)
+}
+
+#### Mosaic rasters together
+# To mosaic the rasters together, the mosaic() function from the raster package requires that rasters have the same origin and resolution. The above rasters will not have the same orgin, and the resolutions will be slightly different. The gt_mosaic() function allows mosaicing rasters with different origins and resolutions.
+r <- gt_mosaic(r_list)
+```
+
+
 
 
 
