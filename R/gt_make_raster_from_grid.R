@@ -28,8 +28,8 @@ gt_make_raster_from_grid <- function(grid_param_df,
   r_list <- lapply(1:nrow(grid_param_df), function(i){
     
     if(print_progress){
-      print(paste0("Processing tile ",i," out of ",nrow(grid_param_df), 
-                   "; pausing for ", webshot_delay, " seconds to allow traffic data to render"))
+      message(paste0("Processing tile ",i," out of ",nrow(grid_param_df), 
+                     "; pausing for ", webshot_delay, " seconds to allow traffic data to render"))
     } 
     
     param_i <- grid_param_df[i,]
