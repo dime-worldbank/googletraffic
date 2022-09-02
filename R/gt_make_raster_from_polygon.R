@@ -39,9 +39,9 @@ gt_make_raster_from_polygon <- function(polygon,
                                 reduce_hw = reduce_hw)
   
   if(print_progress){
-    print(paste0("Raster will be created from ",
-                 nrow(grid_param_df),
-                 " Google traffic tiles."))
+    message(paste0("Raster will be created from ",
+                   nrow(grid_param_df),
+                   " Google traffic tiles."))
   }
   
   r <- gt_make_raster_from_grid(grid_param_df  = grid_param_df,
@@ -64,7 +64,7 @@ gt_make_raster_from_polygon <- function(polygon,
     
     for(i in 1:length(r)){
       if(print_progress){
-        print(paste0("Cropping tile ", i, " of ", length(r)))
+        message(paste0("Cropping tile ", i, " of ", length(r)))
       }
       
       ## Check intersection using planar geometry

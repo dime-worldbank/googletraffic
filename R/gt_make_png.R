@@ -52,7 +52,7 @@ gt_make_png <- function(location,
   setwd(filename_dir)
   
   if(print_progress){
-    cat(paste0("Pausing for ", webshot_delay, " seconds to allow traffic data to render"))
+    message(paste0("Pausing for ", webshot_delay, " seconds to allow traffic data to render"))
   }
   
   webshot::webshot(paste0(filename_only,".html"),
