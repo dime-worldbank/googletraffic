@@ -19,3 +19,13 @@ rasters will not have the same origins and may not have the same resolutions (in
 at different latitudes are queried). \code{gt_mosaic()} allows for mosaicing rasters with different
 origins and resolutions.
 }
+\examples{
+r1 <- raster(ncol=10, nrow=10, xmn = -10, xmx = 1,  ymn = -10, ymx = 1)
+r2 <- raster(ncol=10, nrow=10, xmn = 0,   xmx = 10, ymn = 0,   ymx = 10)
+r3 <- raster(ncol=10, nrow=10, xmn = 9,   xmx = 20, ymn = 9,   ymx = 20)
+
+r123 <- list(r1, r2, r3)
+
+r <- gt_mosaic(r123)
+
+}

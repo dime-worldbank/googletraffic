@@ -12,7 +12,7 @@
 #'
 #' @return Returns a raster where each pixel represents traffic level (1 = no traffic, 2 = medium traffic, 3 = traffic delays, 4 = heavy traffic)
 #'
-#' @example 
+#' @examples 
 #' \dontrun{
 #' ## Make png
 #' gt_make_png(location     = c(40.712778, -74.006111),
