@@ -30,3 +30,21 @@ Returns a georeferenced raster file. The file can contain the following values: 
 Make a raster from Google traffic data, where each pixel has one of four values
 indicating traffic volume (no traffic, light, moderate, and heavy).
 }
+\examples{
+\dontrun{
+## Grab polygon of Manhattan
+us_sp <- raster::getData('GADM', country='USA', level=2)
+ny_sp <- us_sp[us_sp$NAME_2 \%in\% "New York",]
+
+## Make Grid
+grid_df <- gt_make_grid(polygon = ny_sp,
+                       height   = 2000,
+                       width    = 2000,
+                       zoom     = 16)
+
+## Make raster from grid                        
+r <- gt_make_raster_from_grid(grid_param_df = grid_clean_df,
+                              google_key    = "GOOGLE-KEY-HERE")
+}
+
+}

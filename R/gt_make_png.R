@@ -14,7 +14,7 @@
 #'
 #' @return Returns a georeferenced raster file. The file can contain the following values: 1 = no traffic; 2 = light traffic; 3 = moderate traffic; 4 = heavy traffic.
 #'
-#' @example
+#' @examples
 #' \dontrun{
 #' gt_make_png(location     = c(40.712778, -74.006111),
 #'             height       = 1000,

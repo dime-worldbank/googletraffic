@@ -23,3 +23,22 @@ Returns a raster where each pixel represents traffic level (1 = no traffic, 2 = 
 \description{
 Converts PNG to raster and translates color values to traffic values
 }
+\examples{
+\dontrun{
+## Make png
+gt_make_png(location     = c(40.712778, -74.006111),
+            height       = 1000,
+            width        = 1000,
+            zoom         = 16,
+            out_filename = "google_traffic.png",
+            google_key   = "GOOGLE-KEY-HERE")
+
+## Load png as traffic raster
+r <- gt_load_png_as_traffic_raster(filename = "google_traffic.png",
+                                   location = c(40.712778, -74.006111),
+                                   height   = 1000,
+                                   width    = 1000,
+                                   zoom     = 16)
+}                                    
+
+}

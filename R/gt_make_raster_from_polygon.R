@@ -18,7 +18,7 @@
 #'
 #' @return Returns a georeferenced raster file. The file can contain the following values: 1 = no traffic; 2 = light traffic; 3 = moderate traffic; 4 = heavy traffic.
 #' 
-#' @example
+#' @examples
 #' \dontrun{
 #' ## Grab polygon of Manhattan
 #' us_sp <- raster::getData('GADM', country='USA', level=2)

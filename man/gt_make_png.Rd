@@ -39,3 +39,14 @@ Returns a georeferenced raster file. The file can contain the following values: 
 Make a png file of Google traffic data. The \code{gt_load_png_as_traffic_raster()} function can then
 be used to convert the png into a traffic raster
 }
+\examples{
+\dontrun{
+gt_make_png(location     = c(40.712778, -74.006111),
+            height       = 1000,
+            width        = 1000,
+            zoom         = 16,
+            out_filename = "google_traffic.png",
+            google_key   = "GOOGLE-KEY-HERE")
+}
+
+}

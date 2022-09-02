@@ -23,3 +23,22 @@ Returns a dataframe with the locations to query and parameters.
 \description{
 Querying too large of a location may be unfeasible; consequently, it may be necessary to query multiple smaller locations to cover a large location. Based on the location to be queried and the height, width and zoom parameters, determines the points that should be queried.
 }
+\examples{
+## Make polygon
+poly_sf <- c(xmin = -74.02426,
+             xmax = -73.91048,
+             ymin = 40.70042,
+             ymax = 40.87858) \%>\%
+  sf::st_bbox() \%>\%
+  sf::st_as_sfc() \%>\%
+  sf::st_as_sf()
+
+sf::st_crs(poly_sf) <- 4326
+
+## Make grid using polygon
+grid_sf <- gt_make_grid(polygon = poly_sf,
+                        height  = 2000,
+                        width   = 2000,
+                        zoom    = 16)
+
+}
