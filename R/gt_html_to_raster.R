@@ -57,8 +57,7 @@ gt_html_to_raster <- function(filename,
   png_filename <- file.path(filename_dir, paste0(filename_only, ".png"))
   
   r <- gt_load_png_as_traffic_raster(png_filename,
-                                     latitude,
-                                     longitude,
+                                     c(latitude, longitude),
                                      height,
                                      width,
                                      zoom)
