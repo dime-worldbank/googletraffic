@@ -122,3 +122,19 @@ tokens.*
 token/
 tokens/
 docs
+
+
+#######################
+# Documentation
+!/**/*.html
+!/**/*.txt
+!/**/*.js
+!/**/*.map
+!/**/*.css
+!/**/*.svg
+!/**/*.yml
+!/**/*.json
+!/**/*.xlm
+
+
+

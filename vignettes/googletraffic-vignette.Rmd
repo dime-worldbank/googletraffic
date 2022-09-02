@@ -172,7 +172,8 @@ To support these workflows, the package provides the:
 The below example illutrates the process.
 ```{r png_1, include=TRUE, warning=FALSE, message=FALSE, eval=F}
 #### Make png
-# The function does not output anything in R; it saves a png file, specified using the "out_filename" parameter
+# The function does not output anything in R; it saves a png file, specified 
+# using the "out_filename" parameter
 gt_make_png(location = c(40.712778, -74.006111),
             height   = 1000,
             width    = 1000,
@@ -181,7 +182,8 @@ gt_make_png(location = c(40.712778, -74.006111),
             google_key = google_key)
 
 #### Convert png to raster
-# We now convert the "google_traffic.png" created above into a raster. Because the png is not spatially referenced, we need to enter the same
+# We now convert the "google_traffic.png" created above into a raster. Because 
+# the png is not spatially referenced, we need to enter the same
 r <- gt_load_png_as_traffic_raster(filename = "google_traffic.png",
                                    location = c(40.712778, -74.006111),
                                    height   = 1000,
@@ -193,7 +195,8 @@ We can also use this process when querying traffic data for a larger study area 
 
 ```{r png_2, include=TRUE, warning=FALSE, message=FALSE, eval=T}
 #### Make grid
-# We first make a grid, which contains all the parameters needed to make a png then the raster
+# We first make a grid, which contains all the parameters needed to make a png then
+# the raster
 grid_df <- gt_make_grid(polygon = ny_sp,
                         height  = 2000,
                         width   = 2000,
@@ -204,6 +207,7 @@ print(grid_df)
 
 ```{r png_3, include=TRUE, warning=FALSE, message=FALSE, eval=F}
 #### Make PNGs from grid
+# Exports PNGs
 for(i in 1:nrow(grid_df)){
   grid_i_df <- grid_df[i,]
   
@@ -229,7 +233,10 @@ r_list <- lapply(1 in 1:nrow(grid_df)){
 }
 
 #### Mosaic rasters together
-# To mosaic the rasters together, the mosaic() function from the raster package requires that rasters have the same origin and resolution. The above rasters will not have the same orgin, and the resolutions will be slightly different. The gt_mosaic() function allows mosaicing rasters with different origins and resolutions.
+# To mosaic the rasters together, the mosaic() function from the raster package 
+# requires that rasters have the same origin and resolution. The above rasters will
+# not have the same orgin, and the resolutions will be slightly different. The 
+# gt_mosaic() function allows mosaicing rasters with different origins and resolutions.
 r <- gt_mosaic(r_list)
 ```
 

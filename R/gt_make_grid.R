@@ -12,7 +12,7 @@
 #'
 #' @return Returns a dataframe with the locations to query and parameters.
 #' 
-#' @examples
+#' @example
 #' ## Make polygon
 #' poly_sf <- c(xmin = -74.02426,
 #'              xmax = -73.91048,
