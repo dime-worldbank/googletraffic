@@ -9,9 +9,9 @@ gt_make_png(
   height,
   width,
   zoom,
-  webshot_delay,
-  google_key,
   out_filename,
+  google_key,
+  webshot_delay = NULL,
   print_progress = T
 )
 }
@@ -24,11 +24,11 @@ gt_make_png(
 
 \item{zoom}{Zoom level; integer from 0 to 20. For more information, see \href{https://wiki.openstreetmap.org/wiki/Zoom_levels}{here}}
 
-\item{webshot_delay}{How long to wait for google traffic layer to render. Larger height/widths require longer delay times. If \code{NULL}, the following delay time (in seconds) is used: \code{delay = max(height,width)/200}.}
+\item{out_filename}{Filename/path of png file to make}
 
 \item{google_key}{Google API key}
 
-\item{out_filename}{Filename/path of png file to make}
+\item{webshot_delay}{How long to wait for google traffic layer to render. Larger height/widths require longer delay times. If \code{NULL}, the following delay time (in seconds) is used: \code{delay = max(height,width)/200}.}
 
 \item{print_progress}{Whether to print function progress}
 }
