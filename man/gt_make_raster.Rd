@@ -36,3 +36,13 @@ Returns a georeferenced raster file. The file can contain the following values: 
 Make a raster from Google traffic data, where each pixel has one of four values
 indicating traffic volume (no traffic, light, moderate, and heavy).
 }
+\examples{
+\dontrun{
+r <- gt_make_raster(location   = c(40.712778, -74.006111),
+                    height     = 1000,
+                    width      = 1000,
+                    zoom       = 16,
+                    google_key = "GOOGLE-KEY-HERE")
+}
+
+}
