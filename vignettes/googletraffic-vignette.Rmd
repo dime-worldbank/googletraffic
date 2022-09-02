@@ -68,7 +68,7 @@ The following are key parameters used when querying Google Traffic data.
 
 The `gt_make_raster()` function produces a raster, using a centroid location and a height/width around the centroid to specify the location to query traffic information. The below example queries traffic for lower Manhattan, NYC.
 
-```{r point_small, include=TRUE, warning=FALSE, message=FALSE, eval=T}
+```{r point_small, include=TRUE, warning=FALSE, message=FALSE, eval=FALSE}
 ## Make raster
 r <- gt_make_raster(location   = c(40.712778, -74.006111),
                     height     = 1000,
@@ -84,7 +84,7 @@ leaflet(width = "100%") %>%
 
 By using a smaller `zoom`, we can capture a larger area; however, the pixels are more coarse.
 
-```{r point_large, include=TRUE, warning=FALSE, message=FALSE, eval=T}
+```{r point_large, include=TRUE, warning=FALSE, message=FALSE, eval=FALSE}
 ## Make raster
 r <- gt_make_raster(location   = c(41.384900, -78.891302),
                     height     = 1000,
@@ -102,7 +102,7 @@ leaflet(width = "100%") %>%
 
 The above example showed querying traffic information for lower Manhattan. Here, we show querying traffic information for all of Manhattan while still using a relatively high zoom level (that allows capturing traffic on smaller streets). The `gt_make_raster_from_polygon()` accepts a polygon as an input; if needed, multiple API queries are made to query traffic for the full polygon. We still specify the `height` and `width`, which determines the height and width used for a single  API query. Large `height` and `width` values will result in fewer Google queries, while smaller `height` and `width` values will require more queries to cover the same spatial area; traffic data will fail to render if too large of `height` and `width` values are set. 
 
-```{r polygon, include=TRUE, warning=FALSE, message=FALSE, eval=T}
+```{r polygon, include=TRUE, warning=FALSE, message=FALSE, eval=FALSE}
 
 ## Grab polygon of Manhattan
 us_sp <- getData('GADM', country='USA', level=2)
@@ -127,7 +127,7 @@ leaflet(width = "100%") %>%
 
 First, we create a grid using `gt_make_grid()`.
 
-```{r grid_1, include=TRUE, warning=FALSE, message=FALSE, eval=T}
+```{r grid_1, include=TRUE, warning=FALSE, message=FALSE, eval=FALSE}
 grid_df <- gt_make_grid(polygon = ny_sp,
                         height  = 2000,
                         width   = 2000,
@@ -140,7 +140,7 @@ leaflet(width = "100%") %>%
 
 We notice that the tile in the bottom left corner just covers water and some land outside of Manhattan. To reduce the number of API queries we need to make, we can remove this tile.
 
-```{r grid_2, include=TRUE, warning=FALSE, message=FALSE, eval=T}
+```{r grid_2, include=TRUE, warning=FALSE, message=FALSE, eval=FALSE}
 grid_clean_df <- grid_df[-5,]
 
 leaflet(width = "100%") %>%
@@ -150,7 +150,7 @@ leaflet(width = "100%") %>%
 
 Second, we use the grid to make a traffic raster using `gt_make_raster_from_grid()`.
 
-```{r grid_3, include=TRUE, warning=FALSE, message=FALSE, eval=T}
+```{r grid_3, include=TRUE, warning=FALSE, message=FALSE, eval=FALSE}
 ## Make raster
 r <- gt_make_raster_from_grid(grid_param_df = grid_clean_df,
                               google_key    = google_key)
@@ -194,7 +194,7 @@ r <- gt_load_png_as_traffic_raster(filename = "google_traffic.png",
 
 We can also use this process when querying traffic data for a larger study area that requires making multiple API calls. The below example illustrates creating multiple pngs from a grid.
 
-```{r png_2, include=TRUE, warning=FALSE, message=FALSE, eval=T}
+```{r png_2, include=TRUE, warning=FALSE, message=FALSE, eval=FALSE}
 #### Make grid
 # We first make a grid, which contains all the parameters needed to make a png then
 # the raster
