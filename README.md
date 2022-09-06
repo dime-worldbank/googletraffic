@@ -10,7 +10,7 @@ Create traffic data from the [Google Maps Javascript API](https://developers.goo
 
 Google Maps provides information about traffic conditions across an area. This package provides functions to produce georeferenced rasters from live Google Maps traffic information. Providing Google traffic information in a georeferenced data format facilitates analysis of traffic information (e.g., spatially merging traffic information with other data sources, observing trends over time, etc).
 
-The below image shows an example raster produced using the package showing [traffic in Washington, DC.](https://www.google.com/maps/@38.898857,-77.0372457,16.39z/data=!5m1!1e1)
+The below image shows an example raster produced using the package showing [traffic within Washington, DC.](https://www.google.com/maps/@38.9065495,-77.0368202,16z/data=!5m1!1e1)
 
 <p align="center">
 <img src="images/top_example.jpg" alt="Example" width="500"/>

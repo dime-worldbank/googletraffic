@@ -181,7 +181,7 @@ if(F){
   
   # Example for Top of Package -------------------------------------------------
   # https://www.google.com/maps/place/38%C2%B054'05.9%22N+77%C2%B002'11.7%22W/@38.9010952,-77.0350844,16.08z/data=!4m6!3m5!1s0x0:0xdfa7b78027c7aac6!7e2!8m2!3d38.9016494!4d-77.0365891!5m1!1e1
-  r <- gt_make_raster(location = c(38.897761687363925, -77.03651747528248),
+  r <- gt_make_raster(location = c(38.90723410426802, -77.03655197910766),
                       height = 700,
                       width = 700,
                       zoom = 16,
