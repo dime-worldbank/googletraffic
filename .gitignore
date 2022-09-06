@@ -1,2 +1,6 @@
 *.Rds
+*.DS_Store
+*.Rbuildignore
+*.Rhistory
 docs
+
