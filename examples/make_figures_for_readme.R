@@ -1,6 +1,6 @@
 # Examples used for readme
 
-if(T){
+if(F){
   
   # Setup ------------------------------------------------------------------------
   library(googletraffic)
@@ -123,7 +123,7 @@ if(T){
   
   m <- leaflet() %>%
     addTiles() %>%
-    addPolygons(data =grid_df)
+    addPolygons(data = grid_df)
   
   mapshot(m, file = file.path(readme_images, "nyc_grid.jpg"))
   mapshot(m, file = file.path(homepage_images, "nyc_grid.jpg"))

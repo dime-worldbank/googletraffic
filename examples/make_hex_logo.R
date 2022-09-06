@@ -5,6 +5,15 @@ if(F){
   library(hexSticker)
   library(ggplot2)
   library(googletraffic)
+  library(tidyverse)
+  library(raster)
+  
+  api_keys_df <- read_csv("~/Dropbox/World Bank/Webscraping/Files for Server/api_keys.csv")
+  
+  google_key <- api_keys_df %>%
+    dplyr::filter(Service == "Google Directions API",
+                  Account == "ramarty@email.wm.edu") %>%
+    pull(Key)
   
   r <- gt_make_raster(location = c(39.099749, -84.514448),
                       height = 1200,
@@ -20,7 +29,7 @@ if(F){
     geom_raster(data = r_df, 
                 aes(x = x, y = y, 
                     fill = as.factor(value))) +
-    scale_fill_manual(values = c("green2", "orange", "red")) +
+    scale_fill_manual(values = c("green2", "orange", "red", "#660000")) +
     coord_quickmap() + 
     theme_void() + 
     theme_transparent() +

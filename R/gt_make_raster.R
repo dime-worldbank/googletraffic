@@ -12,7 +12,7 @@
 if(F){
   roxygen2::roxygenise("~/Documents/Github/googletraffic")
   
-  setwd("~/Documents/googletraffic")
+  setwd("~/Documents/Github/googletraffic")
   pkgdown::build_site()
   usethis::use_pkgdown_github_pages()
 }
