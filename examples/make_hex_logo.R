@@ -50,7 +50,7 @@ if(F){
           h_color = "gray10",
           white_around_sticker = T,
           spotlight = T,
-          l_alpha = 0.1,
+          l_alpha = 0.15,
           l_y = 1.4,
           l_x = 0.93,
           l_width = 3,
