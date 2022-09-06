@@ -37,8 +37,8 @@ if(F){
 
   sticker(p, 
           package="googletraffic", 
-          p_size=21.5, #7 
-          p_y = 1.4,
+          p_size=23, #7 
+          p_y = 1.45,
           p_family = "sans",
           p_fontface = "italic",
           s_x=1, 
