@@ -10,7 +10,7 @@ Create traffic data from the [Google Maps Javascript API](https://developers.goo
 
 Google Maps provides information about traffic conditions across an area. This package provides functions to produce georeferenced rasters from live Google Maps traffic information. Providing Google traffic information in a georeferenced data format facilitates analysis of traffic information (e.g., spatially merging traffic information with other data sources, observing trends over time, etc).
 
-The below image shows an example raster produced using the package showing [traffic in Washington, DC.](https://www.google.com/maps/@38.9022138,-77.0505589,16.81z/data=!5m1!1e1)
+The below image shows an example raster produced using the package showing [traffic in Washington, DC.](https://www.google.com/maps/@38.898857,-77.0372457,16.39z/data=!5m1!1e1)
 
 <p align="center">
 <img src="images/top_example.jpg" alt="Example" width="500"/>
@@ -69,7 +69,9 @@ google_key <- "GOOGLE-API-KEY-HERE"
 The following are key parameters used when querying Google Traffic data.
 
 * __zoom:__ The [zoom level](https://wiki.openstreetmap.org/wiki/Zoom_levels) defines the resolution of the traffic image. Values can range from 0 to 20. At the equator, with a zoom level 10, each pixel will be about 150 meters; with a zoom level 20, each pixel will be about 0.15 meters. Consequently, smaller zoom levels can be used if only larger roads are of interest (e.g., highways), while larger zoom levels will be needed for capturing smaller roads.
-* __height/width:__ The `height` and `width` parameters define the height and width of the raster in terms of pixels. The kilometer height/width of pixels depends primarily on the `zoom` level (larger `zoom` levels correspond to the `height` and `width` having a smaller kilometer distance). Google traffic data takes time to render on a map, and larger `height` and `width` values require more time needed for data to render. The functions automatically scale the delay time depending on the `height` and `width` values set, but the delay time can also be manually set using the `webshot_delay` parameter. Note that traffic data may fail to render for very large `height` and `width` values, no matter the `webshot_delay` set.
+* __height/width:__ The `height` and `width` parameters define the height and width of the raster in terms of pixels. The kilometer height/width of pixels depends primarily on the `zoom` level (larger `zoom` levels correspond to the `height` and `width` having a smaller kilometer distance). 
+
+    __Large height/width and delay time:__ Google traffic data takes time to render on a map, and larger `height` and `width` values require more time needed for data to render. The functions automatically scale the delay time depending on the `height` and `width` values set, but the delay time can also be manually set using the `webshot_delay` parameter. Note that traffic data may fail to render for very large `height` and `width` values, no matter the `webshot_delay` set (we find that the function works well with a `height`/`width` of 2000 or less).
 
 <!---
 * __webshot_delay:__ Google maps information is originally rendered on an interactive map. For large values of `height` and `width`, traffic information can take some time to render on a map. Consequently, a delay (specified using `webshot_delay`) is introduced to ensure traffic information is fully rendered on the map before traffic data is extracted. For example, when using a `height` and `width` of 500, a delay time of 2 seconds works well. For a `height` and `width` of 5000, a delay of up to 20 seconds may be needed. Traffic information cannot be rendered for very large `height` and `width` values, no matter the `webshot_delay` specified.
@@ -131,7 +133,7 @@ __The package provides functions that allow querying granular traffic informatio
 
 ### Raster from Polygon <a name="raster-from-polygon"></a>
 
-The above example showed querying traffic information for lower Manhattan. Here, we show querying traffic information for all of Manhattan while still using a relatively high zoom level (that allows capturing traffic on smaller streets). The `gt_make_raster_from_polygon()` accepts a polygon as an input; if needed, multiple API queries are made to query traffic for the full polygon. We still specify the `height` and `width`, which determines the height and width used for a single  API query. Large `height` and `width` values will result in fewer Google queries, while smaller `height` and `width` values will require more queries to cover the same spatial area; traffic data will fail to render if too large of `height` and `width` values are set.
+The above example showed querying traffic information for lower Manhattan. Here, we show querying traffic information for all of Manhattan while still using a relatively high zoom level (that allows capturing traffic on smaller streets). The `gt_make_raster_from_polygon()` accepts a polygon as an input; if needed, multiple API queries are made to query traffic for the full polygon. We still specify the `height` and `width`, which determines the height and width used for a single  API query. Large `height` and `width` values will result in fewer Google queries, while smaller `height` and `width` values will require more queries to cover the same spatial area.
 
 In the below example, we use a `height` and `width` of 2000 and a `zoom` of 16, which results in needing to make 14 Google API queries to cover all of Manhattan.
 
