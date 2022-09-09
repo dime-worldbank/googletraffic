@@ -90,17 +90,15 @@
 <span class="r-in"><span>  <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_bbox.html" class="external-link">st_bbox</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sfc.html" class="external-link">st_as_sfc</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html" class="external-link">st_as_sf</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in c(xmin = -74.02426, xmax = -73.91048, ymin = 40.70042, ymax = 40.87858) %&gt;%     sf::st_bbox() %&gt;% sf::st_as_sfc() %&gt;% sf::st_as_sf():</span> could not find function "%&gt;%"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_crs.html" class="external-link">st_crs</a></span><span class="op">(</span><span class="va">poly_sf</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fl">4326</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in sf::st_crs(poly_sf) &lt;- 4326:</span> object 'poly_sf' not found</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Make grid using polygon</span></span></span>
 <span class="r-in"><span><span class="va">grid_sf</span> <span class="op">&lt;-</span> <span class="fu">gt_make_grid</span><span class="op">(</span>polygon <span class="op">=</span> <span class="va">poly_sf</span>,</span></span>
 <span class="r-in"><span>                        height  <span class="op">=</span> <span class="fl">2000</span>,</span></span>
 <span class="r-in"><span>                        width   <span class="op">=</span> <span class="fl">2000</span>,</span></span>
 <span class="r-in"><span>                        zoom    <span class="op">=</span> <span class="fl">16</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in h(simpleError(msg, call)):</span> error in evaluating the argument 'x' in selecting a method for function '%in%': object 'poly_sf' not found</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>st_centroid assumes attributes are constant over geometries of x</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
