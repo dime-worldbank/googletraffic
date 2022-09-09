@@ -1,0 +1,7 @@
+pandoc: 2.17.1.1
+pkgdown: 2.0.6
+pkgdown_sha: ~
+articles:
+  googletraffic-vignette: googletraffic-vignette.html
+last_built: 2022-09-09T18:22Z
+
