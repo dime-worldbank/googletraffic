@@ -30,8 +30,29 @@ if(F){
                   Account == "ramarty@email.wm.edu") %>%
     pull(Key)
   
-  readme_images <- "~/Documents/Github/googletraffic/images"
   homepage_images <- "~/Documents/Github/googletraffic/man/figures"
+  
+  # Example for Top of Package -------------------------------------------------
+  # https://www.google.com/maps/place/38%C2%B054'05.9%22N+77%C2%B002'11.7%22W/@38.9010952,-77.0350844,16.08z/data=!4m6!3m5!1s0x0:0xdfa7b78027c7aac6!7e2!8m2!3d38.9016494!4d-77.0365891!5m1!1e1
+  r <- gt_make_raster(location = c(38.90723410426802, -77.03655197910766),
+                      height = 2000,
+                      width = 2000,
+                      zoom = 16,
+                      google_key = google_key)
+  
+  r_df <- rasterToPoints(r, spatial = TRUE) %>% as.data.frame()
+  names(r_df) <- c("value", "x", "y")
+  
+  p <- ggplot() +
+    geom_raster(data = r_df, 
+                aes(x = x, y = y, 
+                    fill = as.factor(value))) +
+    labs(fill = "Traffic\nLevel") +
+    scale_fill_manual(values = c("green2", "orange", "red", "#660000")) +
+    coord_quickmap() + 
+    theme_void() +
+    theme(plot.background = element_rect(fill = "white", color="white"))
+  ggsave(p, filename = file.path(homepage_images, "top_example.jpg"), height = 5, width = 5)
   
   # Point example 1 -----------------------------------------------------------------
   r <- gt_make_raster(location = c(40.712778, -74.006111),
@@ -179,28 +200,6 @@ if(F){
   #                      maxpixels = 1e8)
   # dev.off()
   
-  # Example for Top of Package -------------------------------------------------
-  # https://www.google.com/maps/place/38%C2%B054'05.9%22N+77%C2%B002'11.7%22W/@38.9010952,-77.0350844,16.08z/data=!4m6!3m5!1s0x0:0xdfa7b78027c7aac6!7e2!8m2!3d38.9016494!4d-77.0365891!5m1!1e1
-  r <- gt_make_raster(location = c(38.90723410426802, -77.03655197910766),
-                      height = 700,
-                      width = 700,
-                      zoom = 16,
-                      google_key = google_key)
-  
-  r_df <- rasterToPoints(r, spatial = TRUE) %>% as.data.frame()
-  names(r_df) <- c("value", "x", "y")
-  
-  p <- ggplot() +
-    geom_raster(data = r_df, 
-                aes(x = x, y = y, 
-                    fill = as.factor(value))) +
-    labs(fill = "Traffic\nLevel") +
-    scale_fill_manual(values = c("green2", "orange", "red", "#660000")) +
-    coord_quickmap() + 
-    theme_void() +
-    theme(plot.background = element_rect(fill = "white", color="white"))
-  ggsave(p, filename = file.path(readme_images, "top_example.jpg"), height = 5, width = 5)
-  ggsave(p, filename = file.path(homepage_images, "top_example.jpg"), height = 5, width = 5)
   
   # jpeg("top_example.jpg",
   #      width = 480*1.5,
