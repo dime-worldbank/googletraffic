@@ -31,6 +31,6 @@ devtools::install_github("dime-worldbank/googletraffic")
 
 ## Usage <a name="usage"></a>
 
-See the [this vignette](https://dime-worldbank.github.io/googletraffic/articles/googletraffic-vignette.html) for additional information and examples illustrating how to use the package.
+See [this vignette](https://dime-worldbank.github.io/googletraffic/articles/googletraffic-vignette.html) for additional information and examples illustrating how to use the package.
 
 
