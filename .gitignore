@@ -3,4 +3,5 @@
 *.Rbuildignore
 *.Rhistory
 docs
+*googletraffic-vignette.html
 
