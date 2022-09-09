@@ -31,6 +31,7 @@ if(F){
     pull(Key)
   
   homepage_images <- "~/Documents/Github/googletraffic/man/figures"
+  vignette_images <- "~/Documents/Github/googletraffic/vignettes"
   
   # Example for Top of Package -------------------------------------------------
   # https://www.google.com/maps/place/38%C2%B054'05.9%22N+77%C2%B002'11.7%22W/@38.9010952,-77.0350844,16.08z/data=!4m6!3m5!1s0x0:0xdfa7b78027c7aac6!7e2!8m2!3d38.9016494!4d-77.0365891!5m1!1e1
@@ -53,7 +54,8 @@ if(F){
     theme_void() +
     theme(plot.background = element_rect(fill = "white", color="white"))
   ggsave(p, filename = file.path(homepage_images, "top_example.jpg"), height = 4.5, width = 5)
-  
+  ggsave(p, filename = file.path(vignette_images, "top_example.jpg"), height = 4.5, width = 5)
+
   # Point example 1 -----------------------------------------------------------------
   r <- gt_make_raster(location = c(40.712778, -74.006111),
                       height = 1000,
