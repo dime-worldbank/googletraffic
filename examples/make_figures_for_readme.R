@@ -52,7 +52,7 @@ if(F){
     coord_quickmap() + 
     theme_void() +
     theme(plot.background = element_rect(fill = "white", color="white"))
-  ggsave(p, filename = file.path(homepage_images, "top_example.jpg"), height = 5, width = 5)
+  ggsave(p, filename = file.path(homepage_images, "top_example.jpg"), height = 4.5, width = 5)
   
   # Point example 1 -----------------------------------------------------------------
   r <- gt_make_raster(location = c(40.712778, -74.006111),
