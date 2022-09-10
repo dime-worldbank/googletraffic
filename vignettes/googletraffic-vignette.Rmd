@@ -234,7 +234,8 @@ gt_make_png(location = c(40.712778, -74.006111),
 
 #### Convert png to raster
 # We now convert the "google_traffic.png" created above into a raster. Because 
-# the png is not spatially referenced, we need to enter the same
+# the png is not spatially referenced, we need to enter the same location,
+# height, width, and zoom parameters as were specified in gt_make_png()
 r <- gt_load_png_as_traffic_raster(filename = "google_traffic.png",
                                    location = c(40.712778, -74.006111),
                                    height   = 1000,
@@ -282,8 +283,9 @@ r_list <- lapply(1 in 1:nrow(grid_df)){
 }
 #### Mosaic rasters together
 # To mosaic the rasters together, the mosaic() function from the raster package 
-# requires that rasters have the same origin and resolution. The above rasters will
-# not have the same orgin, and the resolutions will be slightly different. The 
-# gt_mosaic() function allows mosaicing rasters with different origins and resolutions.
+# requires that rasters have the same origin and resolution. The above rasters 
+# will not have the same orgin, and the resolutions will be slightly different. 
+# The gt_mosaic() function allows mosaicing rasters with different origins and 
+# resolutions.
 r <- gt_mosaic(r_list)
 ```
