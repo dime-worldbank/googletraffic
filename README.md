@@ -1,6 +1,12 @@
 # googletraffic  <img src="man/figures/hex.png" align="right" width="200" />
 Create Georeferenced Traffic Data from the [Google Maps Javascript API](https://developers.google.com/maps/documentation/javascript/trafficlayer)
 
+* [Overview](#overview)
+* [Installation](#installation)
+* [API Key](#apikey)
+* [Quick Start](#quickstart)
+* [Usage](#usage)
+
 ## Overview <a name="overview"></a>
 
 Google Maps provides information about traffic conditions across an area. This package provides functions to produce georeferenced rasters from live Google Maps traffic information. Providing Google traffic information in a georeferenced data format facilitates analysis of traffic information (e.g., spatially merging traffic information with other data sources).
@@ -42,7 +48,8 @@ Querying Google traffic information requires a Google API key with the [Maps Jav
 library(googletraffic)
 
 ## Load additional packages to run below examples
-library(ggplot)
+library(ggplot2)
+library(dplyr)
 library(raster)
 
 ## Set API key
