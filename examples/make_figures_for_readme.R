@@ -23,7 +23,7 @@ if(F){
   
   #source("https://github.com/dime-worldbank/googletraffic/blob/main/R/main.R")
   
-  api_keys_df <- read_csv("~/Dropbox/World Bank/Webscraping/Files for Server/api_keys.csv")
+  api_keys_df <- read.csv("~/Dropbox/World Bank/Webscraping/Files for Server/api_keys.csv")
   
   google_key <- api_keys_df %>%
     dplyr::filter(Service == "Google Directions API",
