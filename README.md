@@ -30,16 +30,26 @@ The package is available via github and can be installed using `devtools`.
 devtools::install_github("dime-worldbank/googletraffic")
 ```
 
+## API Key <a name="apikey"></a>
+
+Querying Google traffic information requires a Google API key with the [Maps Javascript API](https://developers.google.com/maps/documentation/javascript/overview) enabled. To create a Google API key, [follow these instructions](https://developers.google.com/maps/get-started#create-project).
+
 ## Quickstart <a name="quickstart"></a>
 
-### Setup
+### Setup <a name="setup"></a>
 ```r  
+## Load package
 library(googletraffic)
 
+## Load additional packages to run below examples
+library(ggplot)
+library(raster)
+
+## Set API key
 google_key <- "GOOGLE-KEY-HERE"
 ```
 
-### Raster around point
+### Raster around point <a name="point"></a>
 To create a raster around a point, we set the centroid coordinate, the [zoom](https://wiki.openstreetmap.org/wiki/Zoom_levels) level, and the height/width around the centroid coordinate (height/width are in terms of pixels, and kilometer distance of a pixel is determined primarily by the zoom level).
 
 ```r  
@@ -69,7 +79,7 @@ ggplot() +
 <img src="man/figures/nyc_small.jpg" alt="Example" width="800"/>
 </p>
 
-### Raster around polygon
+### Raster around polygon <a name="polygon"></a>
 We can also create a raster using a polygon to define the location. We still define the zoom, height, and width. If needed, the function will make multiple API calls to cover the area within the polygon; the height/width parameters determine the height/width for a single API call (larger height/width mean less API calls are needed, but traffic data will fail to render if too large of a height/width are set.)
 
 ```r
