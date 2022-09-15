@@ -20,6 +20,8 @@ us_sp <- raster::getData('GADM', country='USA', level=2)
 ny_sp <- us_sp[us_sp$NAME_2 %in% "New York",]
 aa <- ny_sp |> sf::st_as_sf()
 
+sf::st_crs(aap) == sf::st_crs(4326)
+
 aap <- sf::st_transform(aa, 4326)
 
 
