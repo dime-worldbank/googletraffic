@@ -97,9 +97,9 @@ us_sp <- getData('GADM', country='USA', level=2)
 ny_sp <- us_sp[us_sp$NAME_2 %in% "New York",]
 
 ## Make raster
-r <- gt_make_raster_from_polygon(polygon       = ny_sp,
-                                 zoom          = 16,
-                                 google_key    = google_key)
+r <- gt_make_raster_from_polygon(polygon    = ny_sp,
+                                 zoom       = 16,
+                                 google_key = google_key)
 
 ## Plot
 r_df <- rasterToPoints(r, spatial = TRUE) %>% as.data.frame()
