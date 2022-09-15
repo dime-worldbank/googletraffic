@@ -6,10 +6,11 @@
 \usage{
 gt_make_raster_from_polygon(
   polygon,
-  height,
-  width,
   zoom,
   google_key,
+  height_width_max = 2000,
+  height = NULL,
+  width = NULL,
   webshot_delay = NULL,
   reduce_hw = 10,
   return_list_of_tiles = F,
@@ -20,13 +21,15 @@ gt_make_raster_from_polygon(
 \arguments{
 \item{polygon}{Polygon (\code{sf} object or \code{SpatialPolygonsDataframe}) in WGS84 CRS}
 
-\item{height}{Height (in pixels; pixel length depends on zoom)}
-
-\item{width}{Width (in pixels; pixel length depends on zoom)}
-
 \item{zoom}{Zoom level; integer from 0 to 20. For more information, see \href{https://wiki.openstreetmap.org/wiki/Zoom_levels}{here}}
 
 \item{google_key}{Google API key}
+
+\item{height_width_max}{Maximum pixel height and width to check using (pixel length depends on zoom). If the same number of grids can be made with a smaller height/width, the function will use a smaller height/width. If height and width are specified, that height and width will be used and height_width_max will be ignored. (Default: 2000)}
+
+\item{height}{Pixel height (pixel length depends on zoom). Enter a \code{height} to manually specify the height; otherwise, a height of \code{height_width_max} or smaller will be used.}
+
+\item{width}{Pixel width (pixel length depends on zoom). Enter a \code{width} to manually specify the width; otherwise, a width of \code{height_width_max} or smaller will be used.}
 
 \item{webshot_delay}{How long to wait for google traffic layer to render. Larger height/widths require longer delay times. If \code{NULL}, the following delay time (in seconds) is used: \code{delay = max(height,width)/200}.}
 

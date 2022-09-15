@@ -37,6 +37,7 @@ gt_make_raster_from_grid <- function(grid_param_df,
                                      return_list_of_tiles = F,
                                      print_progress = T){
   
+  
   ## Set webshot_delay if null
   webshot_delay <- gt_estimate_webshot_delay(grid_param_df$height[1], 
                                              grid_param_df$width[1],

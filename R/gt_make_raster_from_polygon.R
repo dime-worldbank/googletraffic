@@ -6,10 +6,11 @@
 #' indicating traffic volume (no traffic, light, moderate, and heavy).
 #' 
 #' @param polygon Polygon (`sf` object or `SpatialPolygonsDataframe`) in WGS84 CRS
-#' @param height Height (in pixels; pixel length depends on zoom)
-#' @param width Width (in pixels; pixel length depends on zoom)
 #' @param zoom Zoom level; integer from 0 to 20. For more information, see [here](https://wiki.openstreetmap.org/wiki/Zoom_levels)
 #' @param google_key Google API key
+#' @param height_width_max Maximum pixel height and width to check using (pixel length depends on zoom). If the same number of grids can be made with a smaller height/width, the function will use a smaller height/width. If height and width are specified, that height and width will be used and height_width_max will be ignored. (Default: 2000) 
+#' @param height Pixel height (pixel length depends on zoom). Enter a `height` to manually specify the height; otherwise, a height of `height_width_max` or smaller will be used.
+#' @param width Pixel width (pixel length depends on zoom). Enter a `width` to manually specify the width; otherwise, a width of `height_width_max` or smaller will be used.
 #' @param webshot_delay How long to wait for google traffic layer to render. Larger height/widths require longer delay times. If `NULL`, the following delay time (in seconds) is used: `delay = max(height,width)/200`.
 #' @param reduce_hw Number of pixels to reduce height/width by. Doing so creates some overlap between tiles to ensure there is not blank space between tiles (default: 10).
 #' @param return_list_of_tiles Whether to return a list of raster tiles instead of mosaicing together (default: `FALSE`).
@@ -34,24 +35,27 @@
 #'
 #' @export
 gt_make_raster_from_polygon <- function(polygon,
-                                        height,
-                                        width,
                                         zoom,
                                         google_key,
+                                        height_width_max = 2000,
+                                        height = NULL,
+                                        width = NULL,
                                         webshot_delay = NULL,
                                         reduce_hw = 10,
                                         return_list_of_tiles = F,
                                         mask_to_polygon = T,
                                         print_progress = T){
   
+  
   ## Set webshot_delay if null
   webshot_delay <- gt_estimate_webshot_delay(height, width, webshot_delay)
   
-  grid_param_df <- gt_make_grid(polygon   = polygon,
-                                height    = height,
-                                width     = width,
-                                zoom      = zoom,
-                                reduce_hw = reduce_hw)
+  grid_param_df <- gt_make_grid(polygon          = polygon,
+                                zoom             = zoom,
+                                height_width_max = height_width_max,
+                                height           = height,
+                                width            = width,
+                                reduce_hw        = reduce_hw)
   
   if(print_progress){
     message(paste0("Raster will be created from ",

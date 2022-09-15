@@ -87,7 +87,9 @@ ggplot() +
 </p>
 
 ### Raster around polygon <a name="polygon"></a>
-We can also create a raster using a polygon to define the location. We still define the zoom, height, and width. If needed, the function will make multiple API calls to cover the area within the polygon; the height/width parameters determine the height/width for a single API call (larger height/width mean less API calls are needed, but traffic data will fail to render if too large of a height/width are set.)
+We can also create a raster using a polygon to define the location. 
+
+By default, the function will use a height and width of 2000 (pixels) for each API call; if needed, the function will make multiple API calls to cover the area within the polygon. If the same number of API calls can be made using a smaller height and width, the function will use a smaller height and width. However, the height/width can also be manually specified using the `height` and `width` parameters. Larger height/width mean less API calls are needed, but traffic data will fail to render if too large of a height/width are set.
 
 ```r
 ## Grab shapefile of Manhattan
@@ -96,8 +98,6 @@ ny_sp <- us_sp[us_sp$NAME_2 %in% "New York",]
 
 ## Make raster
 r <- gt_make_raster_from_polygon(polygon       = ny_sp,
-                                 height        = 2000,
-                                 width         = 2000,
                                  zoom          = 16,
                                  google_key    = google_key)
 
