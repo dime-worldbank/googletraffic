@@ -47,15 +47,17 @@ gt_make_raster_from_polygon <- function(polygon,
                                         print_progress = T){
   
   
-  ## Set webshot_delay if null
-  webshot_delay <- gt_estimate_webshot_delay(height, width, webshot_delay)
-  
   grid_param_df <- gt_make_grid(polygon          = polygon,
                                 zoom             = zoom,
                                 height_width_max = height_width_max,
                                 height           = height,
                                 width            = width,
                                 reduce_hw        = reduce_hw)
+  
+  ## Set webshot_delay if null
+  webshot_delay <- gt_estimate_webshot_delay(grid_param_df$height[1], 
+                                             grid_param_df$width[1], 
+                                             webshot_delay)
   
   if(print_progress){
     message(paste0("Raster will be created from ",
