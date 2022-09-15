@@ -53,10 +53,11 @@ indicating traffic volume (no traffic, light, moderate, and heavy).</p>
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">gt_make_raster_from_polygon</span><span class="op">(</span></span>
 <span>  <span class="va">polygon</span>,</span>
-<span>  <span class="va">height</span>,</span>
-<span>  <span class="va">width</span>,</span>
 <span>  <span class="va">zoom</span>,</span>
 <span>  <span class="va">google_key</span>,</span>
+<span>  height_width_max <span class="op">=</span> <span class="fl">2000</span>,</span>
+<span>  height <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  width <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  webshot_delay <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  reduce_hw <span class="op">=</span> <span class="fl">10</span>,</span>
 <span>  return_list_of_tiles <span class="op">=</span> <span class="cn">F</span>,</span>
@@ -71,20 +72,24 @@ indicating traffic volume (no traffic, light, moderate, and heavy).</p>
 <dd><p>Polygon (<code>sf</code> object or <code>SpatialPolygonsDataframe</code>) in WGS84 CRS</p></dd>
 
 
-<dt>height</dt>
-<dd><p>Height (in pixels; pixel length depends on zoom)</p></dd>
-
-
-<dt>width</dt>
-<dd><p>Width (in pixels; pixel length depends on zoom)</p></dd>
-
-
 <dt>zoom</dt>
 <dd><p>Zoom level; integer from 0 to 20. For more information, see <a href="https://wiki.openstreetmap.org/wiki/Zoom_levels" class="external-link">here</a></p></dd>
 
 
 <dt>google_key</dt>
 <dd><p>Google API key</p></dd>
+
+
+<dt>height_width_max</dt>
+<dd><p>Maximum pixel height and width to check using (pixel length depends on zoom). If the same number of grids can be made with a smaller height/width, the function will use a smaller height/width. If height and width are specified, that height and width will be used and height_width_max will be ignored. (Default: 2000)</p></dd>
+
+
+<dt>height</dt>
+<dd><p>Pixel height (pixel length depends on zoom). Enter a <code>height</code> to manually specify the height; otherwise, a height of <code>height_width_max</code> or smaller will be used.</p></dd>
+
+
+<dt>width</dt>
+<dd><p>Pixel width (pixel length depends on zoom). Enter a <code>width</code> to manually specify the width; otherwise, a width of <code>height_width_max</code> or smaller will be used.</p></dd>
 
 
 <dt>webshot_delay</dt>
