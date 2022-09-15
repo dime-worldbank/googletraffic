@@ -18,6 +18,17 @@ r <- gt_make_raster(location   = c(40.712778, -74.006111),
 #### From Polygon
 us_sp <- raster::getData('GADM', country='USA', level=2)
 ny_sp <- us_sp[us_sp$NAME_2 %in% "New York",]
+aa <- ny_sp |> sf::st_as_sf()
+
+aap <- sf::st_transform(aa, 4326)
+
+
+sf::st_crs(aa) == 9122
+
+st_crs()
+
+st_crs(sfc) = 4326
+
 
 r <- gt_make_raster_from_polygon(polygon    = ny_sp,
                                  height     = 2000,
