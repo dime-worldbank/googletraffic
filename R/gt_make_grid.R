@@ -44,6 +44,12 @@ gt_make_grid <- function(polygon,
     polygon <- polygon %>% sf::st_as_sf()
   }
   
+  ## Check CRS
+  if(sf::st_crs(polygon) != sf::st_crs(4326)){
+    warning("Transforming polygon to EPSG:4236 CRS")
+    polygon <- polygon %>% sf::st_transform(4326)
+  }
+  
   ## If polygon is more than one row, make one polygon
   if(nrow(polygon) > 1){
     polygon$id <- 1
