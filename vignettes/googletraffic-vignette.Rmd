@@ -246,9 +246,8 @@ r <- gt_load_png_as_traffic_raster(filename = "google_traffic.png",
 We can also use this process when querying traffic data for a larger study area that requires making multiple API calls. The below example illustrates creating multiple pngs from a grid.
 
 ```{r png_2, include=TRUE, warning=FALSE, message=FALSE, eval=T}
-#### Make grid
-# We first make a grid, which contains all the parameters needed to make a png then
-# the raster
+#### First, make grid
+
 grid_df <- gt_make_grid(polygon = ny_sp,
                         height  = 2000,
                         width   = 2000,
@@ -276,7 +275,8 @@ r_list <- lapply(1 in 1:nrow(grid_df)){
   grid_i_df <- grid_df[i,]
   
   gt_load_png_as_traffic_raster(filename = paste0(i, "_google_traffic.png"),
-                                location = c(grid_i_df$latitude, grid_i_df$longitude),
+                                location = c(grid_i_df$latitude, 
+                                             grid_i_df$longitude),
                                 height   = grid_i_df$height,
                                 width    = grid_i_df$width,
                                 zoom     = grid_i_df$zoom)
