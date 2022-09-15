@@ -111,6 +111,8 @@ The following are key parameters relevant across functions for querying Google T
 
 __Large height/width and delay time:__ Google traffic data takes time to render on a map, and larger `height` and `width` values require more time needed for data to render. The functions automatically scale the delay time depending on the `height` and `width` values set, but the delay time can also be manually set using the `webshot_delay` parameter. Note that traffic data may fail to render for very large `height` and `width` values, no matter the `webshot_delay` set (we find that the function works well with a `height`/`width` of 2000 or less).
 
+__Default height/width:__ In the `gt_make_raster_from_polygon()` and `gt_make_grid()` functions, `height` and `width` do not need to be set. The function will first test using a `height` and `width` of 2000, but if a smaller `height` and `width` can be used where the same number of API calls are made, a smaller` height`/`width` will be used. However, the `height` and `width` can still be manually set in these functions.
+
 ---
 
 ## Raster Around Point <a name="raster-point"></a>
@@ -150,7 +152,9 @@ leaflet(width = "100%") %>%
 
 ## Raster Around Polygon <a name="raster-polygon"></a>
 
-The above example showed querying traffic information for lower Manhattan. Here, we show querying traffic information for all of Manhattan while still using a relatively high zoom level (that allows capturing traffic on smaller streets). The `gt_make_raster_from_polygon()` accepts a polygon as an input; if needed, multiple API queries are made to query traffic for the full polygon. We still specify the `height` and `width`, which determines the height and width used for a single API query. Large `height` and `width` values will result in fewer Google queries, while smaller `height` and `width` values will require more queries to cover the same spatial area; traffic data will fail to render if too large of `height` and `width` values are set. 
+The above example showed querying traffic information for lower Manhattan. Here, we show querying traffic information for all of Manhattan while still using a relatively high zoom level (that allows capturing traffic on smaller streets). The `gt_make_raster_from_polygon()` accepts a polygon as an input; if needed, multiple API queries are made to query traffic for the full polygon.
+
+By default, a `height` and `width` of 2000 is used for each API call; however, (1) the function will use a smaller `height`/`width` if a smaller `height`/`width` results in the same number of API queries to cover the polygon, and (2) the `height` and `width` can still be manually specified using the `height` and `width` parameters.
 
 ```{r polygon, include=TRUE, warning=FALSE, message=FALSE, eval=T}
 ## Grab polygon of Manhattan
@@ -159,8 +163,6 @@ ny_sp <- us_sp[us_sp$NAME_2 %in% "New York",]
 
 ## Make raster
 r <- gt_make_raster_from_polygon(polygon    = ny_sp,
-                                 height     = 2000,
-                                 width      = 2000,
                                  zoom       = 15,
                                  google_key = google_key)
 ## Map raster
@@ -173,14 +175,12 @@ leaflet(width = "100%") %>%
 
 ## Raster Using Grid <a name="raster-grid"></a>
 
-`gt_make_raster_from_polygon()` creates a grid that covers a polygon, creates a traffic raster for each grid, and merges the rasters together. Some may prefer to first create and see the grid, then create a traffic raster using this grid. For example, one could (1) create a grid that covers a polygon then (2) remove certain grid tiles that cover areas that may not be of interest. The `gt_make_grid()` and `gt_make_raster_from_grid()` functions facilitate this process; `gt_make_grid()` creates a grid, then `gt_make_raster_from_grid()` uses a grid as an input to create a traffic raster.
+Within `gt_make_raster_from_polygon()`, the function creates a grid that covers a polygon, creates a traffic raster for each grid, and merges the rasters together. Some may prefer to first create and see the grid, then create a traffic raster using this grid. For example, one could (1) create a grid that covers a polygon then (2) remove certain grid tiles that cover areas that may not be of interest. The `gt_make_grid()` and `gt_make_raster_from_grid()` functions facilitate this process; `gt_make_grid()` creates a grid, then `gt_make_raster_from_grid()` uses a grid as an input to create a traffic raster.
 
-First, we create a grid using `gt_make_grid()`.
+First, we create a grid using `gt_make_grid()`. By default, a `height` and `width` of 2000 is used for each grid; however, (1) the function will use a smaller `height`/`width` if a smaller `height`/`width` results in the same number of grid cells to cover the polygon, and (2) the `height` and `width` can still be manually specified using the `height` and `width` parameters.
 
 ```{r grid_1, include=TRUE, warning=FALSE, message=FALSE, eval=T}
 grid_df <- gt_make_grid(polygon = ny_sp,
-                        height  = 2000,
-                        width   = 2000,
                         zoom    = 15)
 leaflet(width = "100%") %>%
   addTiles() %>%
