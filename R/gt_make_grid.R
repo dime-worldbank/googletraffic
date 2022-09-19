@@ -184,7 +184,6 @@ gt_make_grid <- function(polygon,
       sf::st_bbox() %>% 
       sf::st_as_sfc() %>% 
       sf::st_as_sf(crs = CRS("+init=epsg:4326"))
-    #as(ext, "SpatialPolygons") %>% st_as_sf()
   }) %>%
     dplyr::bind_rows()
   

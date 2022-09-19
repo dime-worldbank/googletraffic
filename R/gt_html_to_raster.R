@@ -34,19 +34,12 @@ gt_html_to_raster <- function(filename,
   filename_dir  <- filename_root %>% 
     stringr::str_replace_all(paste0("/", filename_only), "")
   
-  # webshot() exports into current directory, so need to set working directory
-  # to directory where the html file is located. We grab the current directory
-  # so we can switch the directory back.
-  current_dir <- getwd()
-  
-  setwd(filename_dir)
-  
   if(print_progress){
     cat(paste0("Pausing for ", webshot_delay, " seconds to allow traffic data to render"))
   }
   
-  webshot::webshot(paste0(filename_only,".html"),
-                   file = paste0(filename_only,".png"),
+  webshot::webshot(url = filename,
+                   file = file.path(filename_dir, paste0(filename_only,".png")),
                    vheight = height,
                    vwidth = width,
                    cliprect = "viewport",
@@ -64,8 +57,6 @@ gt_html_to_raster <- function(filename,
   
   ## Delete png from temp file
   unlink(file.path(filename_dir, paste0(filename_only,".png")))
-  
-  setwd(current_dir)
-  
+
   return(r)
 }

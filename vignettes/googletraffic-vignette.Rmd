@@ -23,7 +23,7 @@ knitr::opts_chunk$set(
 
 ## Overview <a name="overview"></a>
 
-Google Maps provides information about traffic conditions across an area. This package provides functions to produce georeferenced rasters from live Google Maps traffic information. Providing Google traffic information in a georeferenced data format facilitates analysis of traffic information (e.g., spatially merging traffic information with other data sources).
+Google Maps displays information about traffic conditions across an area. This package provides functions to produce georeferenced rasters from live Google Maps traffic information. Having Google traffic information in a georeferenced data format facilitates analysis of traffic information (e.g., spatially merging traffic information with other data sources).
 
 The below image shows an example raster produced using the package showing [traffic within Washington, DC.](https://www.google.com/maps/@38.9098813,-77.0406205,15.01z/data=!5m1!1e1)
 
@@ -94,6 +94,7 @@ traffic_pal <- colorNumeric(c("green", "orange", "red", "#660000"),
 
 ```{r loadkey, include=FALSE}
 api_keys_df <- read_csv("~/Dropbox/World Bank/Webscraping/Files for Server/api_keys.csv")
+
 google_key <- api_keys_df %>%
   dplyr::filter(Service == "Google Directions API",
                 Account == "ramarty@email.wm.edu") %>%
@@ -107,11 +108,11 @@ google_key <- api_keys_df %>%
 The following are key parameters relevant across functions for querying Google Traffic data.
 
 * __zoom:__ The [zoom level](https://wiki.openstreetmap.org/wiki/Zoom_levels) defines the resolution of the traffic image. Values can range from 0 to 20. At the equator, with a zoom level 10, each pixel will be about 150 meters; with a zoom level 20, each pixel will be about 0.15 meters. Consequently, smaller zoom levels can be used if only larger roads are of interest (e.g., highways), while larger zoom levels will be needed for capturing smaller roads.
-* __height/width:__ The `height` and `width` parameters define the height and width of the raster in terms of pixels. The kilometer height/width of pixels depends primarily on the `zoom` level (larger `zoom` levels correspond to the `height` and `width` having a smaller kilometer distance). 
+* __height/width:__ The `height` and `width` parameters define the height and width of the raster in terms of pixels. The kilometer height/width of pixels depends primarily on the zoom level (larger zoom levels correspond to the pixels having a smaller kilometer distance). 
 
-__Large height/width and delay time:__ Google traffic data takes time to render on a map, and larger `height` and `width` values require more time needed for data to render. The functions automatically scale the delay time depending on the `height` and `width` values set, but the delay time can also be manually set using the `webshot_delay` parameter. Note that traffic data may fail to render for very large `height` and `width` values, no matter the `webshot_delay` set (we find that the function works well with a `height`/`width` of 2000 or less).
+__Large height/width and delay time:__ Google traffic data takes time to render on a map, and larger height and width values require more time for data to render. The functions automatically scale the delay time depending on the height and width values set, but the delay time can also be manually set using the `webshot_delay` parameter. Note that traffic data may fail to render for very large height and width values, no matter the `webshot_delay` set (we find that the function works well with a `height` and `width` of 2000 or less).
 
-__Default height/width:__ In the `gt_make_raster_from_polygon()` and `gt_make_grid()` functions, `height` and `width` do not need to be set. The function will first test using a `height` and `width` of 2000, but if a smaller `height` and `width` can be used where the same number of API calls are made, a smaller` height`/`width` will be used. However, the `height` and `width` can still be manually set in these functions.
+__Default height/width:__ In the `gt_make_raster_from_polygon()` and `gt_make_grid()` functions, `height` and `width` do not need to be set. The function will first test a height and width of 2000, but if a smaller height and width can be used where the same number of API calls are made, a smaller height and width will be used. However, the height and width can still be manually set in these functions.
 
 ---
 
@@ -126,6 +127,7 @@ r <- gt_make_raster(location   = c(40.712778, -74.006111),
                     width      = 1000,
                     zoom       = 16,
                     google_key = google_key)
+
 ## Map raster
 leaflet(width = "100%") %>%
   addProviderTiles("Esri.WorldGrayCanvas") %>%
@@ -141,6 +143,7 @@ r <- gt_make_raster(location   = c(41.384900, -78.891302),
                     width      = 1000,
                     zoom       = 7,
                     google_key = google_key)
+
 ## Map raster
 leaflet(width = "100%") %>%
   addProviderTiles("Esri.WorldGrayCanvas") %>%
@@ -152,9 +155,9 @@ leaflet(width = "100%") %>%
 
 ## Raster Around Polygon <a name="raster-polygon"></a>
 
-The above example showed querying traffic information for lower Manhattan. Here, we show querying traffic information for all of Manhattan while still using a relatively high zoom level (that allows capturing traffic on smaller streets). The `gt_make_raster_from_polygon()` accepts a polygon as an input; if needed, multiple API queries are made to query traffic for the full polygon.
+The above example showed querying traffic information for lower Manhattan. In this example, we show querying traffic information for all of Manhattan while still using a relatively high zoom level (that allows capturing traffic on smaller streets). The `gt_make_raster_from_polygon()` accepts a polygon as an input; if needed, multiple API queries are made to query traffic for the full polygon.
 
-By default, a `height` and `width` of 2000 is used for each API call; however, (1) the function will use a smaller `height`/`width` if a smaller `height`/`width` results in the same number of API queries to cover the polygon, and (2) the `height` and `width` can still be manually specified using the `height` and `width` parameters.
+<!--By default, a `height` and `width` of 2000 is used for each API call; however, (1) the function will use a smaller `height`/`width` if a smaller `height`/`width` results in the same number of API queries to cover the polygon, and (2) the `height` and `width` can still be manually specified using the `height` and `width` parameters.-->
 
 ```{r polygon, include=TRUE, warning=FALSE, message=FALSE, eval=T}
 ## Grab polygon of Manhattan
@@ -165,6 +168,7 @@ ny_sp <- us_sp[us_sp$NAME_2 %in% "New York",]
 r <- gt_make_raster_from_polygon(polygon    = ny_sp,
                                  zoom       = 15,
                                  google_key = google_key)
+
 ## Map raster
 leaflet(width = "100%") %>%
   addProviderTiles("Esri.WorldGrayCanvas") %>%
@@ -177,11 +181,12 @@ leaflet(width = "100%") %>%
 
 Within `gt_make_raster_from_polygon()`, the function creates a grid that covers a polygon, creates a traffic raster for each grid, and merges the rasters together. Some may prefer to first create and see the grid, then create a traffic raster using this grid. For example, one could (1) create a grid that covers a polygon then (2) remove certain grid tiles that cover areas that may not be of interest. The `gt_make_grid()` and `gt_make_raster_from_grid()` functions facilitate this process; `gt_make_grid()` creates a grid, then `gt_make_raster_from_grid()` uses a grid as an input to create a traffic raster.
 
-First, we create a grid using `gt_make_grid()`. By default, a `height` and `width` of 2000 is used for each grid; however, (1) the function will use a smaller `height`/`width` if a smaller `height`/`width` results in the same number of grid cells to cover the polygon, and (2) the `height` and `width` can still be manually specified using the `height` and `width` parameters.
+First, we create a grid using `gt_make_grid()`. 
 
 ```{r grid_1, include=TRUE, warning=FALSE, message=FALSE, eval=T}
 grid_df <- gt_make_grid(polygon = ny_sp,
                         zoom    = 15)
+
 leaflet(width = "100%") %>%
   addTiles() %>%
   addPolygons(data = grid_df, popup = ~as.character(id))
@@ -203,6 +208,7 @@ Second, we use the grid to make a traffic raster using `gt_make_raster_from_grid
 ## Make raster
 r <- gt_make_raster_from_grid(grid_param_df = grid_clean_df,
                               google_key    = google_key)
+
 ## Map raster
 leaflet(width = "100%") %>%
   addProviderTiles("Esri.WorldGrayCanvas") %>%
@@ -213,14 +219,14 @@ leaflet(width = "100%") %>%
 
 ## Make PNG then Convert to Raster <a name="png-raster"></a>
 
-To make a google traffic raster, the functions first makes a temporary png file then converts the png file to a raster---where only the raster is outputted. Some workflows may require separating the processes, where a PNG file would first be created, then the PNG file would be converted to a raster.
+To make a Google traffic raster, the functions first makes a temporary png file then converts the png file to a raster---where only the raster is outputted. Some workflows may want to separate the processes, where a PNG file would first be created, then the PNG file would be converted to a raster.
 
 To support these workflows, the package provides the:
 
 * __`gt_make_png()`__ function which creates a PNG file with traffic data
 * __`gt_load_png_as_traffic_raster()`__ function which converts a PNG file into a spatially-referenced traffic raster
 
-The below example illutrates the process.
+The below example illustrates the process.
 ```{r png_1, include=TRUE, warning=FALSE, message=FALSE, eval=FALSE}
 #### Make png
 # The function does not output anything in R; it saves a png file, specified 
@@ -247,11 +253,11 @@ We can also use this process when querying traffic data for a larger study area 
 
 ```{r png_2, include=TRUE, warning=FALSE, message=FALSE, eval=T}
 #### First, make grid
-
 grid_df <- gt_make_grid(polygon = ny_sp,
                         height  = 2000,
                         width   = 2000,
                         zoom    = 15)
+
 print(grid_df)
 ```
 
@@ -268,6 +274,7 @@ for(i in 1:nrow(grid_df)){
               out_filename = paste0(i, "_google_traffic.png"),
               google_key   = google_key)
 }
+
 #### Convert PNGs to rasters
 # Here we make a list of rasters
 r_list <- lapply(1 in 1:nrow(grid_df)){
@@ -281,6 +288,7 @@ r_list <- lapply(1 in 1:nrow(grid_df)){
                                 width    = grid_i_df$width,
                                 zoom     = grid_i_df$zoom)
 }
+
 #### Mosaic rasters together
 # To mosaic the rasters together, the mosaic() function from the raster package 
 # requires that rasters have the same origin and resolution. The above rasters 

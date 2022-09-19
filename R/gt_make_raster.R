@@ -61,7 +61,7 @@ gt_make_raster <- function(location,
   
   ## Filename; as html
   filename_html <- tempfile(pattern = "file", tmpdir = tempdir(), fileext = ".html")
-  
+
   ## Make html
   gt_make_html(location = location,
                height = height,
