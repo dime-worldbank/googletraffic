@@ -1,17 +1,19 @@
 # Make Raster from Grid
 
+# \link[gt_make_grid()]{`gt_make_grid()`}
+
 #' Make Google Traffic Raster Based on Grid of Coordinates
 #' 
 #' Make a raster from Google traffic data, where each pixel has one of four values
 #' indicating traffic volume (no traffic, light, moderate, and heavy).
 #' 
-#' @param grid_param_df Grid parameter dataframe produced from \link[gt_make_grid()]{`gt_make_grid()`}
+#' @param grid_param_df Grid parameter dataframe produced from `gt_make_grid()`
 #' @param google_key Google API key
 #' @param webshot_delay How long to wait for google traffic layer to render. Larger height/widths require longer delay times. If `NULL`, the following delay time (in seconds) is used: `delay = max(height,width)/200`.
 #' @param print_progress Whether to print function progress
 #' @param return_list_of_tiles Instead of merging traffic tiles together into one large tile, return a list of tiles
 #'
-#' @return Returns a georeferenced raster file. The file can contain the following values: 1 = no traffic; 2 = light traffic; 3 = moderate traffic; 4 = heavy traffic.
+#' @return Returns a georeferenced raster. Raster pixels can contain the following values: 1 = no traffic; 2 = medium traffic; 3 = high traffic; 4 = heavy traffic.
 #' 
 #' @examples
 #' \dontrun{

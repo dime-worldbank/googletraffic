@@ -4,7 +4,7 @@
 #'
 #' Converts PNG to raster and translates color values to traffic values
 #'
-#' @param filename Filename/path of png file
+#' @param filename Filename of png file
 #' @param location Vector of latitude and longitude used to create png file using `gt_make_png()`
 #' @param height Height (in pixels; pixel length depends on zoom) used to create png file using `gt_make_png()`
 #' @param width Width (in pixels; pixel length depends on zoom) used to create png file using `gt_make_png()`
