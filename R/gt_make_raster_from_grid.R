@@ -68,30 +68,7 @@ gt_make_raster_from_grid <- function(grid_param_df,
     if(length(r_list) > 1){
       
       r <- gt_mosaic(r_list)
-      
-      # ## Make template raster
-      # r_list_temp <- r_list
-      # 
-      # names(r_list_temp)    <- NULL
-      # r_list_temp$tolerance <- 9999999
-      # 
-      # r_temp <- do.call(raster::merge, r_list_temp)
-      # r_temp[] <- NA
-      # 
-      # ## Resample to template
-      # for(i in 1:length(r_list)) r_list[[i]] <- raster::resample(r_list[[i]], 
-      #                                                            r_temp, 
-      #                                                            method = "ngb")
-      # 
-      # ## Mosaic rasters together
-      # names(r_list)    <- NULL
-      # r_list$fun       <- max
-      # r_list$tolerance <- 999
-      # 
-      # r <- do.call(raster::mosaic, r_list) 
-      
-      #r[r[] %in% 0] <- NA
-      
+
     } else{
       r <- r_list[[1]]
     }
