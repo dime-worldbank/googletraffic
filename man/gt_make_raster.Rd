@@ -30,7 +30,7 @@ gt_make_raster(
 \item{print_progress}{Whether to print function progress}
 }
 \value{
-Returns a georeferenced raster file. The file can contain the following values: 1 = no traffic; 2 = light traffic; 3 = moderate traffic; 4 = heavy traffic.
+Returns a georeferenced raster. Raster pixels can contain the following values: 1 = no traffic; 2 = medium traffic; 3 = high traffic; 4 = heavy traffic.
 }
 \description{
 Make a raster from Google traffic data, where each pixel has one of four values

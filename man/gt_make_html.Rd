@@ -13,7 +13,7 @@ gt_make_html(location, height, width, zoom, filename, google_key)
 
 \item{width}{Width (in pixels; pixel length depends on zoom)}
 
-\item{zoom}{Zoom; integer from 0 to 20. For more information, see \href{https://wiki.openstreetmap.org/wiki/Zoom_levels}{here}}
+\item{zoom}{Zoom level; integer from 0 to 20. For more information about how zoom levels correspond to pixel size, see \href{https://wiki.openstreetmap.org/wiki/Zoom_levels}{here}}
 
 \item{filename}{Path and filename to save file}
 
