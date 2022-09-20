@@ -16,9 +16,9 @@ gt_make_grid(
 \arguments{
 \item{polygon}{Polygon (\code{sf} object or \code{SpatialPolygonsDataframe}) in WGS84 CRS the defines region to be queried.}
 
-\item{zoom}{Zoom level; integer from 0 to 20. For more information, see \href{https://wiki.openstreetmap.org/wiki/Zoom_levels}{here}}
+\item{zoom}{Zoom level; integer from 0 to 20. For more information about how zoom levels correspond to pixel size, see \href{https://wiki.openstreetmap.org/wiki/Zoom_levels}{here}}
 
-\item{height_width_max}{Maximum pixel height and width to check using (pixel length depends on zoom). If the same number of grids can be made with a smaller height/width, the function will use a smaller height/width. If height and width are specified, that height and width will be used and height_width_max will be ignored. (Default: 2000)}
+\item{height_width_max}{Maximum pixel height and width to check using (pixel length depends on zoom). If the same number of grids can be made with a smaller height/width, the function will use a smaller height/width. If height and width are specified, that height and width will be used and \code{height_width_max} will be ignored. (Default: 2000)}
 
 \item{height}{Pixel height (pixel length depends on zoom). Enter a \code{height} to manually specify the height; otherwise, a height of \code{height_width_max} or smaller will be used.}
 

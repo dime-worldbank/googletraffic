@@ -7,7 +7,7 @@
 gt_load_png_as_traffic_raster(filename, location, height, width, zoom)
 }
 \arguments{
-\item{filename}{Filename/path of png file}
+\item{filename}{Filename of png file}
 
 \item{location}{Vector of latitude and longitude used to create png file using \code{gt_make_png()}}
 
