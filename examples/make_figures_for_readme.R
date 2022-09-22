@@ -102,7 +102,7 @@ if(F){
     theme(plot.background = element_rect(fill = "white", color="white"))
   
   ggsave(p, filename = file.path(homepage_images, "nyc_large.jpg"),
-         height = 20*0.5,
+         height = 20*0.6,
          width = 12*0.5)
   
 }
