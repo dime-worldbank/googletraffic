@@ -43,17 +43,17 @@ getImageBounds <- function(mapWidth, mapHeight, xScale, yScale, lat, lng){
 }
 
 # Main function ----------------------------------------------------------------
-#' Determine the spatial extent of a Google traffic tile
-#'
-#' Based on the location, height, width, and zoom, determines the spatial extent of the Google traffic tile
-#'
-#' @param latitude Latitude
-#' @param longitude Longitude
-#' @param height Height (in pixels; pixel length depends on zoom)
-#' @param width Width (in pixels; pixel length depends on zoom)
-#' @param zoom Zoom level
-#'
-#' @return Returns an extent object in WGS84 (EPSG:4326)
+# Determine the spatial extent of a Google traffic tile
+#
+# Based on the location, height, width, and zoom, determines the spatial extent of the Google traffic tile
+#
+# @param latitude Latitude
+# @param longitude Longitude
+# @param height Height (in pixels; pixel length depends on zoom)
+# @param width Width (in pixels; pixel length depends on zoom)
+# @param zoom Zoom level
+#
+# @return Returns an extent object in WGS84 (EPSG:4326)
 gt_make_extent <- function(latitude,
                            longitude,
                            height,

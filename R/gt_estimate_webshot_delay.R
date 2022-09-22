@@ -1,12 +1,12 @@
 # Webshot Delay
 
-#' If not specified, estimate `webshot_delay` using height and width
-#' 
-#' @param height Height
-#' @param width Width
-#' @param webshot_delay Webshot Delay
-#' 
-#' @return webshot_delay (in seconds).
+# If not specified, estimate `webshot_delay` using height and width
+# 
+# @param height Height
+# @param width Width
+# @param webshot_delay Webshot Delay
+# 
+# @return webshot_delay (in seconds).
 gt_estimate_webshot_delay <- function(height, 
                                       width, 
                                       webshot_delay){

@@ -1,18 +1,18 @@
 # Make Google Traffic HTML
 
-#' Make traffic html from Google
-#'
-#' This function returns an html of traffic from Google. The `gt_html_to_raster()` can
-#' then be used to convert this html into a georeferenced raster file. 
-#'
-#' @param location Vector of latitude and longitude
-#' @param height Height (in pixels; pixel length depends on zoom)
-#' @param width Width (in pixels; pixel length depends on zoom)
-#' @param zoom Zoom level; integer from 0 to 20. For more information about how zoom levels correspond to pixel size, see [here](https://wiki.openstreetmap.org/wiki/Zoom_levels)
-#' @param filename Path and filename to save file
-#' @param google_key Google API key
-#' 
-#' @return Returns an html file of Google traffic
+# Make traffic html from Google
+#
+# This function returns an html of traffic from Google. The `gt_html_to_raster()` can
+# then be used to convert this html into a georeferenced raster file. 
+#
+# @param location Vector of latitude and longitude
+# @param height Height (in pixels; pixel length depends on zoom)
+# @param width Width (in pixels; pixel length depends on zoom)
+# @param zoom Zoom level; integer from 0 to 20. For more information about how zoom levels correspond to pixel size, see [here](https://wiki.openstreetmap.org/wiki/Zoom_levels)
+# @param filename Path and filename to save file
+# @param google_key Google API key
+# 
+# @return Returns an html file of Google traffic
 gt_make_html <- function(location,
                          height,
                          width,
