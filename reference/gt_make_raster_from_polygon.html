@@ -81,23 +81,23 @@ indicating traffic volume (no traffic, light, moderate, and heavy).</p>
 
 
 <dt>height_width_max</dt>
-<dd><p>Maximum pixel height and width to check using (pixel length depends on zoom). If the same number of grids can be made with a smaller height/width, the function will use a smaller height/width. If height and width are specified, that height and width will be used and height_width_max will be ignored. (Default: <code>2000</code>)</p></dd>
+<dd><p>Maximum pixel height and width to check using for each API query (pixel length depends on zoom). If the same number of API queries can be made with a smaller height/width, the function will use a smaller height/width. If <code>height</code> and <code>width</code> are specified, that height and width will be used and <code>height_width_max</code> will be ignored. (Default: <code>2000</code>)</p></dd>
 
 
 <dt>height</dt>
-<dd><p>Pixel height (pixel length depends on zoom). Enter a <code>height</code> to manually specify the height; otherwise, a height of <code>height_width_max</code> or smaller will be used.</p></dd>
+<dd><p>Height, in pixels, for each API query (pixel length depends on zoom). Enter a <code>height</code> to manually specify the height; otherwise, a height of <code>height_width_max</code> or smaller will be used.</p></dd>
 
 
 <dt>width</dt>
-<dd><p>Pixel width (pixel length depends on zoom). Enter a <code>width</code> to manually specify the width; otherwise, a width of <code>height_width_max</code> or smaller will be used.</p></dd>
+<dd><p>Pixel, in pixels, for each API query (pixel length depends on zoom). Enter a <code>width</code> to manually specify the width; otherwise, a width of <code>height_width_max</code> or smaller will be used.</p></dd>
 
 
 <dt>webshot_delay</dt>
-<dd><p>How long to wait for google traffic layer to render (in seconds). Larger height/widths require longer delay times. If <code>NULL</code>, the following delay time (in seconds) is used: <code>delay = max(height,width)/200</code>.</p></dd>
+<dd><p>How long to wait for Google traffic layer to render (in seconds). Larger height/widths require longer delay times. If <code>NULL</code>, the following delay time (in seconds) is used: <code>delay = max(height,width)/200</code>.</p></dd>
 
 
 <dt>reduce_hw</dt>
-<dd><p>Number of pixels to reduce height/width by. Doing so creates some overlap between tiles to ensure there is not blank space between tiles. (Default: <code>10</code>).</p></dd>
+<dd><p>Number of pixels to reduce height/width by. Doing so creates some overlap between grids to ensure there is not blank space between tiles. (Default: <code>10</code>).</p></dd>
 
 
 <dt>return_list_of_tiles</dt>
@@ -109,7 +109,7 @@ indicating traffic volume (no traffic, light, moderate, and heavy).</p>
 
 
 <dt>print_progress</dt>
-<dd><p>Show progress for which tile has been processed. (Default: <code>TRUE</code>).</p></dd>
+<dd><p>Show progress for which grid / API query has been processed. (Default: <code>TRUE</code>).</p></dd>
 
 </dl></div>
     <div class="section level2">
