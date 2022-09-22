@@ -1,14 +1,14 @@
 # Load .png as Traffic Raster
 
-#' Converts png to raster
+#' Converts PNG to raster
 #'
 #' Converts PNG of Google traffic data to raster and translates color values to traffic values
 #'
-#' @param filename Filename of png file
-#' @param location Vector of latitude and longitude used to create png file using [gt_make_png()]
-#' @param height Height (in pixels; pixel length depends on zoom) used to create png file using [gt_make_png()]
-#' @param width Width (in pixels; pixel length depends on zoom) used to create png file using [gt_make_png()]
-#' @param zoom Zoom used to create png file using [gt_make_png()]
+#' @param filename Filename of PNG file
+#' @param location Vector of latitude and longitude used to create PNG file using [gt_make_png()]
+#' @param height Height (in pixels; pixel length depends on zoom) used to create PNG file using [gt_make_png()]
+#' @param width Width (in pixels; pixel length depends on zoom) used to create PNG file using [gt_make_png()]
+#' @param zoom Zoom used to PNG png file using [gt_make_png()]
 #'
 #' @return Returns a raster where each pixel represents traffic level (1 = no traffic, 2 = medium traffic, 3 = traffic delays, 4 = heavy traffic)
 #'

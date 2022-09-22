@@ -2,7 +2,7 @@
 % Please edit documentation in R/gt_make_grid.R
 \name{gt_make_grid}
 \alias{gt_make_grid}
-\title{Creates grid to query Google Traffic}
+\title{Creates Grid to Query Google Traffic}
 \usage{
 gt_make_grid(
   polygon,
@@ -18,13 +18,13 @@ gt_make_grid(
 
 \item{zoom}{Zoom level; integer from 0 to 20. For more information about how zoom levels correspond to pixel size, see \href{https://wiki.openstreetmap.org/wiki/Zoom_levels}{here}}
 
-\item{height_width_max}{Maximum pixel height and width to check using (pixel length depends on zoom). If the same number of grids can be made with a smaller height/width, the function will use a smaller height/width. If height and width are specified, that height and width will be used and \code{height_width_max} will be ignored. (Default: 2000)}
+\item{height_width_max}{Maximum pixel height and width to check using for each grid (pixel length depends on zoom). If the same number of grids can be made with a smaller height/width, the function will use a smaller height/width. If \code{height} and \code{width} are specified, that height and width will be used and \code{height_width_max} will be ignored. (Default: \code{2000})}
 
-\item{height}{Pixel height (pixel length depends on zoom). Enter a \code{height} to manually specify the height; otherwise, a height of \code{height_width_max} or smaller will be used.}
+\item{height}{Height, in pixels, for each grid (pixel length depends on zoom). Enter a \code{height} to manually specify the height; otherwise, a height of \code{height_width_max} or smaller will be used.}
 
-\item{width}{Pixel width (pixel length depends on zoom). Enter a \code{width} to manually specify the width; otherwise, a width of \code{height_width_max} or smaller will be used.}
+\item{width}{Pixel, in pixels, for each grid (pixel length depends on zoom). Enter a \code{width} to manually specify the width; otherwise, a width of \code{height_width_max} or smaller will be used.}
 
-\item{reduce_hw}{Number of pixels to reduce height/width by. Doing so creates some overlap between tiles to ensure there is not blank space between tiles. (Default: 10).}
+\item{reduce_hw}{Number of pixels to reduce height/width by. Doing so creates some overlap between grids to ensure there is not blank space between grids. (Default: 10).}
 }
 \value{
 Returns an sf dataframe with the locations to query, including parameters needed for \code{\link[=gt_make_raster_from_grid]{gt_make_raster_from_grid()}}

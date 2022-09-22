@@ -8,7 +8,7 @@ gt_make_raster_from_grid(
   grid_param_df,
   google_key,
   webshot_delay = NULL,
-  return_list_of_tiles = F,
+  return_list_of_rasters = F,
   print_progress = T
 )
 }
@@ -17,9 +17,9 @@ gt_make_raster_from_grid(
 
 \item{google_key}{Google API key}
 
-\item{webshot_delay}{How long to wait for google traffic layer to render. Larger height/widths require longer delay times. If \code{NULL}, the following delay time (in seconds) is used: \code{delay = max(height,width)/200}.}
+\item{webshot_delay}{How long to wait for Google traffic layer to render. Larger height/widths require longer delay times. If \code{NULL}, the following delay time (in seconds) is used: \code{delay = max(height,width)/200}.}
 
-\item{return_list_of_tiles}{Instead of merging traffic tiles together into one large tile, return a list of tiles}
+\item{return_list_of_rasters}{Instead of merging traffic rasters produced for each grid together into one large raster, return a list of rasters}
 
 \item{print_progress}{Whether to print function progress}
 }

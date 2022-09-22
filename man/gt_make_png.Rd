@@ -24,11 +24,11 @@ gt_make_png(
 
 \item{zoom}{Zoom level; integer from 0 to 20. For more information about how zoom levels correspond to pixel size, see \href{https://wiki.openstreetmap.org/wiki/Zoom_levels}{here}}
 
-\item{out_filename}{Filename/path of png file to make}
+\item{out_filename}{Filename of PNG file to make}
 
 \item{google_key}{Google API key}
 
-\item{webshot_delay}{How long to wait for google traffic layer to render. Larger height/widths require longer delay times. If \code{NULL}, the following delay time (in seconds) is used: \code{delay = max(height,width)/200}.}
+\item{webshot_delay}{How long to wait for Google traffic layer to render. Larger height/widths require longer delay times. If \code{NULL}, the following delay time (in seconds) is used: \code{delay = max(height,width)/200}.}
 
 \item{print_progress}{Whether to print function progress}
 }
@@ -36,7 +36,7 @@ gt_make_png(
 Returns a georeferenced raster file. The file can contain the following values: 1 = no traffic; 2 = light traffic; 3 = moderate traffic; 4 = heavy traffic.
 }
 \description{
-Make a png file of Google traffic data. The \code{gt_load_png_as_traffic_raster()} function can then
+Make a png file of Google traffic data. The \code{\link[=gt_load_png_as_traffic_raster]{gt_load_png_as_traffic_raster()}} function can then
 be used to convert the png into a traffic raster
 }
 \examples{
