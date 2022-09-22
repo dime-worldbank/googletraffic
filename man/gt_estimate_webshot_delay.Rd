@@ -2,7 +2,7 @@
 % Please edit documentation in R/gt_estimate_webshot_delay.R
 \name{gt_estimate_webshot_delay}
 \alias{gt_estimate_webshot_delay}
-\title{If not specified, estimate webshot_delay using height and width}
+\title{If not specified, estimate \code{webshot_delay} using height and width}
 \usage{
 gt_estimate_webshot_delay(height, width, webshot_delay)
 }
@@ -17,5 +17,5 @@ gt_estimate_webshot_delay(height, width, webshot_delay)
 webshot_delay (in seconds).
 }
 \description{
-If not specified, estimate webshot_delay using height and width
+If not specified, estimate \code{webshot_delay} using height and width
 }
