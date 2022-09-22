@@ -68,7 +68,7 @@ Querying Google traffic information requires a Google API key with the [Maps Jav
 
 ## Setup <a name="setup"></a>
 
-The below code should be run before running the following examples. We load packages, set the Google API key, and define a palette used for visualizing traffic data in leaflet.
+The below code should be run before running the following examples. We load packages, set the Google API key, and define a palette used for visualizing traffic data in [leaflet](https://rstudio.github.io/leaflet/).
 
 ```{r setup, include=TRUE, warning=FALSE, message=FALSE}
 ## Load Google Traffic package
@@ -112,7 +112,7 @@ The following are key parameters relevant across functions for querying Google T
 
 __Large height/width and delay time:__ Google traffic data takes time to render on a map, and larger height and width values require more time for data to render. The functions automatically scale the delay time depending on the height and width values set, but the delay time can also be manually set using the `webshot_delay` parameter. Note that traffic data may fail to render for very large height and width values, no matter the `webshot_delay` set (we find that the function works well with a `height` and `width` of 2000 or less).
 
-__Default height/width:__ In the `gt_make_raster_from_polygon()` and `gt_make_grid()` functions, `height` and `width` do not need to be set. The function will first test a height and width of 2000, but if a smaller height and width can be used where the same number of API calls are made, a smaller height and width will be used. However, the height and width can still be manually set in these functions.
+__Default height/width:__ In the `gt_make_raster_from_polygon()` and `gt_make_grid()` functions, `height` and `width` do not need to be set. The function will first test a height and width of 2000 for each API query to cover the region of interest, but if a smaller height and width can be used where the same number of API calls are made, a smaller height and width will be used. However, the height and width can still be manually set in these functions.
 
 ---
 
@@ -155,7 +155,7 @@ leaflet(width = "100%") %>%
 
 ## Raster Around Polygon <a name="raster-polygon"></a>
 
-The above example showed querying traffic information for lower Manhattan. In this example, we show querying traffic information for all of Manhattan while still using a relatively high zoom level (that allows capturing traffic on smaller streets). The `gt_make_raster_from_polygon()` accepts a polygon as an input; if needed, multiple API queries are made to query traffic for the full polygon.
+The above example shows querying traffic information for lower Manhattan. In this example, we show querying traffic information for all of Manhattan while still using a relatively high zoom level (that allows capturing traffic on smaller streets). The `gt_make_raster_from_polygon()` accepts a polygon as an input; if needed, multiple API queries are made to query traffic for the full polygon.
 
 <!--By default, a `height` and `width` of 2000 is used for each API call; however, (1) the function will use a smaller `height`/`width` if a smaller `height`/`width` results in the same number of API queries to cover the polygon, and (2) the `height` and `width` can still be manually specified using the `height` and `width` parameters.-->
 
@@ -249,7 +249,7 @@ r <- gt_load_png_as_traffic_raster(filename = "google_traffic.png",
                                    zoom     = 16)
 ```
 
-We can also use this process when querying traffic data for a larger study area that requires making multiple API calls. The below example illustrates creating multiple pngs from a grid.
+We can also use this process when querying traffic data for a larger study area that requires making multiple API calls. The below example illustrates creating multiple PNGs from a grid.
 
 ```{r png_2, include=TRUE, warning=FALSE, message=FALSE, eval=T}
 #### First, make grid

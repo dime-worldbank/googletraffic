@@ -7,9 +7,9 @@
 #' 
 #' @param grid_param_df Grid parameter dataframe produced from [gt_make_grid()]
 #' @param google_key Google API key
-#' @param webshot_delay How long to wait for google traffic layer to render. Larger height/widths require longer delay times. If `NULL`, the following delay time (in seconds) is used: `delay = max(height,width)/200`.
+#' @param webshot_delay How long to wait for Google traffic layer to render. Larger height/widths require longer delay times. If `NULL`, the following delay time (in seconds) is used: `delay = max(height,width)/200`.
 #' @param print_progress Whether to print function progress
-#' @param return_list_of_tiles Instead of merging traffic tiles together into one large tile, return a list of tiles
+#' @param return_list_of_rasters Instead of merging traffic rasters produced for each grid together into one large raster, return a list of rasters
 #'
 #' @return Returns a georeferenced raster. Raster pixels can contain the following values: 1 = no traffic; 2 = medium traffic; 3 = high traffic; 4 = heavy traffic.
 #' 
@@ -34,7 +34,7 @@
 gt_make_raster_from_grid <- function(grid_param_df,
                                      google_key,
                                      webshot_delay = NULL,
-                                     return_list_of_tiles = F,
+                                     return_list_of_rasters = F,
                                      print_progress = T){
   
   
@@ -47,7 +47,7 @@ gt_make_raster_from_grid <- function(grid_param_df,
   r_list <- lapply(1:nrow(grid_param_df), function(i){
     
     if(print_progress){
-      message(paste0("Processing tile / API query ",i," out of ",nrow(grid_param_df), 
+      message(paste0("Processing grid / API query ",i," out of ",nrow(grid_param_df), 
                      "; pausing for ", webshot_delay, " seconds to allow traffic data to render"))
     } 
     
@@ -64,7 +64,7 @@ gt_make_raster_from_grid <- function(grid_param_df,
     return(r_i)
   })
   
-  if(!return_list_of_tiles){  
+  if(!return_list_of_rasters){  
     if(length(r_list) > 1){
       
       r <- gt_mosaic(r_list)

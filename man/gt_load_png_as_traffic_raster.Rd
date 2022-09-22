@@ -2,26 +2,26 @@
 % Please edit documentation in R/gt_load_png_as_traffic_raster.R
 \name{gt_load_png_as_traffic_raster}
 \alias{gt_load_png_as_traffic_raster}
-\title{Converts png to raster}
+\title{Converts PNG to raster}
 \usage{
 gt_load_png_as_traffic_raster(filename, location, height, width, zoom)
 }
 \arguments{
-\item{filename}{Filename of png file}
+\item{filename}{Filename of PNG file}
 
-\item{location}{Vector of latitude and longitude used to create png file using \code{\link[=gt_make_png]{gt_make_png()}}}
+\item{location}{Vector of latitude and longitude used to create PNG file using \code{\link[=gt_make_png]{gt_make_png()}}}
 
-\item{height}{Height (in pixels; pixel length depends on zoom) used to create png file using \code{\link[=gt_make_png]{gt_make_png()}}}
+\item{height}{Height (in pixels; pixel length depends on zoom) used to create PNG file using \code{\link[=gt_make_png]{gt_make_png()}}}
 
-\item{width}{Width (in pixels; pixel length depends on zoom) used to create png file using \code{\link[=gt_make_png]{gt_make_png()}}}
+\item{width}{Width (in pixels; pixel length depends on zoom) used to create PNG file using \code{\link[=gt_make_png]{gt_make_png()}}}
 
-\item{zoom}{Zoom used to create png file using \code{\link[=gt_make_png]{gt_make_png()}}}
+\item{zoom}{Zoom used to PNG png file using \code{\link[=gt_make_png]{gt_make_png()}}}
 }
 \value{
 Returns a raster where each pixel represents traffic level (1 = no traffic, 2 = medium traffic, 3 = traffic delays, 4 = heavy traffic)
 }
 \description{
-Converts PNG to raster and translates color values to traffic values
+Converts PNG of Google traffic data to raster and translates color values to traffic values
 }
 \examples{
 \dontrun{

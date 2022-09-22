@@ -25,7 +25,7 @@ gt_make_raster(
 
 \item{google_key}{Google API key}
 
-\item{webshot_delay}{How long to wait for google traffic layer to render. Larger height/widths require longer delay times. If \code{NULL}, the following delay time (in seconds) is used: \code{delay = max(height,width)/200}.}
+\item{webshot_delay}{How long to wait for Google traffic layer to render. Larger height/widths require longer delay times. If \code{NULL}, the following delay time (in seconds) is used: \code{delay = max(height,width)/200}.}
 
 \item{print_progress}{Whether to print function progress}
 }
