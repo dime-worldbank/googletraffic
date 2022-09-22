@@ -4,6 +4,6 @@
 *.Rhistory
 .Rhistory
 docs
-*googletraffic-vignette.html
+googletraffic-vignette.html
 
 
