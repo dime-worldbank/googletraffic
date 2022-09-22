@@ -13,10 +13,10 @@ if(F){
   roxygen2::roxygenise("~/Documents/Github/googletraffic")
   
   setwd("~/Documents/Github/googletraffic")
-  usethis::use_pkgdown()
+  #usethis::use_pkgdown()
   ##usethis::use_pkgdown_github_pages()
   pkgdown::deploy_to_branch()
-  pkgdown::build_site()
+  #pkgdown::build_site()
   
   # https://github.com/dime-worldbank/googletraffic
 }
