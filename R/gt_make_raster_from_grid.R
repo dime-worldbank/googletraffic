@@ -1,7 +1,5 @@
 # Make Raster from Grid
 
-# \link[gt_make_grid()]{`gt_make_grid()`}
-
 #' Make Google Traffic Raster Based on Grid of Coordinates
 #' 
 #' Make a raster from Google traffic data, where each pixel has one of four values
@@ -49,7 +47,7 @@ gt_make_raster_from_grid <- function(grid_param_df,
   r_list <- lapply(1:nrow(grid_param_df), function(i){
     
     if(print_progress){
-      message(paste0("Processing tile ",i," out of ",nrow(grid_param_df), 
+      message(paste0("Processing tile / API query ",i," out of ",nrow(grid_param_df), 
                      "; pausing for ", webshot_delay, " seconds to allow traffic data to render"))
     } 
     

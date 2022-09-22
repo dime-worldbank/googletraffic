@@ -14,20 +14,11 @@ if(F){
   library(httr)
   library(sf)
   
-  library(leaflet)
-  library(leaflet.extras)
-  library(leaflet.providers)
-  library(scales)
-  library(mapview)
-  library(ggpubr)
-  
-  #source("https://github.com/dime-worldbank/googletraffic/blob/main/R/main.R")
-  
   api_keys_df <- read.csv("~/Dropbox/World Bank/Webscraping/Files for Server/api_keys.csv")
   
   google_key <- api_keys_df %>%
     dplyr::filter(Service == "Google Directions API",
-                  Account == "ramarty@email.wm.edu") %>%
+                  Account == "satelliteieconnect@gmail.com") %>%
     pull(Key)
   
   homepage_images <- "~/Documents/Github/googletraffic/man/figures"
