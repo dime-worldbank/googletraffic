@@ -2,25 +2,25 @@
 
 #' Creates grid to query Google Traffic 
 #'
-#' Querying too large of a location may be unfeasible; consequently, it may be necessary to query multiple smaller locations to cover a large location. Based on the location to be queried and the height, width and zoom parameters, determines the points that should be queried.
+#' Creates a grid of sf polygons, where traffic data for each polygon can then be queried using [gt_make_raster_from_grid()]. 
 #'
 #' @param polygon Polygon (`sf` object or `SpatialPolygonsDataframe`) in WGS84 CRS the defines region to be queried.
 #' @param zoom Zoom level; integer from 0 to 20. For more information about how zoom levels correspond to pixel size, see [here](https://wiki.openstreetmap.org/wiki/Zoom_levels)
 #' @param height_width_max Maximum pixel height and width to check using (pixel length depends on zoom). If the same number of grids can be made with a smaller height/width, the function will use a smaller height/width. If height and width are specified, that height and width will be used and `height_width_max` will be ignored. (Default: 2000) 
 #' @param height Pixel height (pixel length depends on zoom). Enter a `height` to manually specify the height; otherwise, a height of `height_width_max` or smaller will be used.
 #' @param width Pixel width (pixel length depends on zoom). Enter a `width` to manually specify the width; otherwise, a width of `height_width_max` or smaller will be used.
-#' @param reduce_hw Number of pixels to reduce height/width by. Doing so creates some overlap between tiles to ensure there is not blank space between tiles (default = 10 pixels).
+#' @param reduce_hw Number of pixels to reduce height/width by. Doing so creates some overlap between tiles to ensure there is not blank space between tiles. (Default: 10).
 #'
-#' @return Returns a dataframe with the locations to query and parameters.
+#' @return Returns an sf dataframe with the locations to query, including parameters needed for [gt_make_raster_from_grid()]
 #' 
 #' @examples
 #' ## Make polygon
 #' poly_sf <- c(xmin = -74.02426,
 #'              xmax = -73.91048,
 #'              ymin = 40.70042,
-#'              ymax = 40.87858) %>%
-#'   sf::st_bbox() %>%
-#'   sf::st_as_sfc() %>%
+#'              ymax = 40.87858) |>
+#'   sf::st_bbox() |>
+#'   sf::st_as_sfc() |>
 #'   sf::st_as_sf()
 #' 
 #' sf::st_crs(poly_sf) <- 4326
