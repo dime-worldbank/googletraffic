@@ -1,18 +1,18 @@
 # HTML to Raster
 
-#' Converts Google HTML file to Raster
-#' 
-#' Converts a Google HTML file into a spatially referenced raster file. 
-#'
-#' @param filename HTML filename to convert into raster
-#' @param location Vector of latitude and longitude
-#' @param height Height (in pixels; pixel length depends on zoom)
-#' @param width Width (in pixels; pixel length depends on zoom)
-#' @param zoom Zoom level
-#' @param webshot_delay How long to wait for .html file to load. Larger .html files (large height/widths) will require more time to fully load. If `NULL`, the following delay time (in seconds) is used: `delay = max(height,width)/200`.
-#' @param print_progress Whether to print function progress
-#'
-#' @return Returns a georeferenced raster. Raster pixels can contain the following values: 1 = no traffic; 2 = medium traffic; 3 = high traffic; 4 = heavy traffic.
+# Converts Google HTML file to Raster
+# 
+# Converts a Google HTML file into a spatially referenced raster file. 
+#
+# @param filename HTML filename to convert into raster
+# @param location Vector of latitude and longitude
+# @param height Height (in pixels; pixel length depends on zoom)
+# @param width Width (in pixels; pixel length depends on zoom)
+# @param zoom Zoom level
+# @param webshot_delay How long to wait for .html file to load. Larger .html files (large height/widths) will require more time to fully load. If `NULL`, the following delay time (in seconds) is used: `delay = max(height,width)/200`.
+# @param print_progress Whether to print function progress
+#
+# @return Returns a georeferenced raster. Raster pixels can contain the following values: 1 = no traffic; 2 = medium traffic; 3 = high traffic; 4 = heavy traffic.
 gt_html_to_raster <- function(filename,
                               location,
                               height,
