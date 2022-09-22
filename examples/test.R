@@ -5,7 +5,7 @@ api_keys_df <- readr::read_csv("~/Dropbox/World Bank/Webscraping/Files for Serve
 
 google_key <- api_keys_df |>
   dplyr::filter(Service == "Google Directions API",
-                Account == "ramarty@email.wm.edu") |>
+                Account == "satelliteieconnect@gmail.com") |>
   dplyr::pull(Key)
 
 #### From Point
