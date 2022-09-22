@@ -24,22 +24,22 @@ gt_make_grid(
 
 \item{width}{Pixel width (pixel length depends on zoom). Enter a \code{width} to manually specify the width; otherwise, a width of \code{height_width_max} or smaller will be used.}
 
-\item{reduce_hw}{Number of pixels to reduce height/width by. Doing so creates some overlap between tiles to ensure there is not blank space between tiles (default = 10 pixels).}
+\item{reduce_hw}{Number of pixels to reduce height/width by. Doing so creates some overlap between tiles to ensure there is not blank space between tiles. (Default: 10).}
 }
 \value{
-Returns a dataframe with the locations to query and parameters.
+Returns an sf dataframe with the locations to query, including parameters needed for \code{\link[=gt_make_raster_from_grid]{gt_make_raster_from_grid()}}
 }
 \description{
-Querying too large of a location may be unfeasible; consequently, it may be necessary to query multiple smaller locations to cover a large location. Based on the location to be queried and the height, width and zoom parameters, determines the points that should be queried.
+Creates a grid of sf polygons, where traffic data for each polygon can then be queried using \code{\link[=gt_make_raster_from_grid]{gt_make_raster_from_grid()}}.
 }
 \examples{
 ## Make polygon
 poly_sf <- c(xmin = -74.02426,
              xmax = -73.91048,
              ymin = 40.70042,
-             ymax = 40.87858) \%>\%
-  sf::st_bbox() \%>\%
-  sf::st_as_sfc() \%>\%
+             ymax = 40.87858) |>
+  sf::st_bbox() |>
+  sf::st_as_sfc() |>
   sf::st_as_sf()
 
 sf::st_crs(poly_sf) <- 4326

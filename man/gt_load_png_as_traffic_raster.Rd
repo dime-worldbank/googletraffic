@@ -9,11 +9,11 @@ gt_load_png_as_traffic_raster(filename, location, height, width, zoom)
 \arguments{
 \item{filename}{Filename of png file}
 
-\item{location}{Vector of latitude and longitude used to create png file using \code{gt_make_png()}}
+\item{location}{Vector of latitude and longitude used to create png file using \code{\link[=gt_make_png]{gt_make_png()}}}
 
-\item{height}{Height (in pixels; pixel length depends on zoom) used to create png file using \code{gt_make_png()}}
+\item{height}{Height (in pixels; pixel length depends on zoom) used to create png file using \code{\link[=gt_make_png]{gt_make_png()}}}
 
-\item{width}{Width (in pixels; pixel length depends on zoom) used to create png file using \code{gt_make_png()}}
+\item{width}{Width (in pixels; pixel length depends on zoom) used to create png file using \code{\link[=gt_make_png]{gt_make_png()}}}
 
 \item{zoom}{Zoom used to create png file using \code{\link[=gt_make_png]{gt_make_png()}}}
 }

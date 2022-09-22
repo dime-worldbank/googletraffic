@@ -7,7 +7,7 @@
 #' Make a raster from Google traffic data, where each pixel has one of four values
 #' indicating traffic volume (no traffic, light, moderate, and heavy).
 #' 
-#' @param grid_param_df Grid parameter dataframe produced from `gt_make_grid()`
+#' @param grid_param_df Grid parameter dataframe produced from [gt_make_grid()]
 #' @param google_key Google API key
 #' @param webshot_delay How long to wait for google traffic layer to render. Larger height/widths require longer delay times. If `NULL`, the following delay time (in seconds) is used: `delay = max(height,width)/200`.
 #' @param print_progress Whether to print function progress
@@ -70,7 +70,7 @@ gt_make_raster_from_grid <- function(grid_param_df,
     if(length(r_list) > 1){
       
       r <- gt_mosaic(r_list)
-
+      
     } else{
       r <- r_list[[1]]
     }

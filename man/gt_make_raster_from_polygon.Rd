@@ -25,7 +25,7 @@ gt_make_raster_from_polygon(
 
 \item{google_key}{Google API key}
 
-\item{height_width_max}{Maximum pixel height and width to check using (pixel length depends on zoom). If the same number of grids can be made with a smaller height/width, the function will use a smaller height/width. If height and width are specified, that height and width will be used and height_width_max will be ignored. (Default: 2000)}
+\item{height_width_max}{Maximum pixel height and width to check using (pixel length depends on zoom). If the same number of grids can be made with a smaller height/width, the function will use a smaller height/width. If height and width are specified, that height and width will be used and height_width_max will be ignored. (Default: \code{2000})}
 
 \item{height}{Pixel height (pixel length depends on zoom). Enter a \code{height} to manually specify the height; otherwise, a height of \code{height_width_max} or smaller will be used.}
 
@@ -33,13 +33,13 @@ gt_make_raster_from_polygon(
 
 \item{webshot_delay}{How long to wait for google traffic layer to render (in seconds). Larger height/widths require longer delay times. If \code{NULL}, the following delay time (in seconds) is used: \code{delay = max(height,width)/200}.}
 
-\item{reduce_hw}{Number of pixels to reduce height/width by. Doing so creates some overlap between tiles to ensure there is not blank space between tiles (default: 10).}
+\item{reduce_hw}{Number of pixels to reduce height/width by. Doing so creates some overlap between tiles to ensure there is not blank space between tiles. (Default: \code{10}).}
 
-\item{return_list_of_tiles}{Whether to return a list of raster tiles instead of mosaicing together (default: \code{FALSE}).}
+\item{return_list_of_tiles}{Whether to return a list of raster tiles instead of mosaicing together. (Default: \code{FALSE}).}
 
-\item{mask_to_polygon}{Whether to mask raster to \code{polygon} (default: \code{TRUE}).}
+\item{mask_to_polygon}{Whether to mask raster to \code{polygon}. (Default: \code{TRUE}).}
 
-\item{print_progress}{Show progress for which tile has been processed (default: \code{TRUE}).}
+\item{print_progress}{Show progress for which tile has been processed. (Default: \code{TRUE}).}
 }
 \value{
 Returns a georeferenced raster. Raster pixels can contain the following values: 1 = no traffic; 2 = medium traffic; 3 = high traffic; 4 = heavy traffic.
