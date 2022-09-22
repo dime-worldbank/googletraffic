@@ -19,22 +19,10 @@
     <loc>/index.html</loc>
   </url>
   <url>
-    <loc>/reference/gt_estimate_webshot_delay.html</loc>
-  </url>
-  <url>
-    <loc>/reference/gt_html_to_raster.html</loc>
-  </url>
-  <url>
     <loc>/reference/gt_load_png_as_traffic_raster.html</loc>
   </url>
   <url>
-    <loc>/reference/gt_make_extent.html</loc>
-  </url>
-  <url>
     <loc>/reference/gt_make_grid.html</loc>
-  </url>
-  <url>
-    <loc>/reference/gt_make_html.html</loc>
   </url>
   <url>
     <loc>/reference/gt_make_png.html</loc>
