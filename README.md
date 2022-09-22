@@ -49,7 +49,7 @@ library(googletraffic)
 
 ## Load additional packages to run below examples
 library(ggplot2)
-library(dplyr)
+#library(dplyr)
 library(raster)
 
 ## Set API key
