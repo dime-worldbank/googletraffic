@@ -13,7 +13,7 @@ gt_mosaic(r_list)
 Returns a raster.
 }
 \description{
-The mosaic function from R requires rasters to have the same origin and resolution.
+The \code{\link[raster:mosaic]{raster::mosaic()}} function requires rasters to have the same origin and resolution.
 However, when producing multiple rasters to query traffic data across a large study area, the
 rasters will not have the same origins and may not have the same resolutions (in cases where rasters
 at different latitudes are queried). \code{gt_mosaic()} allows for mosaicing rasters with different
