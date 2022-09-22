@@ -1,6 +1,6 @@
 # Webshot Delay
 
-#' If not specified, estimate webshot_delay using height and width
+#' If not specified, estimate `webshot_delay` using height and width
 #' 
 #' @param height Height
 #' @param width Width
