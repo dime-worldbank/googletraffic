@@ -2,7 +2,7 @@
 
 #' Mosaic rasters with different origins and resolutions
 #' 
-#' The mosaic function from R requires rasters to have the same origin and resolution.
+#' The [raster::mosaic()] function requires rasters to have the same origin and resolution.
 #' However, when producing multiple rasters to query traffic data across a large study area, the
 #' rasters will not have the same origins and may not have the same resolutions (in cases where rasters 
 #' at different latitudes are queried). `gt_mosaic()` allows for mosaicing rasters with different
