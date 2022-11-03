@@ -3,11 +3,11 @@
 #' @import htmlwidgets
 #' @import plotwidgets
 #' @import png
-#' @import raster
 #' @import sf
 #' @import sp
 #' @import stringr
 #' @import webshot
+#' @import raster
 
 if(F){
   roxygen2::roxygenise("~/Documents/Github/googletraffic")
