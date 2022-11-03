@@ -16,8 +16,8 @@ Imports:
   htmlwidgets,
   plotwidgets,
   png,
-  raster,
   sf,
   sp,
   stringr,
-  webshot
+  webshot,
+  raster
