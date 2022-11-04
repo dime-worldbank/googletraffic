@@ -1,7 +1,7 @@
 ---
 title: "Google Traffic"
-#author: "Rob Marty"
-#date: "`r Sys.Date()`"
+author: "Robert Marty"
+date: "`r Sys.Date()`"
 #output: rmarkdown::html_vignette
 output:
   html_document:
@@ -9,9 +9,13 @@ output:
     toc_depth: 3
     toc_float: true
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::knitr}
+  %\VignetteIndexEntry{Title of your vignette}
+  %\usepackage[UTF-8]{inputenc}
+#vignette: >
+#  %\VignetteIndexEntry{Vignette Title}
+#  %\VignetteEngine{knitr::rmarkdown}
+#  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r init, include = FALSE}

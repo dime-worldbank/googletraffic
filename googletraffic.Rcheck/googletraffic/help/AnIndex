@@ -1,7 +1,0 @@
-gt_load_png_as_traffic_raster	gt_load_png_as_traffic_raster
-gt_make_grid	gt_make_grid
-gt_make_png	gt_make_png
-gt_make_raster	gt_make_raster
-gt_make_raster_from_grid	gt_make_raster_from_grid
-gt_make_raster_from_polygon	gt_make_raster_from_polygon
-gt_mosaic	gt_mosaic
