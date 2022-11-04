@@ -38,13 +38,17 @@ gt_html_to_raster <- function(filename,
     cat(paste0("Pausing for ", webshot_delay, " seconds to allow traffic data to render"))
   }
   
-  webshot::webshot(url = filename,
-                   file = file.path(filename_dir, paste0(filename_only,".png")),
-                   vheight = height,
-                   vwidth = width,
-                   cliprect = "viewport",
-                   delay = webshot_delay,
-                   zoom = 1)
+  # Gives a warning referencing lengths/logical that can be ignored
+  # In is.null(x) || is.na(x) : 'length(x) = 4 > 1' in coercion to 'logical(1)'
+  suppressWarnings({
+    webshot::webshot(url = filename,
+                     file = file.path(filename_dir, paste0(filename_only,".png")),
+                     vheight = height,
+                     vwidth = width,
+                     cliprect = "viewport",
+                     delay = webshot_delay,
+                     zoom = 1)
+  })
   
   #### Load as raster and image
   png_filename <- file.path(filename_dir, paste0(filename_only, ".png"))
@@ -57,6 +61,6 @@ gt_html_to_raster <- function(filename,
   
   ## Delete png from temp file
   unlink(file.path(filename_dir, paste0(filename_only,".png")))
-
+  
   return(r)
 }
