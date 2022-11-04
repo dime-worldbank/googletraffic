@@ -25,6 +25,17 @@
 #'}
 #' 
 #' @export
+#' @import dplyr
+#' @import googleway
+#' @import htmlwidgets
+#' @import plotwidgets
+#' @import png
+#' @import sf
+#' @import sp
+#' @import stringr
+#' @import webshot
+#' @import raster
+
 gt_make_raster <- function(location,
                            height,
                            width,
