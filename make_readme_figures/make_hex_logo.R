@@ -8,12 +8,7 @@ if(F){
   library(tidyverse)
   library(raster)
   
-  api_keys_df <- read_csv("~/Dropbox/World Bank/Webscraping/Files for Server/api_keys.csv")
-  
-  google_key <- api_keys_df %>%
-    dplyr::filter(Service == "Google Directions API",
-                  Account == "ramarty@email.wm.edu") %>%
-    pull(Key)
+  google_key <- "GOOGLE-KEY-HERE"
   
   r <- gt_make_raster(location = c(39.099749, -84.514448),
                       height = 1200,

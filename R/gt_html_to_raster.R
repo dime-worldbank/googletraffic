@@ -49,11 +49,11 @@ gt_html_to_raster <- function(filename,
   #### Load as raster and image
   png_filename <- file.path(filename_dir, paste0(filename_only, ".png"))
   
-  r <- gt_load_png_as_traffic_raster(png_filename,
-                                     c(latitude, longitude),
-                                     height,
-                                     width,
-                                     zoom)
+  r <- gt_load_png_as_traffic_raster(filename = png_filename,
+                                     location = c(latitude, longitude),
+                                     height   = height,
+                                     width    = width,
+                                     zoom     = zoom)
   
   ## Delete png from temp file
   unlink(file.path(filename_dir, paste0(filename_only,".png")))
