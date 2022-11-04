@@ -14,13 +14,8 @@ if(F){
   library(httr)
   library(sf)
   
-  api_keys_df <- read.csv("~/Dropbox/World Bank/Webscraping/Files for Server/api_keys.csv")
-  
-  google_key <- api_keys_df %>%
-    dplyr::filter(Service == "Google Directions API",
-                  Account == "satelliteieconnect@gmail.com") %>%
-    pull(Key)
-  
+  google_key <- "GOOGLE-KEY-HERE"
+
   homepage_images <- "~/Documents/Github/googletraffic/man/figures"
   vignette_images <- "~/Documents/Github/googletraffic/vignettes"
   
