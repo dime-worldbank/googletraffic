@@ -13,7 +13,7 @@ gt_make_raster_from_polygon(
   width = NULL,
   webshot_delay = NULL,
   reduce_hw = 10,
-  return_list_of_tiles = F,
+  return_list_of_rasters = F,
   mask_to_polygon = T,
   print_progress = T
 )
@@ -35,7 +35,7 @@ gt_make_raster_from_polygon(
 
 \item{reduce_hw}{Number of pixels to reduce height/width by. Doing so creates some overlap between grids to ensure there is not blank space between tiles. (Default: \code{10}).}
 
-\item{return_list_of_tiles}{Whether to return a list of raster tiles instead of mosaicing together. (Default: \code{FALSE}).}
+\item{return_list_of_rasters}{Whether to return a list of raster tiles instead of mosaicing together. (Default: \code{FALSE}).}
 
 \item{mask_to_polygon}{Whether to mask raster to \code{polygon}. (Default: \code{TRUE}).}
 

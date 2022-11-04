@@ -1,14 +1,3 @@
-#' @import dplyr
-#' @import googleway
-#' @import htmlwidgets
-#' @import plotwidgets
-#' @import png
-#' @import sf
-#' @import sp
-#' @import stringr
-#' @import webshot
-#' @import raster
-
 # Make Google Traffic Raster
 
 #' Make Google Traffic Raster
