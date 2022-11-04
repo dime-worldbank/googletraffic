@@ -13,7 +13,7 @@
 #' @param width Pixel, in pixels, for each API query (pixel length depends on zoom). Enter a `width` to manually specify the width; otherwise, a width of `height_width_max` or smaller will be used.
 #' @param webshot_delay How long to wait for Google traffic layer to render (in seconds). Larger height/widths require longer delay times. If `NULL`, the following delay time (in seconds) is used: `delay = max(height,width)/200`.
 #' @param reduce_hw Number of pixels to reduce height/width by. Doing so creates some overlap between grids to ensure there is not blank space between tiles. (Default: `10`).
-#' @param return_list_of_tiles Whether to return a list of raster tiles instead of mosaicing together. (Default: `FALSE`).
+#' @param return_list_of_rasters Whether to return a list of raster tiles instead of mosaicing together. (Default: `FALSE`).
 #' @param mask_to_polygon Whether to mask raster to `polygon`. (Default: `TRUE`).
 #' @param print_progress Show progress for which grid / API query has been processed. (Default: `TRUE`).
 #'
@@ -42,7 +42,7 @@ gt_make_raster_from_polygon <- function(polygon,
                                         width = NULL,
                                         webshot_delay = NULL,
                                         reduce_hw = 10,
-                                        return_list_of_tiles = F,
+                                        return_list_of_rasters = F,
                                         mask_to_polygon = T,
                                         print_progress = T){
   
@@ -68,16 +68,16 @@ gt_make_raster_from_polygon <- function(polygon,
   r <- gt_make_raster_from_grid(grid_param_df  = grid_param_df,
                                 webshot_delay  = webshot_delay,
                                 google_key     = google_key,
-                                return_list_of_tiles = return_list_of_tiles,
+                                return_list_of_rasters = return_list_of_rasters,
                                 print_progress = print_progress)
   
-  if(mask_to_polygon & !return_list_of_tiles){
+  if(mask_to_polygon & !return_list_of_rasters){
     r <- r %>%
       raster::crop(polygon) %>%
       raster::mask(polygon)
   }
   
-  if(mask_to_polygon & return_list_of_tiles){
+  if(mask_to_polygon & return_list_of_rasters){
     
     if("SpatialPolygonsDataFrame" %in% class(polygon)){
       polygon <- polygon %>% sf::st_as_sf()

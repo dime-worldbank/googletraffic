@@ -1,0 +1,24 @@
+* installing *source* package ‘googletraffic’ ...
+** using staged installation
+** R
+** byte-compile and prepare package for lazy loading
+Warning: replacing previous import ‘dplyr::union’ by ‘raster::union’ when loading ‘googletraffic’
+Warning: replacing previous import ‘dplyr::select’ by ‘raster::select’ when loading ‘googletraffic’
+Warning: replacing previous import ‘dplyr::intersect’ by ‘raster::intersect’ when loading ‘googletraffic’
+Note: wrong number of arguments to 'ceiling' 
+Note: possible error in 'gt_make_raster_from_grid(grid_param_df = grid_param_df, ': unused argument (return_list_of_tiles = return_list_of_tiles) 
+** help
+*** installing help indices
+*** copying figures
+** building package indices
+** installing vignettes
+** testing if installed package can be loaded from temporary location
+Warning: replacing previous import ‘dplyr::union’ by ‘raster::union’ when loading ‘googletraffic’
+Warning: replacing previous import ‘dplyr::select’ by ‘raster::select’ when loading ‘googletraffic’
+Warning: replacing previous import ‘dplyr::intersect’ by ‘raster::intersect’ when loading ‘googletraffic’
+** testing if installed package can be loaded from final location
+Warning: replacing previous import ‘dplyr::union’ by ‘raster::union’ when loading ‘googletraffic’
+Warning: replacing previous import ‘dplyr::select’ by ‘raster::select’ when loading ‘googletraffic’
+Warning: replacing previous import ‘dplyr::intersect’ by ‘raster::intersect’ when loading ‘googletraffic’
+** testing if installed package keeps a record of temporary installation path
+* DONE (googletraffic)
