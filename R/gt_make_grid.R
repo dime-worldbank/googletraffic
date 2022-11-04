@@ -128,7 +128,7 @@ gt_make_grid <- function(polygon,
   # Use most extreme latitude location
   most_extreme_lat_point <- sf::st_coordinates(polygon) %>%
     as.data.frame() %>%
-    dplyr::mutate(Y_abs = abs(Y)) %>%
+    dplyr::mutate(Y_abs = abs(.data$Y)) %>%
     dplyr::arrange(-Y_abs) %>%
     head(1)
   
@@ -164,8 +164,8 @@ gt_make_grid <- function(polygon,
     sf::st_centroid() %>%
     sf::st_coordinates() %>%
     as.data.frame() %>%
-    dplyr::rename(longitude = X,
-                  latitude = Y) %>%
+    dplyr::rename(longitude = .data$X,
+                  latitude = .data$Y) %>%
     dplyr::mutate(id = 1:n(),
                   height = height,
                   width = width,
