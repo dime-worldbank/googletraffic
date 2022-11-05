@@ -21,11 +21,3 @@ Imports:
   stringr,
   webshot,
   raster
-Suggests: 
-    knitr,
-    rmarkdown,
-    leaflet,
-    leaflet.providers,
-    raster,
-    dplyr
-VignetteBuilder: knitr

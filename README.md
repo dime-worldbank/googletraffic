@@ -62,24 +62,24 @@ To create a raster around a point, we set the centroid coordinate, the [zoom](ht
 ```r  
 ## Make raster
 r <- gt_make_raster(location   = c(40.712778, -74.006111),
-height     = 2000,
-width      = 2000,
-zoom       = 16,
-google_key = google_key)
+                    height     = 2000,
+                    width      = 2000,
+                    zoom       = 16,
+                    google_key = google_key)
 
 ## Plot
 r_df <- rasterToPoints(r, spatial = TRUE) %>% as.data.frame()
 names(r_df) <- c("value", "x", "y")
 
 ggplot() +
-geom_raster(data = r_df, 
-aes(x = x, y = y, 
-fill = as.factor(value))) +
-labs(fill = "Traffic\nLevel") +
-scale_fill_manual(values = c("green2", "orange", "red", "#660000")) +
-coord_quickmap() + 
-theme_void() +
-theme(plot.background = element_rect(fill = "white", color="white"))
+  geom_raster(data = r_df, 
+  aes(x = x, y = y, 
+  fill = as.factor(value))) +
+  labs(fill = "Traffic\nLevel") +
+  scale_fill_manual(values = c("green2", "orange", "red", "#660000")) +
+  coord_quickmap() + 
+  theme_void() +
+  theme(plot.background = element_rect(fill = "white", color="white"))
 ```
 
 <p align="center">
@@ -98,22 +98,22 @@ ny_sp <- us_sp[us_sp$NAME_2 %in% "New York",]
 
 ## Make raster
 r <- gt_make_raster_from_polygon(polygon    = ny_sp,
-zoom       = 16,
-google_key = google_key)
+                                 zoom       = 16,
+                                 google_key = google_key)
 
 ## Plot
 r_df <- rasterToPoints(r, spatial = TRUE) %>% as.data.frame()
 names(r_df) <- c("value", "x", "y")
 
 ggplot() +
-geom_raster(data = r_df, 
-aes(x = x, y = y, 
-fill = as.factor(value))) +
-labs(fill = "Traffic\nLevel") +
-scale_fill_manual(values = c("green2", "orange", "red", "#660000")) +
-coord_quickmap() + 
-theme_void() +
-theme(plot.background = element_rect(fill = "white", color="white"))
+  geom_raster(data = r_df, 
+  aes(x = x, y = y, 
+  fill = as.factor(value))) +
+  labs(fill = "Traffic\nLevel") +
+  scale_fill_manual(values = c("green2", "orange", "red", "#660000")) +
+  coord_quickmap() + 
+  theme_void() +
+  theme(plot.background = element_rect(fill = "white", color="white"))
 ```
 
 <p align="center">

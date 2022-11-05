@@ -15,4 +15,14 @@ man/figures
 man/figures/hex.png
 man/figures/nyc_large.jpg
 man/figures/nyc_small.jpg
+vignettes
+vignettes/.gitignore
+vignettes/top_example.jpg
+vignettes/googletraffic-vignette.Rmd
+vignettes/png_then_raster_grid.Rds
+vignettes/raster_grid_1.Rds
+vignettes/raster_point_large.Rds
+vignettes/raster_point_small.Rds
+vignettes/raster_polygon.Rds
+vignettes/raster_using_grid.Rds
 
