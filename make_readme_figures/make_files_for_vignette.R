@@ -38,7 +38,7 @@ r <- gt_make_raster(location   = c(40.712778, -74.006111),
                     zoom       = 16,
                     google_key = google_key)
 
-saveRDS(r, file.path(vig_dir, "raster_point_small.Rds"))
+saveRDS(r, file.path(vig_dir, "raster_point_small.Rds"), version = 2)
 
 ## Map raster
 #leaflet(width = "100%") %>%
@@ -53,7 +53,7 @@ r <- gt_make_raster(location   = c(41.384900, -78.891302),
                     zoom       = 7,
                     google_key = google_key)
 
-saveRDS(r, file.path(vig_dir, "raster_point_large.Rds"))
+saveRDS(r, file.path(vig_dir, "raster_point_large.Rds"), version = 2)
 
 ## Map raster
 #leaflet(width = "100%") %>%
@@ -71,7 +71,7 @@ r <- gt_make_raster_from_polygon(polygon    = ny_sp,
                                  zoom       = 15,
                                  google_key = google_key)
 
-saveRDS(r, file.path(vig_dir, "raster_polygon.Rds"))
+saveRDS(r, file.path(vig_dir, "raster_polygon.Rds"), version = 2)
 
 ## Map raster
 #leaflet(width = "100%") %>%
@@ -83,7 +83,7 @@ saveRDS(r, file.path(vig_dir, "raster_polygon.Rds"))
 grid_df <- gt_make_grid(polygon = ny_sp,
                         zoom    = 15)
 
-saveRDS(grid_df, file.path(vig_dir, "raster_grid_1.Rds"))
+saveRDS(grid_df, file.path(vig_dir, "raster_grid_1.Rds"), version = 2)
 
 #leaflet(width = "100%") %>%
 #  addTiles() %>%
@@ -103,7 +103,7 @@ saveRDS(grid_df, file.path(vig_dir, "raster_grid_1.Rds"))
 r <- gt_make_raster_from_grid(grid_param_df = grid_clean_df,
                               google_key    = google_key)
 
-saveRDS(r, file.path(vig_dir, "raster_using_grid.Rds"))
+saveRDS(r, file.path(vig_dir, "raster_using_grid.Rds"), version = 2)
 
 ## Map raster
 #leaflet(width = "100%") %>%
@@ -119,7 +119,7 @@ grid_df <- gt_make_grid(polygon = ny_sp,
                         width   = 2000,
                         zoom    = 15)
 
-saveRDS(grid_df, file.path(vig_dir, "png_then_raster_grid.Rds"))
+saveRDS(grid_df, file.path(vig_dir, "png_then_raster_grid.Rds"), version = 2)
 
 #print(grid_df)
 

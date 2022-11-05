@@ -4,7 +4,7 @@ Version: 0.0.0.9000
 Authors@R: 
     person("Robert", "Marty", , "rmarty@worldbank.org", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-3164-3813"))
-Description: Create geo-referenced traffic data from the Google Maps JavaScript API.
+Description: Create geographically referenced traffic data from the Google Maps JavaScript API.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
