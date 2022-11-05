@@ -78,21 +78,31 @@ Querying Google traffic information requires a Google API key with the [Maps Jav
 
 The below code should be run before running the following examples. We load packages, set the Google API key, and define a palette used for visualizing traffic data in [leaflet](https://rstudio.github.io/leaflet/).
 
-```{r setup, include=TRUE, warning=FALSE, message=FALSE}
+```{r setup_view, include=TRUE, warning=FALSE, message=FALSE, eval = FALSE}
 ## Load Google Traffic package
 library(googletraffic)
 
 ## Load additional packages for working with and visualizing data
 library(leaflet)
-library(leaflet.extras)
 library(leaflet.providers)
-library(scales)
-library(mapview)
 library(raster)
-library(tidyverse)
+library(dplyr)
 
 ## Set Google API Key
 google_key <- "GOOGLE-API-KEY-HERE"
+
+## Define Leaflet Palette and Legend
+traffic_pal <- colorNumeric(c("green", "orange", "red", "#660000"), 
+                            1:4,
+                            na.color = "transparent")
+```
+
+```{r setup_use, include=FALSE}
+## Load additional packages for working with and visualizing data
+library(leaflet)
+library(leaflet.providers)
+library(raster)
+library(dplyr)
 
 ## Define Leaflet Palette and Legend
 traffic_pal <- colorNumeric(c("green", "orange", "red", "#660000"), 
