@@ -129,7 +129,7 @@ gt_make_grid <- function(polygon,
   most_extreme_lat_point <- sf::st_coordinates(polygon) %>%
     as.data.frame() %>%
     dplyr::mutate(Y_abs = abs(.data$Y)) %>%
-    dplyr::arrange(-Y_abs) %>%
+    dplyr::arrange(-.data$Y_abs) %>%
     head(1)
   
   most_extreme_lat_ext <- gt_make_extent(latitude = most_extreme_lat_point$Y,

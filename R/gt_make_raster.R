@@ -34,7 +34,7 @@
 #' @import sp
 #' @import stringr
 #' @import webshot
-#' @import raster
+#' @rawNamespace import(raster, except = c(union, select, intersect))
 
 gt_make_raster <- function(location,
                            height,
