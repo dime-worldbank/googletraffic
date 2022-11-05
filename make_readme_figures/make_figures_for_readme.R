@@ -15,6 +15,7 @@ if(F){
   library(sf)
   
   google_key <- "GOOGLE-KEY-HERE"
+  google_key <- "AIzaSyC5Wu7vIXEf82L4rJaEfbtAmmVl8MgZDyw"
 
   homepage_images <- "~/Documents/Github/googletraffic/man/figures"
   vignette_images <- "~/Documents/Github/googletraffic/vignettes"
@@ -61,9 +62,9 @@ if(F){
     theme(plot.background = element_rect(fill = "white", color="white"))
   
   ggsave(p, filename = file.path(homepage_images, "nyc_small.jpg"),
-         height = 8,
-         width = 8)
-  
+         height = 4,
+         width = 5)
+
   # Polygon example 2 ----------------------------------------------------------
   us_sp <- getData('GADM', country='USA', level=2)
   ny_sp <- us_sp[us_sp$NAME_2 %in% "New York",]
@@ -88,8 +89,10 @@ if(F){
     theme(plot.background = element_rect(fill = "white", color="white"))
   
   ggsave(p, filename = file.path(homepage_images, "nyc_large.jpg"),
-         height = 20*0.6,
-         width = 12*0.5)
+         height = 7,
+         width = 4.2)
+  
+  
   
 }
 

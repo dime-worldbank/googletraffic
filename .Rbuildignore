@@ -1,3 +1,16 @@
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
+.github
+.github/pkgdown.yaml
+.github/workflows
+.gitignore
+.Rhistory
+R/.Rhistory
+make_readme_figures
+make_readme_figures/build_package_and_site.R
+make_readme_figures/make_figures_for_readme.R
+make_readme_figures/make_hex_logo.R
+
+
+

@@ -10,8 +10,12 @@ output:
     toc_float: true
 vignette: >
   %\VignetteEngine{knitr::knitr}
-  %\VignetteIndexEntry{Title of your vignette}
-  %\usepackage[UTF-8]{inputenc}
+  %\VignetteIndexEntry{Google Traffic}
+  %\usepackage{UTF-8}
+#vignette: >
+#  %\VignetteEngine{knitr::knitr}
+#  %\VignetteIndexEntry{Title of your vignette}
+#  %\usepackage[UTF-8]{inputenc}
 #vignette: >
 #  %\VignetteIndexEntry{Vignette Title}
 #  %\VignetteEngine{knitr::rmarkdown}
@@ -96,15 +100,6 @@ traffic_pal <- colorNumeric(c("green", "orange", "red", "#660000"),
                             na.color = "transparent")
 ```
 
-```{r loadkey, include=FALSE}
-api_keys_df <- read_csv("~/Dropbox/World Bank/Webscraping/Files for Server/api_keys.csv")
-
-google_key <- api_keys_df %>%
-  dplyr::filter(Service == "Google Directions API",
-                Account == "ramarty@email.wm.edu") %>%
-  pull(Key)
-```
-
 ---
 
 ## Key parameters <a name="key-parameters"></a>
@@ -124,14 +119,20 @@ __Default height/width:__ In the `gt_make_raster_from_polygon()` and `gt_make_gr
 
 The `gt_make_raster()` function produces a raster, using a centroid location and a height/width around the centroid to specify the location to query traffic information. The below example queries traffic for lower Manhattan, NYC.
 
-```{r point_small, include=TRUE, warning=FALSE, message=FALSE, eval=T}
+```{r point_small_load, include=FALSE}
+r <- readRDS("raster_point_small.Rds")
+```
+
+```{r point_small_raster, include=TRUE, warning=FALSE, message=FALSE, eval=FALSE}
 ## Make raster
 r <- gt_make_raster(location   = c(40.712778, -74.006111),
                     height     = 1000,
                     width      = 1000,
                     zoom       = 16,
                     google_key = google_key)
+```
 
+```{r point_small_leaflet, include=TRUE, warning=FALSE, message=FALSE, eval=T}
 ## Map raster
 leaflet(width = "100%") %>%
   addProviderTiles("Esri.WorldGrayCanvas") %>%
@@ -140,14 +141,20 @@ leaflet(width = "100%") %>%
 
 By using a smaller `zoom`, we can capture a larger area; however, the pixels are more coarse.
 
-```{r point_large, include=TRUE, warning=FALSE, message=FALSE, eval=T}
+```{r point_large_load, include=FALSE}
+r <- readRDS("raster_point_large.Rds")
+```
+
+```{r point_large_raster, include=TRUE, warning=FALSE, message=FALSE, eval=FALSE}
 ## Make raster
 r <- gt_make_raster(location   = c(41.384900, -78.891302),
                     height     = 1000,
                     width      = 1000,
                     zoom       = 7,
                     google_key = google_key)
+```
 
+```{r point_large_leaflet, include=TRUE, warning=FALSE, message=FALSE, eval=T}
 ## Map raster
 leaflet(width = "100%") %>%
   addProviderTiles("Esri.WorldGrayCanvas") %>%
@@ -163,7 +170,11 @@ The above example shows querying traffic information for lower Manhattan. In thi
 
 <!--By default, a `height` and `width` of 2000 is used for each API call; however, (1) the function will use a smaller `height`/`width` if a smaller `height`/`width` results in the same number of API queries to cover the polygon, and (2) the `height` and `width` can still be manually specified using the `height` and `width` parameters.-->
 
-```{r polygon, include=TRUE, warning=FALSE, message=FALSE, eval=T}
+```{r polygon_load, include=FALSE}
+r <- readRDS("raster_polygon.Rds")
+```
+
+```{r polygon_raster, include=TRUE, warning=FALSE, message=FALSE, eval=FALSE}
 ## Grab polygon of Manhattan
 us_sp <- getData('GADM', country='USA', level=2)
 ny_sp <- us_sp[us_sp$NAME_2 %in% "New York",]
@@ -172,7 +183,9 @@ ny_sp <- us_sp[us_sp$NAME_2 %in% "New York",]
 r <- gt_make_raster_from_polygon(polygon    = ny_sp,
                                  zoom       = 15,
                                  google_key = google_key)
+```
 
+```{r polygon_leaflet, include=TRUE, warning=FALSE, message=FALSE, eval=T}
 ## Map raster
 leaflet(width = "100%") %>%
   addProviderTiles("Esri.WorldGrayCanvas") %>%
@@ -187,10 +200,16 @@ Within `gt_make_raster_from_polygon()`, the function creates a grid that covers 
 
 First, we create a grid using `gt_make_grid()`. 
 
-```{r grid_1, include=TRUE, warning=FALSE, message=FALSE, eval=T}
+```{r grid_1_load, include=FALSE}
+grid_df <- readRDS("raster_grid_1.Rds")
+```
+
+```{r grid_1_make, include=TRUE, warning=FALSE, message=FALSE, eval=FALSE}
 grid_df <- gt_make_grid(polygon = ny_sp,
                         zoom    = 15)
+```
 
+```{r grid_1_leaflet, include=TRUE, warning=FALSE, message=FALSE, eval=T}
 leaflet(width = "100%") %>%
   addTiles() %>%
   addPolygons(data = grid_df, popup = ~as.character(id))
@@ -208,11 +227,17 @@ leaflet(width = "100%") %>%
 
 Second, we use the grid to make a traffic raster using `gt_make_raster_from_grid()`.
 
-```{r grid_3, include=TRUE, warning=FALSE, message=FALSE, eval=T}
+```{r grid_3_load, include=FALSE}
+r <- readRDS("raster_using_grid.Rds")
+```
+
+```{r grid_3_raster, include=TRUE, warning=FALSE, message=FALSE, eval=FALSE}
 ## Make raster
 r <- gt_make_raster_from_grid(grid_param_df = grid_clean_df,
                               google_key    = google_key)
+```
 
+```{r grid_3_leaflet, include=TRUE, warning=FALSE, message=FALSE, eval=T}
 ## Map raster
 leaflet(width = "100%") %>%
   addProviderTiles("Esri.WorldGrayCanvas") %>%
@@ -255,13 +280,19 @@ r <- gt_load_png_as_traffic_raster(filename = "google_traffic.png",
 
 We can also use this process when querying traffic data for a larger study area that requires making multiple API calls. The below example illustrates creating multiple PNGs from a grid.
 
-```{r png_2, include=TRUE, warning=FALSE, message=FALSE, eval=T}
+```{r png_2_load, include=FALSE}
+grid_df <- readRDS("png_then_raster_grid.Rds")
+```
+
+```{r png_2_make, include=TRUE, warning=FALSE, message=FALSE, eval=FALSE}
 #### First, make grid
 grid_df <- gt_make_grid(polygon = ny_sp,
                         height  = 2000,
                         width   = 2000,
                         zoom    = 15)
+```
 
+```{r png_2_plot, include=TRUE, warning=FALSE, message=FALSE, eval=T}
 print(grid_df)
 ```
 
