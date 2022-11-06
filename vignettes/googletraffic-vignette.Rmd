@@ -1,7 +1,7 @@
 ---
 title: "Google Traffic"
-author: "Robert Marty"
-date: "`r Sys.Date()`"
+#author: "Robert Marty"
+#date: "`r Sys.Date()`"
 #output: rmarkdown::html_vignette
 output:
   html_document:
