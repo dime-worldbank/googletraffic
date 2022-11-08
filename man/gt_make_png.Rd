@@ -12,7 +12,7 @@ gt_make_png(
   out_filename,
   google_key,
   webshot_delay = NULL,
-  print_progress = T
+  print_progress = TRUE
 )
 }
 \arguments{
@@ -30,7 +30,7 @@ gt_make_png(
 
 \item{webshot_delay}{How long to wait for Google traffic layer to render. Larger height/widths require longer delay times. If \code{NULL}, the following delay time (in seconds) is used: \code{delay = max(height,width)/200}.}
 
-\item{print_progress}{Whether to print function progress}
+\item{print_progress}{Whether to print function progress (default: \code{TRUE})}
 }
 \value{
 Returns a georeferenced raster file. The file can contain the following values: 1 = no traffic; 2 = light traffic; 3 = moderate traffic; 4 = heavy traffic.

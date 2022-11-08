@@ -19,7 +19,7 @@ gt_html_to_raster <- function(filename,
                               width,
                               zoom,
                               webshot_delay = NULL,
-                              print_progress = T){
+                              print_progress = TRUE){
   
   #### Set webshot_delay if null
   webshot_delay <- gt_estimate_webshot_delay(height, width, webshot_delay)
