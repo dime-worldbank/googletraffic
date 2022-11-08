@@ -8,8 +8,8 @@
 #' @param grid_param_df Grid parameter dataframe produced from [gt_make_grid()]
 #' @param google_key Google API key
 #' @param webshot_delay How long to wait for Google traffic layer to render. Larger height/widths require longer delay times. If `NULL`, the following delay time (in seconds) is used: `delay = max(height,width)/200`.
-#' @param print_progress Whether to print function progress
-#' @param return_list_of_rasters Instead of merging traffic rasters produced for each grid together into one large raster, return a list of rasters
+#' @param return_list_of_rasters Instead of merging traffic rasters produced for each grid together into one large raster, return a list of rasters (default: `FALSE`)
+#' @param print_progress Whether to print function progress (default: `TRUE`)
 #'
 #' @return Returns a georeferenced raster. Raster pixels can contain the following values: 1 = no traffic; 2 = medium traffic; 3 = high traffic; 4 = heavy traffic.
 #' 
@@ -34,8 +34,8 @@
 gt_make_raster_from_grid <- function(grid_param_df,
                                      google_key,
                                      webshot_delay = NULL,
-                                     return_list_of_rasters = F,
-                                     print_progress = T){
+                                     return_list_of_rasters = FALSE,
+                                     print_progress = TRUE){
   
   
   ## Set webshot_delay if null
@@ -59,7 +59,7 @@ gt_make_raster_from_grid <- function(grid_param_df,
                           zoom           = param_i$zoom,
                           webshot_delay  = webshot_delay,
                           google_key     = google_key,
-                          print_progress = F)
+                          print_progress = FALSE)
     
     return(r_i)
   })

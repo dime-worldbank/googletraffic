@@ -11,7 +11,7 @@ gt_make_raster(
   zoom,
   google_key,
   webshot_delay = NULL,
-  print_progress = T
+  print_progress = TRUE
 )
 }
 \arguments{
@@ -27,7 +27,7 @@ gt_make_raster(
 
 \item{webshot_delay}{How long to wait for Google traffic layer to render. Larger height/widths require longer delay times. If \code{NULL}, the following delay time (in seconds) is used: \code{delay = max(height,width)/200}.}
 
-\item{print_progress}{Whether to print function progress}
+\item{print_progress}{Whether to print function progress (default: \code{TRUE})}
 }
 \value{
 Returns a georeferenced raster. Raster pixels can contain the following values: 1 = no traffic; 2 = medium traffic; 3 = high traffic; 4 = heavy traffic.

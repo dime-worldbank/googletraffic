@@ -42,9 +42,9 @@ gt_make_raster_from_polygon <- function(polygon,
                                         width = NULL,
                                         webshot_delay = NULL,
                                         reduce_hw = 10,
-                                        return_list_of_rasters = F,
-                                        mask_to_polygon = T,
-                                        print_progress = T){
+                                        return_list_of_rasters = FALSE,
+                                        mask_to_polygon = TRUE,
+                                        print_progress = TRUE){
   
   
   grid_param_df <- gt_make_grid(polygon          = polygon,
@@ -96,10 +96,6 @@ gt_make_raster_from_polygon <- function(polygon,
                                     polygon %>% sf::st_bbox() %>% sf::st_as_sfc(),
                                     sparse = F)[1]
       sf::sf_use_s2(sf_use_s2_default)
-      
-      ## Could also use rgeos approach
-      # inter_df <- gIntersects(r[[i]] %>% st_bbox() %>% st_as_sfc() %>% as("Spatial"), 
-      #                         polygon %>% st_bbox() %>% st_as_sfc() %>% as("Spatial"))
       
       if(inter_df){
         

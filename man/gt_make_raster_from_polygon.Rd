@@ -13,9 +13,9 @@ gt_make_raster_from_polygon(
   width = NULL,
   webshot_delay = NULL,
   reduce_hw = 10,
-  return_list_of_rasters = F,
-  mask_to_polygon = T,
-  print_progress = T
+  return_list_of_rasters = FALSE,
+  mask_to_polygon = TRUE,
+  print_progress = TRUE
 )
 }
 \arguments{

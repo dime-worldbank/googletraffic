@@ -72,17 +72,17 @@ gt_make_html <- function(location,
                                 height = height,
                                 width = width,
                                 styles = style,
-                                zoom_control = F,
-                                map_type_control = F,
-                                scale_control = F,
-                                fullscreen_control = F,
-                                rotate_control = F,
-                                street_view_control = F) %>%
+                                zoom_control = FALSE,
+                                map_type_control = FALSE,
+                                scale_control = FALSE,
+                                fullscreen_control = FALSE,
+                                rotate_control = FALSE,
+                                street_view_control = FALSE) %>%
     googleway::add_traffic() 
   
   htmlwidgets::saveWidget(gmap, 
                           filename, 
-                          selfcontained = T)
+                          selfcontained = TRUE)
   
   #### Also creates folder; delete that
   unlink(filename %>% stringr::str_replace_all(".html$", "_files"), 
