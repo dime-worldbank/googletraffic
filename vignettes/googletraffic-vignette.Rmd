@@ -59,11 +59,10 @@ The package provides function to query Google traffic data around a location, wi
 
 ## Installation <a name="installation"></a>
 
-The package is available via github and can be installed using `devtools`.
+The package can be installed via CRAN.
 
-```{r install, eval=FALSE}
-# install.packages("devtools")
-devtools::install_github("dime-worldbank/googletraffic")
+```r  
+install.packages("googletraffic")
 ```
 
 ---

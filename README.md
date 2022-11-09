@@ -29,11 +29,10 @@ Pixel values in rasters are derived from Google traffic colors and can be one of
 
 ## Installation <a name="installation"></a>
 
-The package is available via github and can be installed using `devtools`.
+The package can be installed via CRAN.
 
 ```r  
-# install.packages("devtools")
-devtools::install_github("dime-worldbank/googletraffic")
+install.packages("googletraffic")
 ```
 
 ## API Key <a name="apikey"></a>
