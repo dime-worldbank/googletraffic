@@ -26,3 +26,4 @@ vignettes/raster_point_small.Rds
 vignettes/raster_polygon.Rds
 vignettes/raster_using_grid.Rds
 
+^\.github$

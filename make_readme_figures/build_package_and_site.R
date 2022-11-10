@@ -1,8 +1,10 @@
 if(F){
+  setwd("~/Documents/Github/googletraffic")
+  
   roxygen2::roxygenise("~/Documents/Github/googletraffic")
   
-  setwd("~/Documents/Github/googletraffic")
   pkgdown::deploy_to_branch()
+  usethis::use_github_action_check_standard()
   
   ## Comand line code for building and checking package
   #R CMD build --as-cran "~/Documents/Github/googletraffic"
