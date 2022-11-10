@@ -1,4 +1,9 @@
 # googletraffic  <img src="man/figures/hex.png" align="right" width="200" />
+
+<!-- badges: start -->
+  [![/Users/robmarty/Documents/Github/googletraffic](https://github.com/dime-worldbank/googletraffic/actions/workflows//Users/robmarty/Documents/Github/googletraffic.yaml/badge.svg)](https://github.com/dime-worldbank/googletraffic/actions/workflows//Users/robmarty/Documents/Github/googletraffic.yaml)
+<!-- badges: end -->
+  
 Create Georeferenced Traffic Data from the [Google Maps Javascript API](https://developers.google.com/maps/documentation/javascript/trafficlayer)
 
 * [Overview](#overview)
