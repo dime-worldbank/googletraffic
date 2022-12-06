@@ -63,7 +63,7 @@ gt_make_extent <- function(latitude,
   mapWidth  <- 256
   mapHeight <- 256
   xScale    <- (2^zoom) / (width/mapWidth)
-  yScale    <- (2^zoom) / (height/mapWidth)
+  yScale    <- (2^zoom) / (height/mapHeight)
   
   corners      <- getImageBounds(mapWidth, mapHeight, xScale, yScale, latitude, longitude)
   point_left   <- corners[2]
