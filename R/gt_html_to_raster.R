@@ -47,7 +47,7 @@ gt_html_to_raster <- function(filename,
                      vwidth = width,
                      cliprect = "viewport",
                      delay = webshot_delay,
-                     zoom = 1)
+                     zoom = 1) # change
   })
   
   #### Load as raster and image
