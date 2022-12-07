@@ -7,6 +7,7 @@
 #' 
 #' @param grid_param_df Grid parameter dataframe produced from [gt_make_grid()]
 #' @param google_key Google API key
+#' @param webshot_zoom How many pixels should be created relative to height and width values. If `height` and `width` are set to `100` and `webshot_zoom` is set to `2`, the resulting raster will have dimensions of about `200x200` (default: `1`). 
 #' @param webshot_delay How long to wait for Google traffic layer to render. Larger height/widths require longer delay times. If `NULL`, the following delay time (in seconds) is used: `delay = max(height,width)/200`.
 #' @param return_list_of_rasters Instead of merging traffic rasters produced for each grid together into one large raster, return a list of rasters (default: `FALSE`)
 #' @param print_progress Whether to print function progress (default: `TRUE`)
@@ -33,6 +34,8 @@
 #' @export
 gt_make_raster_from_grid <- function(grid_param_df,
                                      google_key,
+                                     color_classification = "base_colors",
+                                     webshot_zoom = 1,
                                      webshot_delay = NULL,
                                      return_list_of_rasters = FALSE,
                                      print_progress = TRUE){
@@ -57,6 +60,8 @@ gt_make_raster_from_grid <- function(grid_param_df,
                           height         = param_i$height,
                           width          = param_i$width,
                           zoom           = param_i$zoom,
+                          color_classification = color_classification,
+                          webshot_zoom   = webshot_zoom,
                           webshot_delay  = webshot_delay,
                           google_key     = google_key,
                           print_progress = FALSE)

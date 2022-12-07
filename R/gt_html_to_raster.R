@@ -9,6 +9,7 @@
 # @param height Height (in pixels; pixel length depends on zoom)
 # @param width Width (in pixels; pixel length depends on zoom)
 # @param zoom Zoom level
+# @param webshot_zoom How many pixels should be created relative to height and width values. If `height` and `width` are set to `100` and `webshot_zoom` is set to `2`, the resulting raster will have dimensions of about `200x200` (default: `1`). 
 # @param webshot_delay How long to wait for .html file to load. Larger .html files (large height/widths) will require more time to fully load. If `NULL`, the following delay time (in seconds) is used: `delay = max(height,width)/200`.
 # @param print_progress Whether to print function progress
 #
@@ -18,6 +19,8 @@ gt_html_to_raster <- function(filename,
                               height,
                               width,
                               zoom,
+                              color_classification = "base_colors",
+                              webshot_zoom = 1,
                               webshot_delay = NULL,
                               print_progress = TRUE){
   
@@ -47,7 +50,7 @@ gt_html_to_raster <- function(filename,
                      vwidth = width,
                      cliprect = "viewport",
                      delay = webshot_delay,
-                     zoom = 1) # change
+                     zoom = webshot_zoom) # change
   })
   
   #### Load as raster and image
@@ -57,7 +60,8 @@ gt_html_to_raster <- function(filename,
                                      location = c(latitude, longitude),
                                      height   = height,
                                      width    = width,
-                                     zoom     = zoom)
+                                     zoom     = zoom,
+                                     color_classification = color_classification)
   
   ## Delete png from temp file
   unlink(file.path(filename_dir, paste0(filename_only,".png")))
