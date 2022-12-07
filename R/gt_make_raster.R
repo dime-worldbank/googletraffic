@@ -10,6 +10,7 @@
 #' @param width Width (in pixels; pixel length depends on zoom)
 #' @param zoom Zoom level; integer from 0 to 20. For more information, see [here](https://wiki.openstreetmap.org/wiki/Zoom_levels)
 #' @param google_key Google API key
+#' @param webshot_zoom How many pixels should be created relative to height and width values. If `height` and `width` are set to `100` and `webshot_zoom` is set to `2`, the resulting raster will have dimensions of about `200x200` (default: `1`). 
 #' @param webshot_delay How long to wait for Google traffic layer to render. Larger height/widths require longer delay times. If `NULL`, the following delay time (in seconds) is used: `delay = max(height,width)/200`.
 #' @param print_progress Whether to print function progress (default: `TRUE`)
 #'
@@ -41,6 +42,8 @@ gt_make_raster <- function(location,
                            width,
                            zoom,
                            google_key,
+                           color_classification = "base_colors",
+                           webshot_zoom = 1,
                            webshot_delay = NULL,
                            print_progress = TRUE){
   
@@ -64,6 +67,8 @@ gt_make_raster <- function(location,
                          height = height,
                          width = width,
                          zoom = zoom,
+                         color_classification = color_classification,
+                         webshot_zoom = webshot_zoom,
                          webshot_delay = webshot_delay,
                          print_progress = print_progress)
   

@@ -11,6 +11,7 @@
 #' @param height_width_max Maximum pixel height and width to check using for each API query (pixel length depends on zoom). If the same number of API queries can be made with a smaller height/width, the function will use a smaller height/width. If `height` and `width` are specified, that height and width will be used and `height_width_max` will be ignored. (Default: `2000`) 
 #' @param height Height, in pixels, for each API query (pixel length depends on zoom). Enter a `height` to manually specify the height; otherwise, a height of `height_width_max` or smaller will be used.
 #' @param width Pixel, in pixels, for each API query (pixel length depends on zoom). Enter a `width` to manually specify the width; otherwise, a width of `height_width_max` or smaller will be used.
+#' @param webshot_zoom How many pixels should be created relative to height and width values. If `height` and `width` are set to `100` and `webshot_zoom` is set to `2`, the resulting raster will have dimensions of about `200x200` (default: `1`). 
 #' @param webshot_delay How long to wait for Google traffic layer to render (in seconds). Larger height/widths require longer delay times. If `NULL`, the following delay time (in seconds) is used: `delay = max(height,width)/200`.
 #' @param reduce_hw Number of pixels to reduce height/width by. Doing so creates some overlap between grids to ensure there is not blank space between tiles. (Default: `10`).
 #' @param return_list_of_rasters Whether to return a list of raster tiles instead of mosaicing together. (Default: `FALSE`).
@@ -40,6 +41,8 @@ gt_make_raster_from_polygon <- function(polygon,
                                         height_width_max = 2000,
                                         height = NULL,
                                         width = NULL,
+                                        color_classification = "base_colors",
+                                        webshot_zoom = 1,
                                         webshot_delay = NULL,
                                         reduce_hw = 10,
                                         return_list_of_rasters = FALSE,
@@ -66,6 +69,8 @@ gt_make_raster_from_polygon <- function(polygon,
   }
   
   r <- gt_make_raster_from_grid(grid_param_df  = grid_param_df,
+                                color_classification = color_classification,
+                                webshot_zoom   = webshot_zoom,
                                 webshot_delay  = webshot_delay,
                                 google_key     = google_key,
                                 return_list_of_rasters = return_list_of_rasters,
