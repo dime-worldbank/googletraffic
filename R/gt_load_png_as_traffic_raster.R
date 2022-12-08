@@ -36,7 +36,8 @@ gt_load_png_as_traffic_raster <- function(filename,
                                           height,
                                           width,
                                           zoom,
-                                          color_classification){
+                                          travel_level_color_dist = 4.6,
+                                          color_dist_formula = "CIEDE2000"){
   
   # Code produces some warnings that are not relevant; for example, when initially
   # make a raster, we get a warning that the extent is not defined. This warning
@@ -55,57 +56,59 @@ gt_load_png_as_traffic_raster <- function(filename,
     ## Image to hex
     rimg <- raster::as.raster(img) 
     
-    if(color_classification == "base_colors"){
+    if(travel_level_color_dist == 0){
       
       r[] <- NA
-      r[rimg %in% "#63D668EE"] <- 1
-      r[rimg %in% "#EF974DEE"] <- 2
-      r[rimg %in% "#F23C32EE"] <- 3
-      r[rimg %in% "#811F1FEE"] <- 4
+      r[rimg %in% "#63D668FF"] <- 1
+      r[rimg %in% "#FF974DFF"] <- 2
+      r[rimg %in% "#F23C32FF"] <- 3
+      r[rimg %in% "#811F1FFF"] <- 4
       
-    } else if(color_classification == "all_colors"){
+    } else {
       
-      colors_df <- rimg %>% 
-        table() %>% 
+      ## Color Values
+      color_df <- rimg[] %>% 
+        unique() %>% 
         as.data.frame() %>%
-        dplyr::rename(hex = ".")
+        dplyr::rename(hex = ".") %>%
+        mutate(hex_noff = hex %>% str_replace_all("FF$", ""))
       
-      colors_df$hex <- colors_df$hex %>% 
-        as.character()
+      lab_df <- color_df$hex_noff %>% 
+        hex_to_lab()
       
-      ## Assign traffic colors based on hsl
-      hsl_df <- colors_df$hex %>% 
-        plotwidgets::col2hsl() %>%
-        t() %>%
-        as.data.frame() 
+      color_df <- bind_cols(color_df,
+                            lab_df)
       
-      colors_df <- dplyr::bind_cols(colors_df, hsl_df)
+      ## Distance
+      color_df$dist_1 <- colordiff(color_df[,c("l", "a", "b")],
+                                   as.matrix(hex_to_lab("#63D668")))
       
-      colors_df <- colors_df %>%
-        dplyr::mutate(color = case_when(#((H == 0) & (S < 0.2)) ~ "background",
-          ((H == 0) & (S >= 0.28) & (S < 0.7) & (L >= 0.3) & (L <= 0.42)) ~ "dark-red",
-          H > 0 & H <= 5 & L <= 0.65 ~ "red", # L <= 0.80
-          H >= 20 & H <= 28 & L <= 0.80 ~ "orange", # L <= 0.85
-          H >= 120 & H <= 135 & L <= 0.80 ~ "green"))
+      color_df$dist_2 <- colordiff(color_df[,c("l", "a", "b")],
+                                   as.matrix(hex_to_lab("#FF974D")))
       
-      ## Apply traffic colors to raster
-      colors_unique <- colors_df$color %>% unique()
-      colors_unique <- colors_unique[!is.na(colors_unique)]
-      colors_unique <- colors_unique[!(colors_unique %in% "background")]
-      rimg <- matrix(rimg) #%>% raster::t() #%>% base::t()
-      for(color_i in colors_unique){
-        rimg[rimg %in% colors_df$hex[colors_df$color %in% color_i]] <- color_i
-      }
+      color_df$dist_3 <- colordiff(color_df[,c("l", "a", "b")],
+                                   as.matrix(hex_to_lab("#F23C32")))
+      
+      color_df$dist_4 <- colordiff(color_df[,c("l", "a", "b")],
+                                   as.matrix(hex_to_lab("#811F1F")))
+      
+      ## Assign traffic levels
+      color_df <- color_df %>%
+        mutate(traffic = case_when(
+          dist_1 <= travel_level_color_dist ~ 1,
+          dist_2 <= travel_level_color_dist ~ 2,
+          dist_3 <= travel_level_color_dist ~ 3,
+          dist_4 <= travel_level_color_dist ~ 4
+        )) 
       
       r[] <- NA
-      r[rimg %in% "green"]    <- 1
-      r[rimg %in% "orange"]   <- 2
-      r[rimg %in% "red"]      <- 3
-      r[rimg %in% "dark-red"] <- 4
-      
+      r[rimg %in% color_df$hex[color_df$traffic %in% 1]] <- 1
+      r[rimg %in% color_df$hex[color_df$traffic %in% 2]] <- 2
+      r[rimg %in% color_df$hex[color_df$traffic %in% 3]] <- 3
+      r[rimg %in% color_df$hex[color_df$traffic %in% 4]] <- 4
     }
     
-    ## Spatially define raster
+    #### Spatially define raster
     ext_4326 <- gt_make_extent(latitude = latitude,
                                longitude = longitude,
                                height = height,
