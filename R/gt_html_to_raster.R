@@ -19,7 +19,8 @@ gt_html_to_raster <- function(filename,
                               height,
                               width,
                               zoom,
-                              color_classification = "base_colors",
+                              traffic_color_dist_thresh = 4.6,
+                              traffic_color_dist_metric = "CIEDE2000",
                               webshot_zoom = 1,
                               webshot_delay = NULL,
                               print_progress = TRUE){
@@ -61,7 +62,8 @@ gt_html_to_raster <- function(filename,
                                      height   = height,
                                      width    = width,
                                      zoom     = zoom,
-                                     color_classification = color_classification)
+                                     traffic_color_dist_thresh = traffic_color_dist_thresh,
+                                     traffic_color_dist_metric = traffic_color_dist_metric)
   
   ## Delete png from temp file
   unlink(file.path(filename_dir, paste0(filename_only,".png")))

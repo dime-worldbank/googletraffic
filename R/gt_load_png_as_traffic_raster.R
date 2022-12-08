@@ -36,8 +36,8 @@ gt_load_png_as_traffic_raster <- function(filename,
                                           height,
                                           width,
                                           zoom,
-                                          travel_level_color_dist = 4.6,
-                                          color_dist_formula = "CIEDE2000"){
+                                          traffic_color_dist_thresh = 4.6,
+                                          traffic_color_dist_metric = "CIEDE2000"){
   
   # Code produces some warnings that are not relevant; for example, when initially
   # make a raster, we get a warning that the extent is not defined. This warning
@@ -81,16 +81,20 @@ gt_load_png_as_traffic_raster <- function(filename,
       
       ## Distance
       color_df$dist_1 <- colordiff(color_df[,c("l", "a", "b")],
-                                   as.matrix(hex_to_lab("#63D668")))
+                                   as.matrix(hex_to_lab("#63D668")),
+                                   metric = traffic_color_dist_metric)
       
       color_df$dist_2 <- colordiff(color_df[,c("l", "a", "b")],
-                                   as.matrix(hex_to_lab("#FF974D")))
+                                   as.matrix(hex_to_lab("#FF974D")),
+                                   metric = traffic_color_dist_metric)
       
       color_df$dist_3 <- colordiff(color_df[,c("l", "a", "b")],
-                                   as.matrix(hex_to_lab("#F23C32")))
+                                   as.matrix(hex_to_lab("#F23C32")),
+                                   metric = traffic_color_dist_metric)
       
       color_df$dist_4 <- colordiff(color_df[,c("l", "a", "b")],
-                                   as.matrix(hex_to_lab("#811F1F")))
+                                   as.matrix(hex_to_lab("#811F1F")),
+                                   metric = traffic_color_dist_metric)
       
       ## Assign traffic levels
       color_df <- color_df %>%
