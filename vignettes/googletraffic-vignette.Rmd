@@ -145,7 +145,7 @@ r <- gt_make_raster(location   = c(40.712778, -74.006111),
 ## Map raster
 leaflet(width = "100%") %>%
   addProviderTiles("Esri.WorldGrayCanvas") %>%
-  addRasterImage(r, colors = traffic_pal, opacity = 1) 
+  addRasterImage(r, colors = traffic_pal, opacity = 1, method = "ngb") 
 ```
 
 By using a smaller `zoom`, we can capture a larger area; however, the pixels are more coarse.
@@ -167,7 +167,7 @@ r <- gt_make_raster(location   = c(41.384900, -78.891302),
 ## Map raster
 leaflet(width = "100%") %>%
   addProviderTiles("Esri.WorldGrayCanvas") %>%
-  addRasterImage(r, colors = traffic_pal, opacity = 1) %>%
+  addRasterImage(r, colors = traffic_pal, opacity = 1, method = "ngb") %>%
   setView(lat = 41.384900, lng = -78.891302, zoom = 6) 
 ```
 
@@ -198,7 +198,7 @@ r <- gt_make_raster_from_polygon(polygon    = ny_sp,
 ## Map raster
 leaflet(width = "100%") %>%
   addProviderTiles("Esri.WorldGrayCanvas") %>%
-  addRasterImage(r, colors = traffic_pal, opacity = 1) 
+  addRasterImage(r, colors = traffic_pal, opacity = 1, method = "ngb") 
 ```
 
 ---
@@ -250,7 +250,7 @@ r <- gt_make_raster_from_grid(grid_param_df = grid_clean_df,
 ## Map raster
 leaflet(width = "100%") %>%
   addProviderTiles("Esri.WorldGrayCanvas") %>%
-  addRasterImage(r, colors = traffic_pal, opacity = 1) 
+  addRasterImage(r, colors = traffic_pal, opacity = 1, method = "ngb") 
 ```
 
 ---
