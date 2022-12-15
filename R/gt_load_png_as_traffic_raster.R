@@ -8,9 +8,11 @@
 #' @param location Vector of latitude and longitude used to create PNG file using [gt_make_png()]
 #' @param height Height (in pixels; pixel length depends on zoom) used to create PNG file using [gt_make_png()]
 #' @param width Width (in pixels; pixel length depends on zoom) used to create PNG file using [gt_make_png()]
-#' @param zoom Zoom used to PNG png file using [gt_make_png()]
-#'
+#' @param zoom Zoom level used to create PNG file using [gt_make_png()]
+#' @param traffic_color_dist_thresh Google traffic relies on four main base colors: `#63D668` for no traffic, `#FF974D` for medium traffic, `#F23C32` for high traffic, and `#811F1F` for heavy traffic. Slight variations of these colors can also represent traffic. By default, the base colors and all colors within a 2.3 color distance of each base color are used to define traffic; by default, the `CIEDE2000` formula is used to determine color distance. A value of 2.3 is one threshold used to define a "just noticeable distance" between colors. This parameter changes the color distance from the base colors used to define colors as traffic.
+#' @param traffic_color_dist_metric See above; this parameter changes the formula used to calculate distances between colors. By default, `CIEDE2000` is used; `CIE76` and `CIE94` can also be used.
 #' @return Returns a raster where each pixel represents traffic level (1 = no traffic, 2 = medium traffic, 3 = traffic delays, 4 = heavy traffic)
+#' @references Sharma, G., Wu, W., & Dalal, E. N. (2005). The CIEDE2000 color-difference formula: Implementation notes, supplementary test data, and mathematical observations. Color Research & Application: Endorsed by Inter-Society Color Council, The Colour Group (Great Britain), Canadian Society for Color, Color Science Association of Japan, Dutch Society for the Study of Color, The Swedish Colour Centre Foundation, Colour Society of Australia, Centre Français de la Couleur, 30(1), 21-30.
 #'
 #' @examples 
 #' \dontrun{
@@ -36,7 +38,7 @@ gt_load_png_as_traffic_raster <- function(filename,
                                           height,
                                           width,
                                           zoom,
-                                          traffic_color_dist_thresh = 4.6,
+                                          traffic_color_dist_thresh = 2.3,
                                           traffic_color_dist_metric = "CIEDE2000"){
   
   # Code produces some warnings that are not relevant; for example, when initially
@@ -56,7 +58,7 @@ gt_load_png_as_traffic_raster <- function(filename,
     ## Image to hex
     rimg <- raster::as.raster(img) 
     
-    if(travel_level_color_dist == 0){
+    if(traffic_color_dist_thresh == 0){
       
       r[] <- NA
       r[rimg %in% "#63D668FF"] <- 1
@@ -74,35 +76,35 @@ gt_load_png_as_traffic_raster <- function(filename,
         mutate(hex_noff = hex %>% str_replace_all("FF$", ""))
       
       lab_df <- color_df$hex_noff %>% 
-        hex_to_lab()
+        schemr::hex_to_lab()
       
       color_df <- bind_cols(color_df,
                             lab_df)
       
       ## Distance
-      color_df$dist_1 <- colordiff(color_df[,c("l", "a", "b")],
-                                   as.matrix(hex_to_lab("#63D668")),
-                                   metric = traffic_color_dist_metric)
+      color_df$dist_1 <- ColorNameR::colordiff(color_df[,c("l", "a", "b")],
+                                               as.matrix(hex_to_lab("#63D668")),
+                                               metric = traffic_color_dist_metric)
       
-      color_df$dist_2 <- colordiff(color_df[,c("l", "a", "b")],
-                                   as.matrix(hex_to_lab("#FF974D")),
-                                   metric = traffic_color_dist_metric)
+      color_df$dist_2 <- ColorNameR::colordiff(color_df[,c("l", "a", "b")],
+                                               as.matrix(hex_to_lab("#FF974D")),
+                                               metric = traffic_color_dist_metric)
       
-      color_df$dist_3 <- colordiff(color_df[,c("l", "a", "b")],
-                                   as.matrix(hex_to_lab("#F23C32")),
-                                   metric = traffic_color_dist_metric)
+      color_df$dist_3 <- ColorNameR::colordiff(color_df[,c("l", "a", "b")],
+                                               as.matrix(hex_to_lab("#F23C32")),
+                                               metric = traffic_color_dist_metric)
       
-      color_df$dist_4 <- colordiff(color_df[,c("l", "a", "b")],
-                                   as.matrix(hex_to_lab("#811F1F")),
-                                   metric = traffic_color_dist_metric)
+      color_df$dist_4 <- ColorNameR::colordiff(color_df[,c("l", "a", "b")],
+                                               as.matrix(hex_to_lab("#811F1F")),
+                                               metric = traffic_color_dist_metric)
       
       ## Assign traffic levels
       color_df <- color_df %>%
         mutate(traffic = case_when(
-          dist_1 <= travel_level_color_dist ~ 1,
-          dist_2 <= travel_level_color_dist ~ 2,
-          dist_3 <= travel_level_color_dist ~ 3,
-          dist_4 <= travel_level_color_dist ~ 4
+          dist_1 <= traffic_color_dist_thresh ~ 1,
+          dist_2 <= traffic_color_dist_thresh ~ 2,
+          dist_3 <= traffic_color_dist_thresh ~ 3,
+          dist_4 <= traffic_color_dist_thresh ~ 4
         )) 
       
       r[] <- NA

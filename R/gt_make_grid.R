@@ -5,7 +5,7 @@
 #' Creates a grid of sf polygons, where traffic data for each polygon can then be queried using [gt_make_raster_from_grid()]. 
 #'
 #' @param polygon Polygon (`sf` object or `SpatialPolygonsDataframe`) in WGS84 CRS the defines region to be queried.
-#' @param zoom Zoom level; integer from 0 to 20. For more information about how zoom levels correspond to pixel size, see [here](https://wiki.openstreetmap.org/wiki/Zoom_levels)
+#' @param zoom Zoom level; integer from 0 to 20. For more information about how zoom levels correspond to pixel size, see [here](https://wiki.openstreetmap.org/wiki/Zoom_levels) and [here](https://developers.google.com/maps/documentation/javascript/overview#zoom-levels).
 #' @param height_width_max Maximum pixel height and width to check using for each grid (pixel length depends on zoom). If the same number of grids can be made with a smaller height/width, the function will use a smaller height/width. If `height` and `width` are specified, that height and width will be used and `height_width_max` will be ignored. (Default: `2000`) 
 #' @param height Height, in pixels, for each grid (pixel length depends on zoom). Enter a `height` to manually specify the height; otherwise, a height of `height_width_max` or smaller will be used.
 #' @param width Pixel, in pixels, for each grid (pixel length depends on zoom). Enter a `width` to manually specify the width; otherwise, a width of `height_width_max` or smaller will be used.
