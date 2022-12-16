@@ -23,7 +23,7 @@ gt_make_png(
 
 \item{width}{Width (in pixels; pixel length depends on zoom)}
 
-\item{zoom}{Zoom level; integer from 0 to 20. For more information about how zoom levels correspond to pixel size, see \href{https://wiki.openstreetmap.org/wiki/Zoom_levels}{here} and \href{https://developers.google.com/maps/documentation/javascript/overview#zoom-levels}{here}.}
+\item{zoom}{Zoom level; integer from 5 to 20. For more information about how zoom levels correspond to pixel size, see \href{https://wiki.openstreetmap.org/wiki/Zoom_levels}{here} and \href{https://developers.google.com/maps/documentation/javascript/overview#zoom-levels}{here}.}
 
 \item{out_filename}{Filename of PNG file to make}
 

@@ -9,6 +9,7 @@ library(googletraffic)
 library(dplyr)
 library(ggplot2)
 library(leaflet)
+library(raster)
 
 if(F){
   library(dplyr)
@@ -33,9 +34,9 @@ google_key_df <- api_keys_df |>
 google_key <- google_key_df$Key
 
 # Make PNGs --------------------------------------------------------------------
-mk.dir("~/Desktop/gt_pngs")
+dir.create("~/Desktop/gt_pngs")
 
-for(zoom in 0:20){
+for(zoom in 5:20){
   gt_make_png(location = c(40.717437418183884, -73.99145764250052),
               height = 2000,
               width = 2000,
@@ -45,7 +46,7 @@ for(zoom in 0:20){
 }
 
 # Make Traffic Figures ---------------------------------------------------------
-mk.dir("~/Desktop/gt_raster_images")
+dir.create("~/Desktop/gt_raster_images")
 
 for(zoom in 5:20){
   r <- gt_load_png_as_traffic_raster(filename = paste0("~/Desktop/gt_pngs/gt",zoom,".png"),
@@ -72,6 +73,7 @@ for(zoom in 5:20){
 }
 
 # Test Leaflet -----------------------------------------------------------------
+zoom=16
 traffic_pal <- colorNumeric(c("#63D668", "#FF974D", "#F23C32", "#811F1F"), 
                             1:4,
                             na.color = "transparent")
