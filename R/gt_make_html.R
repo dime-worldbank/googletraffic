@@ -8,7 +8,7 @@
 # @param location Vector of latitude and longitude
 # @param height Height (in pixels; pixel length depends on zoom)
 # @param width Width (in pixels; pixel length depends on zoom)
-# @param zoom Zoom level; integer from 0 to 20. For more information about how zoom levels correspond to pixel size, see [here](https://wiki.openstreetmap.org/wiki/Zoom_levels)
+# @param zoom Zoom level; integer from 5 to 20. For more information about how zoom levels correspond to pixel size, see [here](https://wiki.openstreetmap.org/wiki/Zoom_levels)
 # @param filename Path and filename to save file
 # @param google_key Google API key
 # 
