@@ -27,7 +27,7 @@ gt_make_png(
 
 \item{out_filename}{Filename of PNG file to make}
 
-\item{google_key}{Google API key}
+\item{google_key}{Google API key, where the \href{https://developers.google.com/maps/documentation/javascript/overview}{Maps JavaScript API} is enabled. To create a Google API key, follow \href{https://developers.google.com/maps/get-started#create-project}{these instructions}.}
 
 \item{webshot_zoom}{How many pixels should be created relative to height and width values. If \code{height} and \code{width} are set to \code{100} and \code{webshot_zoom} is set to \code{2}, the resulting raster will have dimensions of about \verb{200x200} (default: \code{1}).}
 
