@@ -4,7 +4,15 @@
 \alias{gt_load_png_as_traffic_raster}
 \title{Converts PNG to raster}
 \usage{
-gt_load_png_as_traffic_raster(filename, location, height, width, zoom)
+gt_load_png_as_traffic_raster(
+  filename,
+  location,
+  height,
+  width,
+  zoom,
+  traffic_color_dist_thresh = 2.3,
+  traffic_color_dist_metric = "CIEDE2000"
+)
 }
 \arguments{
 \item{filename}{Filename of PNG file}
@@ -15,7 +23,11 @@ gt_load_png_as_traffic_raster(filename, location, height, width, zoom)
 
 \item{width}{Width (in pixels; pixel length depends on zoom) used to create PNG file using \code{\link[=gt_make_png]{gt_make_png()}}}
 
-\item{zoom}{Zoom used to PNG png file using \code{\link[=gt_make_png]{gt_make_png()}}}
+\item{zoom}{Zoom level used to create PNG file using \code{\link[=gt_make_png]{gt_make_png()}}}
+
+\item{traffic_color_dist_thresh}{Google traffic relies on four main base colors: \verb{#63D668} for no traffic, \verb{#FF974D} for medium traffic, \verb{#F23C32} for high traffic, and \verb{#811F1F} for heavy traffic. Slight variations of these colors can also represent traffic. By default, the base colors and all colors within a 2.3 color distance of each base color are used to define traffic; by default, the \code{CIEDE2000} formula is used to determine color distance. A value of 2.3 is one threshold used to define a "just noticeable distance" between colors. This parameter changes the color distance from the base colors used to define colors as traffic.}
+
+\item{traffic_color_dist_metric}{See above; this parameter changes the formula used to calculate distances between colors. By default, \code{CIEDE2000} is used; \code{CIE76} and \code{CIE94} can also be used.}
 }
 \value{
 Returns a raster where each pixel represents traffic level (1 = no traffic, 2 = medium traffic, 3 = traffic delays, 4 = heavy traffic)
@@ -41,4 +53,7 @@ r <- gt_load_png_as_traffic_raster(filename = "google_traffic.png",
                                    zoom     = 16)
 }                                    
 
+}
+\references{
+Sharma, G., Wu, W., & Dalal, E. N. (2005). The CIEDE2000 color-difference formula: Implementation notes, supplementary test data, and mathematical observations. Color Research & Application: Endorsed by Inter-Society Color Council, The Colour Group (Great Britain), Canadian Society for Color, Color Science Association of Japan, Dutch Society for the Study of Color, The Swedish Colour Centre Foundation, Colour Society of Australia, Centre Français de la Couleur, 30(1), 21-30.
 }
