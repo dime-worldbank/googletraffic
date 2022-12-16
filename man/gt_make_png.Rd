@@ -11,6 +11,7 @@ gt_make_png(
   zoom,
   out_filename,
   google_key,
+  webshot_zoom = 1,
   webshot_delay = NULL,
   print_progress = TRUE
 )
@@ -22,11 +23,13 @@ gt_make_png(
 
 \item{width}{Width (in pixels; pixel length depends on zoom)}
 
-\item{zoom}{Zoom level; integer from 0 to 20. For more information about how zoom levels correspond to pixel size, see \href{https://wiki.openstreetmap.org/wiki/Zoom_levels}{here}}
+\item{zoom}{Zoom level; integer from 0 to 20. For more information about how zoom levels correspond to pixel size, see \href{https://wiki.openstreetmap.org/wiki/Zoom_levels}{here} and \href{https://developers.google.com/maps/documentation/javascript/overview#zoom-levels}{here}.}
 
 \item{out_filename}{Filename of PNG file to make}
 
 \item{google_key}{Google API key}
+
+\item{webshot_zoom}{How many pixels should be created relative to height and width values. If \code{height} and \code{width} are set to \code{100} and \code{webshot_zoom} is set to \code{2}, the resulting raster will have dimensions of about \verb{200x200} (default: \code{1}).}
 
 \item{webshot_delay}{How long to wait for Google traffic layer to render. Larger height/widths require longer delay times. If \code{NULL}, the following delay time (in seconds) is used: \code{delay = max(height,width)/200}.}
 

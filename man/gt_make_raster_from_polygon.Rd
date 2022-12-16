@@ -11,6 +11,9 @@ gt_make_raster_from_polygon(
   height_width_max = 2000,
   height = NULL,
   width = NULL,
+  traffic_color_dist_thresh = 2.3,
+  traffic_color_dist_metric = "CIEDE2000",
+  webshot_zoom = 1,
   webshot_delay = NULL,
   reduce_hw = 10,
   return_list_of_rasters = FALSE,
@@ -21,7 +24,7 @@ gt_make_raster_from_polygon(
 \arguments{
 \item{polygon}{Polygon (\code{sf} object or \code{SpatialPolygonsDataframe}) in WGS84 CRS}
 
-\item{zoom}{Zoom level; integer from 0 to 20. For more information about how zoom levels correspond to pixel size, see \href{https://wiki.openstreetmap.org/wiki/Zoom_levels}{here}}
+\item{zoom}{Zoom level; integer from 0 to 20. For more information about how zoom levels correspond to pixel size, see \href{https://wiki.openstreetmap.org/wiki/Zoom_levels}{here} and \href{https://developers.google.com/maps/documentation/javascript/overview#zoom-levels}{here}.}
 
 \item{google_key}{Google API key}
 
@@ -30,6 +33,12 @@ gt_make_raster_from_polygon(
 \item{height}{Height, in pixels, for each API query (pixel length depends on zoom). Enter a \code{height} to manually specify the height; otherwise, a height of \code{height_width_max} or smaller will be used.}
 
 \item{width}{Pixel, in pixels, for each API query (pixel length depends on zoom). Enter a \code{width} to manually specify the width; otherwise, a width of \code{height_width_max} or smaller will be used.}
+
+\item{traffic_color_dist_thresh}{Google traffic relies on four main base colors: \verb{#63D668} for no traffic, \verb{#FF974D} for medium traffic, \verb{#F23C32} for high traffic, and \verb{#811F1F} for heavy traffic. Slight variations of these colors can also represent traffic. By default, the base colors and all colors within a 2.3 color distance of each base color are used to define traffic; by default, the \code{CIEDE2000} formula is used to determine color distance. A value of 2.3 is one threshold used to define a "just noticeable distance" between colors. This parameter changes the color distance from the base colors used to define colors as traffic.}
+
+\item{traffic_color_dist_metric}{See above; this parameter changes the formula used to calculate distances between colors. By default, \code{CIEDE2000} is used; \code{CIE76} and \code{CIE94} can also be used.}
+
+\item{webshot_zoom}{How many pixels should be created relative to height and width values. If \code{height} and \code{width} are set to \code{100} and \code{webshot_zoom} is set to \code{2}, the resulting raster will have dimensions of about \verb{200x200} (default: \code{1}).}
 
 \item{webshot_delay}{How long to wait for Google traffic layer to render (in seconds). Larger height/widths require longer delay times. If \code{NULL}, the following delay time (in seconds) is used: \code{delay = max(height,width)/200}.}
 
@@ -62,4 +71,7 @@ r <- gt_make_raster_from_polygon(polygon    = ny_sp,
                                  google_key = "GOOGLE-KEY-HERE")
 } 
 
+}
+\references{
+Sharma, G., Wu, W., & Dalal, E. N. (2005). The CIEDE2000 color-difference formula: Implementation notes, supplementary test data, and mathematical observations. Color Research & Application: Endorsed by Inter-Society Color Council, The Colour Group (Great Britain), Canadian Society for Color, Color Science Association of Japan, Dutch Society for the Study of Color, The Swedish Colour Centre Foundation, Colour Society of Australia, Centre Français de la Couleur, 30(1), 21-30.
 }

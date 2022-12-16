@@ -16,7 +16,7 @@ gt_make_grid(
 \arguments{
 \item{polygon}{Polygon (\code{sf} object or \code{SpatialPolygonsDataframe}) in WGS84 CRS the defines region to be queried.}
 
-\item{zoom}{Zoom level; integer from 0 to 20. For more information about how zoom levels correspond to pixel size, see \href{https://wiki.openstreetmap.org/wiki/Zoom_levels}{here}}
+\item{zoom}{Zoom level; integer from 0 to 20. For more information about how zoom levels correspond to pixel size, see \href{https://wiki.openstreetmap.org/wiki/Zoom_levels}{here} and \href{https://developers.google.com/maps/documentation/javascript/overview#zoom-levels}{here}.}
 
 \item{height_width_max}{Maximum pixel height and width to check using for each grid (pixel length depends on zoom). If the same number of grids can be made with a smaller height/width, the function will use a smaller height/width. If \code{height} and \code{width} are specified, that height and width will be used and \code{height_width_max} will be ignored. (Default: \code{2000})}
 
