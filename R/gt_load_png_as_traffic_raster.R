@@ -72,7 +72,7 @@ gt_load_png_as_traffic_raster <- function(filename,
         unique() %>% 
         as.data.frame() %>%
         dplyr::rename(hex = ".") %>%
-        mutate(hex_noff = hex %>% str_replace_all("FF$", ""))
+        dplyr::mutate(hex_noff = str_replace_all(.data$hex, "FF$", ""))
       
       lab_df <- color_df$hex_noff %>% 
         schemr::hex_to_lab()
@@ -82,24 +82,24 @@ gt_load_png_as_traffic_raster <- function(filename,
       
       ## Distance
       color_df$dist_1 <- ColorNameR::colordiff(color_df[,c("l", "a", "b")],
-                                               as.matrix(hex_to_lab("#63D668")),
+                                               as.matrix(schemr::hex_to_lab("#63D668")),
                                                metric = traffic_color_dist_metric)
       
       color_df$dist_2 <- ColorNameR::colordiff(color_df[,c("l", "a", "b")],
-                                               as.matrix(hex_to_lab("#FF974D")),
+                                               as.matrix(schemr::hex_to_lab("#FF974D")),
                                                metric = traffic_color_dist_metric)
       
       color_df$dist_3 <- ColorNameR::colordiff(color_df[,c("l", "a", "b")],
-                                               as.matrix(hex_to_lab("#F23C32")),
+                                               as.matrix(schemr::hex_to_lab("#F23C32")),
                                                metric = traffic_color_dist_metric)
       
       color_df$dist_4 <- ColorNameR::colordiff(color_df[,c("l", "a", "b")],
-                                               as.matrix(hex_to_lab("#811F1F")),
+                                               as.matrix(schemr::hex_to_lab("#811F1F")),
                                                metric = traffic_color_dist_metric)
       
       ## Assign traffic levels
       color_df <- color_df %>%
-        mutate(traffic = case_when(
+        dplyr::mutate(traffic = case_when(
           dist_1 <= traffic_color_dist_thresh ~ 1,
           dist_2 <= traffic_color_dist_thresh ~ 2,
           dist_3 <= traffic_color_dist_thresh ~ 3,
