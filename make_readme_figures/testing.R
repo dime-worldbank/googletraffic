@@ -1,8 +1,29 @@
 # Testing Package
 
+# TODO:
+# Use 4.6
+
 # Setup ------------------------------------------------------------------------
 # devtools::install_github("dime-worldbank/googletraffic")
 library(googletraffic)
+library(dplyr)
+library(ggplot2)
+library(leaflet)
+
+if(F){
+  library(dplyr)
+  library(googleway)
+  library(htmlwidgets)
+  library(plotwidgets)
+  library(png)
+  library(sf)
+  library(sp)
+  library(stringr)
+  library(webshot)
+  library(raster)
+  library(ColorNameR)
+  library(schemr)
+}
 
 api_keys_df <- read.csv("~/Dropbox/World Bank/Webscraping/Files for Server/api_keys.csv")
 
@@ -12,6 +33,8 @@ google_key_df <- api_keys_df |>
 google_key <- google_key_df$Key
 
 # Make PNGs --------------------------------------------------------------------
+mk.dir("~/Desktop/gt_pngs")
+
 for(zoom in 0:20){
   gt_make_png(location = c(40.717437418183884, -73.99145764250052),
               height = 2000,
@@ -22,7 +45,9 @@ for(zoom in 0:20){
 }
 
 # Make Traffic Figures ---------------------------------------------------------
-for(zoom in 0:20){
+mk.dir("~/Desktop/gt_raster_images")
+
+for(zoom in 5:20){
   r <- gt_load_png_as_traffic_raster(filename = paste0("~/Desktop/gt_pngs/gt",zoom,".png"),
                                      location = c(40.717437418183884, -73.99145764250052),
                                      height = 2000,
@@ -37,7 +62,7 @@ for(zoom in 0:20){
                 aes(x = x, y = y, 
                     fill = as.factor(value))) +
     labs(fill = "Traffic\nLevel") +
-    scale_fill_manual(values = c("green2", "orange", "red", "#660000")) +
+    scale_fill_manual(values = c("#63D668", "#FF974D", "#F23C32", "#811F1F")) +
     coord_quickmap() + 
     theme_void() +
     theme(plot.background = element_rect(fill = "white", color="white"))
@@ -46,3 +71,86 @@ for(zoom in 0:20){
          height = 6, width = 6)
 }
 
+# Test Leaflet -----------------------------------------------------------------
+traffic_pal <- colorNumeric(c("#63D668", "#FF974D", "#F23C32", "#811F1F"), 
+                            1:4,
+                            na.color = "transparent")
+
+r <- gt_load_png_as_traffic_raster(filename = paste0("~/Desktop/gt_pngs/gt",zoom,".png"),
+                                   location = c(40.717437418183884, -73.99145764250052),
+                                   height = 2000,
+                                   width = 2000,
+                                   traffic_color_dist_thresh = 4.6,
+                                   zoom = zoom)
+
+## Map raster
+leaflet() %>%
+  addTiles() %>%
+  addRasterImage(r, colors = traffic_pal, opacity = 1, method = "ngb") 
+
+# Test Grid --------------------------------------------------------------------
+grid_df <- gt_make_grid(polygon = ny_sp,
+                        zoom    = 15)
+
+leaflet() %>%
+  addTiles() %>%
+  addPolygons(data = grid_df)
+
+r <- gt_make_raster_from_grid(grid_param_df = grid_df,
+                              google_key    = google_key)
+
+## Plot
+r_df <- rasterToPoints(r, spatial = TRUE) %>% as.data.frame()
+names(r_df) <- c("value", "x", "y")
+
+p <- ggplot() +
+  geom_raster(data = r_df, 
+              aes(x = x, y = y, 
+                  fill = as.factor(value))) +
+  labs(fill = "Traffic\nLevel") +
+  scale_fill_manual(values = c("green2", "orange", "red", "#660000")) +
+  coord_quickmap() + 
+  theme_void() +
+  theme(plot.background = element_rect(fill = "white", color="white"))
+
+ggsave(p, filename = "~/Desktop/nyc_grid.png",  
+       height = 7*1.6,
+       width = 4.2*1.6)
+
+
+leaflet() %>%
+  addTiles() %>%
+  addRasterImage(r, colors = traffic_pal, opacity = 1, method = "ngb") 
+
+# Test Polygon -----------------------------------------------------------------
+
+## Grab shapefile of Manhattan
+us_sp <- getData('GADM', country='USA', level=2)
+ny_sp <- us_sp[us_sp$NAME_2 %in% "New York",]
+
+## Make raster
+r <- gt_make_raster_from_polygon(polygon    = ny_sp,
+                                 zoom       = 16,
+                                 google_key = google_key)
+
+## Plot
+r_df <- rasterToPoints(r, spatial = TRUE) %>% as.data.frame()
+names(r_df) <- c("value", "x", "y")
+
+p <- ggplot() +
+  geom_raster(data = r_df, 
+              aes(x = x, y = y, 
+                  fill = as.factor(value))) +
+  labs(fill = "Traffic\nLevel") +
+  scale_fill_manual(values = c("green2", "orange", "red", "#660000")) +
+  coord_quickmap() + 
+  theme_void() +
+  theme(plot.background = element_rect(fill = "white", color="white"))
+
+ggsave(p, filename = "~/Desktop/nyc_polygon.png",  
+       height = 7*2,
+       width = 4.2*2)
+
+leaflet() %>%
+  addTiles() %>%
+  addRasterImage(r, colors = traffic_pal, opacity = 1, method = "ngb") 

@@ -1,7 +1,8 @@
 # googletraffic 0.1.0
 
 * Add `webshot_zoom` parameter
-* Add `color_classification` parameter
+* Add `traffic_color_dist_thresh` parameter
+* Add `traffic_color_dist_metric` parameter
 
 # googletraffic 0.1.0
 
