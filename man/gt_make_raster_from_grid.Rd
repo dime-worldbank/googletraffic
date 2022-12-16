@@ -18,7 +18,7 @@ gt_make_raster_from_grid(
 \arguments{
 \item{grid_param_df}{Grid parameter dataframe produced from \code{\link[=gt_make_grid]{gt_make_grid()}}}
 
-\item{google_key}{Google API key}
+\item{google_key}{Google API key, where the \href{https://developers.google.com/maps/documentation/javascript/overview}{Maps JavaScript API} is enabled. To create a Google API key, follow \href{https://developers.google.com/maps/get-started#create-project}{these instructions}.}
 
 \item{traffic_color_dist_thresh}{Google traffic relies on four main base colors: \verb{#63D668} for no traffic, \verb{#FF974D} for medium traffic, \verb{#F23C32} for high traffic, and \verb{#811F1F} for heavy traffic. Slight variations of these colors can also represent traffic. By default, the base colors and all colors within a 4.6 color distance of each base color are used to define traffic; by default, the \code{CIEDE2000} metric is used to determine color distance. A value of 2.3 is one threshold used to define a "just noticeable distance" (JND) between colors (by default, 2 X JND is used). This parameter changes the color distance from the base colors used to define colors as traffic. For more information, see \href{https://en.wikipedia.org/wiki/Color_difference#CIEDE2000}{here}.}
 
@@ -56,7 +56,4 @@ r <- gt_make_raster_from_grid(grid_param_df = grid_clean_df,
                               google_key    = "GOOGLE-KEY-HERE")
 }
 
-}
-\references{
-Sharma, G., Wu, W., & Dalal, E. N. (2005). The CIEDE2000 color-difference formula: Implementation notes, supplementary test data, and mathematical observations. Color Research & Application: Endorsed by Inter-Society Color Council, The Colour Group (Great Britain), Canadian Society for Color, Color Science Association of Japan, Dutch Society for the Study of Color, The Swedish Colour Centre Foundation, Colour Society of Australia, Centre Français de la Couleur, 30(1), 21-30.
 }

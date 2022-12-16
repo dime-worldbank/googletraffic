@@ -26,7 +26,7 @@ gt_make_raster_from_polygon(
 
 \item{zoom}{Zoom level; integer from 5 to 20. For more information about how zoom levels correspond to pixel size, see \href{https://wiki.openstreetmap.org/wiki/Zoom_levels}{here} and \href{https://developers.google.com/maps/documentation/javascript/overview#zoom-levels}{here}.}
 
-\item{google_key}{Google API key}
+\item{google_key}{Google API key, where the \href{https://developers.google.com/maps/documentation/javascript/overview}{Maps JavaScript API} is enabled. To create a Google API key, follow \href{https://developers.google.com/maps/get-started#create-project}{these instructions}.}
 
 \item{height_width_max}{Maximum pixel height and width to check using for each API query (pixel length depends on zoom). If the same number of API queries can be made with a smaller height/width, the function will use a smaller height/width. If \code{height} and \code{width} are specified, that height and width will be used and \code{height_width_max} will be ignored. (Default: \code{2000})}
 
@@ -71,7 +71,4 @@ r <- gt_make_raster_from_polygon(polygon    = ny_sp,
                                  google_key = "GOOGLE-KEY-HERE")
 } 
 
-}
-\references{
-Sharma, G., Wu, W., & Dalal, E. N. (2005). The CIEDE2000 color-difference formula: Implementation notes, supplementary test data, and mathematical observations. Color Research & Application: Endorsed by Inter-Society Color Council, The Colour Group (Great Britain), Canadian Society for Color, Color Science Association of Japan, Dutch Society for the Study of Color, The Swedish Colour Centre Foundation, Colour Society of Australia, Centre Français de la Couleur, 30(1), 21-30.
 }
