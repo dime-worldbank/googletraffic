@@ -7,7 +7,7 @@
 gt_make_raster_from_grid(
   grid_param_df,
   google_key,
-  traffic_color_dist_thresh = 2.3,
+  traffic_color_dist_thresh = 4.6,
   traffic_color_dist_metric = "CIEDE2000",
   webshot_zoom = 1,
   webshot_delay = NULL,
@@ -20,7 +20,7 @@ gt_make_raster_from_grid(
 
 \item{google_key}{Google API key}
 
-\item{traffic_color_dist_thresh}{Google traffic relies on four main base colors: \verb{#63D668} for no traffic, \verb{#FF974D} for medium traffic, \verb{#F23C32} for high traffic, and \verb{#811F1F} for heavy traffic. Slight variations of these colors can also represent traffic. By default, the base colors and all colors within a 2.3 color distance of each base color are used to define traffic; by default, the \code{CIEDE2000} formula is used to determine color distance. A value of 2.3 is one threshold used to define a "just noticeable distance" between colors. This parameter changes the color distance from the base colors used to define colors as traffic.}
+\item{traffic_color_dist_thresh}{Google traffic relies on four main base colors: \verb{#63D668} for no traffic, \verb{#FF974D} for medium traffic, \verb{#F23C32} for high traffic, and \verb{#811F1F} for heavy traffic. Slight variations of these colors can also represent traffic. By default, the base colors and all colors within a 4.6 color distance of each base color are used to define traffic; by default, the \code{CIEDE2000} formula is used to determine color distance. A value of 2.3 is one threshold used to define a "just noticeable distance" (JND) between colors (by default, 2 X JND is used). This parameter changes the color distance from the base colors used to define colors as traffic.}
 
 \item{traffic_color_dist_metric}{See above; this parameter changes the formula used to calculate distances between colors. By default, \code{CIEDE2000} is used; \code{CIE76} and \code{CIE94} can also be used.}
 
