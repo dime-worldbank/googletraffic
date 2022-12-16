@@ -87,7 +87,7 @@ r <- gt_load_png_as_traffic_raster(filename = paste0("~/Desktop/gt_pngs/gt",zoom
 
 ## Map raster
 leaflet() %>%
-  addTiles() %>%
+  #addTiles() %>%
   addRasterImage(r, colors = traffic_pal, opacity = 1, method = "ngb") 
 
 # Test Grid --------------------------------------------------------------------

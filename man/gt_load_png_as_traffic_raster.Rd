@@ -25,9 +25,9 @@ gt_load_png_as_traffic_raster(
 
 \item{zoom}{Zoom level used to create PNG file using \code{\link[=gt_make_png]{gt_make_png()}}}
 
-\item{traffic_color_dist_thresh}{Google traffic relies on four main base colors: \verb{#63D668} for no traffic, \verb{#FF974D} for medium traffic, \verb{#F23C32} for high traffic, and \verb{#811F1F} for heavy traffic. Slight variations of these colors can also represent traffic. By default, the base colors and all colors within a 4.6 color distance of each base color are used to define traffic; by default, the \code{CIEDE2000} formula is used to determine color distance. A value of 2.3 is one threshold used to define a "just noticeable distance" (JND) between colors (by default, 2 X JND is used). This parameter changes the color distance from the base colors used to define colors as traffic.}
+\item{traffic_color_dist_thresh}{Google traffic relies on four main base colors: \verb{#63D668} for no traffic, \verb{#FF974D} for medium traffic, \verb{#F23C32} for high traffic, and \verb{#811F1F} for heavy traffic. Slight variations of these colors can also represent traffic. By default, the base colors and all colors within a 4.6 color distance of each base color are used to define traffic; by default, the \code{CIEDE2000} metric is used to determine color distance. A value of 2.3 is one threshold used to define a "just noticeable distance" (JND) between colors (by default, 2 X JND is used). This parameter changes the color distance from the base colors used to define colors as traffic. For more information, see \href{https://en.wikipedia.org/wiki/Color_difference#CIEDE2000}{here}.}
 
-\item{traffic_color_dist_metric}{See above; this parameter changes the formula used to calculate distances between colors. By default, \code{CIEDE2000} is used; \code{CIE76} and \code{CIE94} can also be used.}
+\item{traffic_color_dist_metric}{See above; this parameter changes the metric used to calculate distances between colors. By default, \code{CIEDE2000} is used; \code{CIE76} and \code{CIE94} can also be used. For more information, see \href{https://en.wikipedia.org/wiki/Color_difference#CIEDE2000}{here}.}
 }
 \value{
 Returns a raster where each pixel represents traffic level (1 = no traffic, 2 = medium traffic, 3 = traffic delays, 4 = heavy traffic)
