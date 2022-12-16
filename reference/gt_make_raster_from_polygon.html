@@ -12,7 +12,7 @@ indicating traffic volume (no traffic, light, moderate, and heavy)."><!-- mathja
     
     <a class="navbar-brand me-2" href="../index.html">googletraffic</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -67,6 +67,9 @@ indicating traffic volume (no traffic, light, moderate, and heavy).</p>
 <span>  height_width_max <span class="op">=</span> <span class="fl">2000</span>,</span>
 <span>  height <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  width <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  traffic_color_dist_thresh <span class="op">=</span> <span class="fl">4.6</span>,</span>
+<span>  traffic_color_dist_metric <span class="op">=</span> <span class="st">"CIEDE2000"</span>,</span>
+<span>  webshot_zoom <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  webshot_delay <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  reduce_hw <span class="op">=</span> <span class="fl">10</span>,</span>
 <span>  return_list_of_rasters <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -82,11 +85,11 @@ indicating traffic volume (no traffic, light, moderate, and heavy).</p>
 
 
 <dt>zoom</dt>
-<dd><p>Zoom level; integer from 0 to 20. For more information about how zoom levels correspond to pixel size, see <a href="https://wiki.openstreetmap.org/wiki/Zoom_levels" class="external-link">here</a></p></dd>
+<dd><p>Zoom level; integer from 5 to 20. For more information about how zoom levels correspond to pixel size, see <a href="https://wiki.openstreetmap.org/wiki/Zoom_levels" class="external-link">here</a> and <a href="https://developers.google.com/maps/documentation/javascript/overview#zoom-levels" class="external-link">here</a>.</p></dd>
 
 
 <dt>google_key</dt>
-<dd><p>Google API key</p></dd>
+<dd><p>Google API key, where the <a href="https://developers.google.com/maps/documentation/javascript/overview" class="external-link">Maps JavaScript API</a> is enabled. To create a Google API key, follow <a href="https://developers.google.com/maps/get-started#create-project" class="external-link">these instructions</a>.</p></dd>
 
 
 <dt>height_width_max</dt>
@@ -99,6 +102,18 @@ indicating traffic volume (no traffic, light, moderate, and heavy).</p>
 
 <dt>width</dt>
 <dd><p>Pixel, in pixels, for each API query (pixel length depends on zoom). Enter a <code>width</code> to manually specify the width; otherwise, a width of <code>height_width_max</code> or smaller will be used.</p></dd>
+
+
+<dt>traffic_color_dist_thresh</dt>
+<dd><p>Google traffic relies on four main base colors: <code>#63D668</code> for no traffic, <code>#FF974D</code> for medium traffic, <code>#F23C32</code> for high traffic, and <code>#811F1F</code> for heavy traffic. Slight variations of these colors can also represent traffic. By default, the base colors and all colors within a 4.6 color distance of each base color are used to define traffic; by default, the <code>CIEDE2000</code> metric is used to determine color distance. A value of 2.3 is one threshold used to define a "just noticeable distance" (JND) between colors (by default, 2 X JND is used). This parameter changes the color distance from the base colors used to define colors as traffic. For more information, see <a href="https://en.wikipedia.org/wiki/Color_difference#CIEDE2000" class="external-link">here</a>.</p></dd>
+
+
+<dt>traffic_color_dist_metric</dt>
+<dd><p>See above; this parameter changes the metric used to calculate distances between colors. By default, <code>CIEDE2000</code> is used; <code>CIE76</code> and <code>CIE94</code> can also be used. For more information, see <a href="https://en.wikipedia.org/wiki/Color_difference#CIEDE2000" class="external-link">here</a>.</p></dd>
+
+
+<dt>webshot_zoom</dt>
+<dd><p>How many pixels should be created relative to height and width values. If <code>height</code> and <code>width</code> are set to <code>100</code> and <code>webshot_zoom</code> is set to <code>2</code>, the resulting raster will have dimensions of about <code>200x200</code> (default: <code>1</code>).</p></dd>
 
 
 <dt>webshot_delay</dt>

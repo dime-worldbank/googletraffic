@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">googletraffic</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,7 +57,15 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">gt_load_png_as_traffic_raster</span><span class="op">(</span><span class="va">filename</span>, <span class="va">location</span>, <span class="va">height</span>, <span class="va">width</span>, <span class="va">zoom</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">gt_load_png_as_traffic_raster</span><span class="op">(</span></span>
+<span>  <span class="va">filename</span>,</span>
+<span>  <span class="va">location</span>,</span>
+<span>  <span class="va">height</span>,</span>
+<span>  <span class="va">width</span>,</span>
+<span>  <span class="va">zoom</span>,</span>
+<span>  traffic_color_dist_thresh <span class="op">=</span> <span class="fl">4.6</span>,</span>
+<span>  traffic_color_dist_metric <span class="op">=</span> <span class="st">"CIEDE2000"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -79,7 +87,15 @@
 
 
 <dt>zoom</dt>
-<dd><p>Zoom used to PNG png file using <code><a href="gt_make_png.html">gt_make_png()</a></code></p></dd>
+<dd><p>Zoom level used to create PNG file using <code><a href="gt_make_png.html">gt_make_png()</a></code></p></dd>
+
+
+<dt>traffic_color_dist_thresh</dt>
+<dd><p>Google traffic relies on four main base colors: <code>#63D668</code> for no traffic, <code>#FF974D</code> for medium traffic, <code>#F23C32</code> for high traffic, and <code>#811F1F</code> for heavy traffic. Slight variations of these colors can also represent traffic. By default, the base colors and all colors within a 4.6 color distance of each base color are used to define traffic; by default, the <code>CIEDE2000</code> metric is used to determine color distance. A value of 2.3 is one threshold used to define a "just noticeable distance" (JND) between colors (by default, 2 X JND is used). This parameter changes the color distance from the base colors used to define colors as traffic. For more information, see <a href="https://en.wikipedia.org/wiki/Color_difference#CIEDE2000" class="external-link">here</a>.</p></dd>
+
+
+<dt>traffic_color_dist_metric</dt>
+<dd><p>See above; this parameter changes the metric used to calculate distances between colors. By default, <code>CIEDE2000</code> is used; <code>CIE76</code> and <code>CIE94</code> can also be used. For more information, see <a href="https://en.wikipedia.org/wiki/Color_difference#CIEDE2000" class="external-link">here</a>.</p></dd>
 
 </dl></div>
     <div class="section level2">

@@ -12,7 +12,7 @@ be used to convert the png into a traffic raster"><!-- mathjax --><script src="h
     
     <a class="navbar-brand me-2" href="../index.html">googletraffic</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -67,6 +67,7 @@ be used to convert the png into a traffic raster</p>
 <span>  <span class="va">zoom</span>,</span>
 <span>  <span class="va">out_filename</span>,</span>
 <span>  <span class="va">google_key</span>,</span>
+<span>  webshot_zoom <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  webshot_delay <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  print_progress <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -87,7 +88,7 @@ be used to convert the png into a traffic raster</p>
 
 
 <dt>zoom</dt>
-<dd><p>Zoom level; integer from 0 to 20. For more information about how zoom levels correspond to pixel size, see <a href="https://wiki.openstreetmap.org/wiki/Zoom_levels" class="external-link">here</a></p></dd>
+<dd><p>Zoom level; integer from 5 to 20. For more information about how zoom levels correspond to pixel size, see <a href="https://wiki.openstreetmap.org/wiki/Zoom_levels" class="external-link">here</a> and <a href="https://developers.google.com/maps/documentation/javascript/overview#zoom-levels" class="external-link">here</a>.</p></dd>
 
 
 <dt>out_filename</dt>
@@ -95,7 +96,11 @@ be used to convert the png into a traffic raster</p>
 
 
 <dt>google_key</dt>
-<dd><p>Google API key</p></dd>
+<dd><p>Google API key, where the <a href="https://developers.google.com/maps/documentation/javascript/overview" class="external-link">Maps JavaScript API</a> is enabled. To create a Google API key, follow <a href="https://developers.google.com/maps/get-started#create-project" class="external-link">these instructions</a>.</p></dd>
+
+
+<dt>webshot_zoom</dt>
+<dd><p>How many pixels should be created relative to height and width values. If <code>height</code> and <code>width</code> are set to <code>100</code> and <code>webshot_zoom</code> is set to <code>2</code>, the resulting raster will have dimensions of about <code>200x200</code> (default: <code>1</code>).</p></dd>
 
 
 <dt>webshot_delay</dt>
