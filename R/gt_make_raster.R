@@ -37,7 +37,7 @@
 #' @import sp
 #' @import stringr
 #' @import webshot
-#' @import ColorNameR,
+#' @import ColorNameR
 #' @import schemr
 #' @rawNamespace import(raster, except = c(union, select, intersect))
 
