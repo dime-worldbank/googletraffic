@@ -1,17 +1,18 @@
 # Testing Package
 
 # Setup ------------------------------------------------------------------------
+# devtools::install_github("dime-worldbank/googletraffic")
 library(googletraffic)
 
-api_keys_df <- read_csv("~/Dropbox/World Bank/Webscraping/Files for Server/api_keys.csv")
+api_keys_df <- read.csv("~/Dropbox/World Bank/Webscraping/Files for Server/api_keys.csv")
 
-google_key <- api_keys_df %>%
+google_key_df <- api_keys_df |>
   dplyr::filter(Service == "Google Directions API",
-                Account == "ramarty@email.wm.edu") %>%
-  pull(Key)
+                Account == "ramarty@email.wm.edu") 
+google_key <- google_key_df$Key
 
 # Make PNGs --------------------------------------------------------------------
-for(zoom in 10:15){
+for(zoom in 0:20){
   gt_make_png(location = c(40.717437418183884, -73.99145764250052),
               height = 2000,
               width = 2000,
@@ -21,7 +22,7 @@ for(zoom in 10:15){
 }
 
 # Make Traffic Figures ---------------------------------------------------------
-for(zoom in 10:15){
+for(zoom in 0:20){
   r <- gt_load_png_as_traffic_raster(filename = paste0("~/Desktop/gt_pngs/gt",zoom,".png"),
                                      location = c(40.717437418183884, -73.99145764250052),
                                      height = 2000,

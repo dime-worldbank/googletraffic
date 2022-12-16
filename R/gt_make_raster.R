@@ -37,6 +37,8 @@
 #' @import sp
 #' @import stringr
 #' @import webshot
+#' @import ColorNameR,
+#' @import schemr
 #' @rawNamespace import(raster, except = c(union, select, intersect))
 
 gt_make_raster <- function(location,
