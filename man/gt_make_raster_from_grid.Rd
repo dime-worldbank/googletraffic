@@ -57,3 +57,8 @@ r <- gt_make_raster_from_grid(grid_param_df = grid_clean_df,
 }
 
 }
+\references{
+Markus Hilpert, Jenni A. Shearston, Jemaleddin Cole, Steven N. Chillrud, and Micaela E. Martinez. \href{https://arxiv.org/abs/2105.12235}{Acquisition and analysis of crowd-sourced traffic data}. CoRR, abs/2105.12235, 2021.
+
+Pavel Pokorny. \href{https://ieeexplore.ieee.org/abstract/document/8326831}{Determining traffic levels in cities using google maps}. In 2017 Fourth International Conference on Mathematics and Computers in Sciences and in Industry (MCSI), pages 144–147, 2017.
+}
