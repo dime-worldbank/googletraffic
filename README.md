@@ -2,7 +2,7 @@
 
 <!-- badges: start -->
 
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/googletraffic)](http://cran.r-project.org/package=googletraffic)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/googletraffic)](https://cran.r-project.org/package=googletraffic)
 [![R-CMD-check](https://github.com/dime-worldbank/googletraffic/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/dime-worldbank/googletraffic/actions/workflows/R-CMD-check.yaml)
 ![downloads](http://cranlogs.r-pkg.org/badges/grand-total/googletraffic)
 <!-- badges: end -->
