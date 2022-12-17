@@ -1,6 +1,6 @@
 #' Make Google Traffic PNG
 #' 
-#' Make a png file of Google traffic data. The [gt_load_png_as_traffic_raster()] function can then
+#' Make a png file of [Google traffic data](https://developers.google.com/maps/documentation/javascript/trafficlayer). The [gt_load_png_as_traffic_raster()] function can then
 #' be used to convert the png into a traffic raster
 #' 
 #' @param location Vector of latitude and longitude
