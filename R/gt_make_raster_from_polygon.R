@@ -2,7 +2,7 @@
 
 #' Make Google Traffic Raster Based on Polygon
 #' 
-#' Make a raster from Google traffic data, where each pixel has one of four values
+#' Make a raster of [Google traffic data](https://developers.google.com/maps/documentation/javascript/trafficlayer), where each pixel has one of four values
 #' indicating traffic volume (no traffic, light, moderate, and heavy).
 #' 
 #' @param polygon Polygon (`sf` object or `SpatialPolygonsDataframe`) in WGS84 CRS

@@ -33,7 +33,7 @@ gt_load_png_as_traffic_raster(
 Returns a raster where each pixel represents traffic level (1 = no traffic, 2 = medium traffic, 3 = traffic delays, 4 = heavy traffic)
 }
 \description{
-Converts PNG of Google traffic data to raster and translates color values to traffic values
+Converts PNG of \href{https://developers.google.com/maps/documentation/javascript/trafficlayer}{Google traffic data} to raster and translates color values to traffic values
 }
 \examples{
 \dontrun{

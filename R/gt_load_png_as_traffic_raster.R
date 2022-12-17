@@ -2,7 +2,7 @@
 
 #' Converts PNG to raster
 #'
-#' Converts PNG of Google traffic data to raster and translates color values to traffic values
+#' Converts PNG of [Google traffic data](https://developers.google.com/maps/documentation/javascript/trafficlayer) to raster and translates color values to traffic values
 #'
 #' @param filename Filename of PNG file
 #' @param location Vector of latitude and longitude used to create PNG file using [gt_make_png()]

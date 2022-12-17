@@ -39,7 +39,7 @@ gt_make_png(
 Returns a PNG file showing traffic levels.
 }
 \description{
-Make a png file of Google traffic data. The \code{\link[=gt_load_png_as_traffic_raster]{gt_load_png_as_traffic_raster()}} function can then
+Make a png file of \href{https://developers.google.com/maps/documentation/javascript/trafficlayer}{Google traffic data}. The \code{\link[=gt_load_png_as_traffic_raster]{gt_load_png_as_traffic_raster()}} function can then
 be used to convert the png into a traffic raster
 }
 \examples{
