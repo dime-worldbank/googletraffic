@@ -175,7 +175,7 @@ ggplot() +
 ```
 
 <p align="center">
-<img src="man/figures/mapbox_nyc_point.png" alt="Mapbox Example Point" width="800"/>
+<img src="man/figures/mapbox_nyc_point.jpg" alt="Mapbox Example Point" width="800"/>
 </p>
 
 Like `gt_make_raster()`, `get_vector_tiles` uses a latitude, longitude, and zoom level as input. `get_vector_tiles` does not have parameters to define the number of pixels the map covers. However, `get_vector_tiles` also accepts an `sf` polygon, where multiple queries are made to cover the bounding box of the polygon. 
@@ -212,7 +212,7 @@ ggplot() +
 ```
 
 <p align="center">
-<img src="man/figures/mapbox_nyc_polygon.png" alt="Mapbox Example Polygon" width="800"/>
+<img src="man/figures/mapbox_nyc_polygon.jpg" alt="Mapbox Example Polygon" width="800"/>
 </p>
 
 In addition to providing vector-based data on traffic levels, Mapbox also provides information on [typical and live traffic speeds](https://www.mapbox.com/traffic-data). Obtaining this speed information requires Mapbox Enterprise access.
