@@ -3,6 +3,8 @@
 library(dplyr)
 library(mapboxapi)
 library(sf)
+library(raster)
+library(ggplot2)
 
 # Setup ------------------------------------------------------------------------
 ## Keys
@@ -50,7 +52,7 @@ nyc_cong_point %>%
   theme_void() +
   theme(plot.background = element_rect(fill = "white", color="white"))
 
-ggsave(filename = file.path("~/Documents/Github/googletraffic/man/figures/mapbox_nyc_point.png"),
+ggsave(filename = file.path("~/Documents/Github/googletraffic/man/figures/mapbox_nyc_point.jpg"),
        height = 4, width = 4)
 
 #### Polygon
@@ -66,7 +68,7 @@ nyc_cong_poly %>%
   theme_void() +
   theme(plot.background = element_rect(fill = "white", color="white"))
 
-ggsave(filename = file.path("~/Documents/Github/googletraffic/man/figures/mapbox_nyc_polygon.png"),
+ggsave(filename = file.path("~/Documents/Github/googletraffic/man/figures/mapbox_nyc_polygon.jpg"),
        height = 4, width = 4)
 
 # Leaflet ----------------------------------------------------------------------
