@@ -14,6 +14,7 @@ Create Georeferenced Traffic Data from the [Google Maps Javascript API](https://
 * [API Key](#apikey)
 * [Quick Start](#quickstart)
 * [Usage](#usage)
+* [Alternatives to Google Maps](#alternatives)
 
 ## Overview <a name="overview"></a>
 
@@ -132,5 +133,89 @@ ggplot() +
 ## Usage <a name="usage"></a>
 
 See [this vignette](https://dime-worldbank.github.io/googletraffic/articles/googletraffic-vignette.html) for additional information and examples illustrating how to use the package.
+
+## Alternatives to Google Maps traffic information <a name="alternatives"></a>
+
+Google Maps is one of many sources that shows traffic information. One alternative source is Mapbox, which provides [vector tilesets](https://docs.mapbox.com/data/tilesets/reference/mapbox-traffic-v1/) that---similar to Google---show four levels of live traffic. The [mapboxapi](https://walker-data.com/mapboxapi/index.html) package provides a convenient way to obtain traffic information from Mapbox as `sf` polylines using the [get_vector_tiles](https://www.rdocumentation.org/packages/mapboxapi/versions/0.2/topics/get_vector_tiles) function. The function requires a Mapbox API key, which can be obtained [here](https://account.mapbox.com/auth/signup/).
+
+They key differences between traffic information from the `mapboxapi` and `googletraffic` packages are that:
+
+* `googletraffic` provides data in raster format, while `mapboxapi` provides data as polylines
+* To cover traffic over large areas, `googletraffic` can require significantly less API calls compared to `mapboxapi`
+
+Below is an example querying traffic information from Mapbox:
+
+```r
+## Load package
+library(mapboxapi)
+library(sf)
+
+## Set API key
+mapbox_key <- "MAPBOX-KEY-HERE"
+
+## Query Data
+nyc_cong_point <- get_vector_tiles(
+  tileset_id = "mapbox.mapbox-traffic-v1",
+  location = c(-74.006111, 40.712778), # c(longitude, latitude)
+  zoom = 14,
+  access_token = key
+)$traffic$lines
+
+#### Plot Data
+nyc_cong_point %>%
+  mutate(congestion = congestion %>% 
+           tools::toTitleCase() %>%
+           factor(levels = c("Low", "Moderate", "Heavy", "Severe"))) %>%
+ggplot() +
+  geom_sf(data = nyc_cong_point, aes(color = congestion)) +
+  scale_color_manual(values = c("green2", "orange", "red", "#660000")) +
+  labs(color = "Congestion") +
+  theme_void() +
+  theme(plot.background = element_rect(fill = "white", color="white"))
+```
+
+<p align="center">
+<img src="man/figures/mapbox_nyc_point.png" alt="Mapbox Example Point" width="800"/>
+</p>
+
+Like `gt_make_raster()`, `get_vector_tiles` uses a latitude, longitude, and zoom level as input. `get_vector_tiles` does not have parameters to define the number of pixels the map covers. However, `get_vector_tiles` also accepts an `sf` polygon, where multiple queries are made to cover the bounding box of the polygon. 
+
+The below example shows querying data for all of Manhattan. One key difference between using Mapbox and Google Maps is that `get_vector_tiles` requires 66 queries to cover Manhattan, while `gt_make_raster_from_polygon` requires 14 queries (or less if using a larger height and width).
+
+```r
+## Grab shapefile of Manhattan
+us_sp <- getData('GADM', country='USA', level=2)
+ny_sp <- us_sp[us_sp$NAME_2 %in% "New York",]
+ny_sf <- ny_sp %>% st_as_sf()
+
+## Query traffic data
+nyc_cong_poly <- get_vector_tiles(
+  tileset_id = "mapbox.mapbox-traffic-v1",
+  location = ny_sf,
+  zoom = 14,
+  access_token = key
+)$traffic
+
+## Map
+nyc_cong_poly <- nyc_cong_poly %>%
+  mutate(congestion = congestion %>% 
+           tools::toTitleCase() %>%
+           factor(levels = c("Low", "Moderate", "Heavy", "Severe")))
+
+ggplot() +
+  geom_sf(data = nyc_cong_poly, aes(color = congestion),
+          size = 0.1) +
+  scale_color_manual(values = c("green2", "orange", "red", "#660000")) +
+  labs(color = "Congestion") +
+  theme_void() +
+  theme(plot.background = element_rect(fill = "white", color="white"))
+```
+
+<p align="center">
+<img src="man/figures/mapbox_nyc_polygon.png" alt="Mapbox Example Polygon" width="800"/>
+</p>
+
+In addition to providing vector-based data on traffic levels, Mapbox also provides information on [typical and live traffic speeds](https://www.mapbox.com/traffic-data). Obtaining this speed information requires Mapbox Enterprise access.
+
 
 

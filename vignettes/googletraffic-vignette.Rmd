@@ -343,3 +343,103 @@ r_list <- lapply(1 in 1:nrow(grid_df)){
 # resolutions.
 r <- gt_mosaic(r_list)
 ```
+
+## Alternatives to Google Maps traffic information <a name="alternatives"></a>
+
+Google Maps is one of many sources that shows traffic information. One alternative source is Mapbox, which provides [vector tilesets](https://docs.mapbox.com/data/tilesets/reference/mapbox-traffic-v1/) that---similar to Google---show four levels of live traffic. The [mapboxapi](https://walker-data.com/mapboxapi/index.html) package provides a convenient way to obtain traffic information from Mapbox as `sf` polylines using the [get_vector_tiles](https://www.rdocumentation.org/packages/mapboxapi/versions/0.2/topics/get_vector_tiles) function. The function requires a Mapbox API key, which can be obtained [here](https://account.mapbox.com/auth/signup/).
+
+They key differences between traffic information from the `mapboxapi` and `googletraffic` packages are that:
+
+* `googletraffic` provides data in raster format, while `mapboxapi` provides data as polylines
+* To cover traffic over large areas, `googletraffic` can require significantly less API calls compared to `mapboxapi`
+
+Below is an example querying traffic information from Mapbox:
+
+```{r mapbox_point_code, include=TRUE, warning=FALSE, message=FALSE, eval=FALSE}
+## Setup
+library(mapboxapi)
+library(dplyr)
+library(leaflet)
+library(sf)
+
+## Set API key
+mapbox_key <- "MAPBOX-KEY-HERE"
+
+## Make leaflet palette
+mapbox_pal <- colorFactor(c("green", "orange", "red", "#660000"), 
+                            c("low", "moderate", "heavy", "severe"),
+                            na.color = "transparent")
+
+## Query Data
+nyc_cong_point <- get_vector_tiles(
+  tileset_id = "mapbox.mapbox-traffic-v1",
+  location = c(-74.006111, 40.712778), # c(longitude, latitude)
+  zoom = 14,
+  access_token = mapbox_key
+)$traffic$lines
+```
+
+```{r mapbox_point_leaf, include=FALSE, warning=FALSE, message=FALSE, eval=TRUE}
+## Setup
+library(mapboxapi)
+library(sf)
+
+nyc_cong_point <- readRDS("mapbox_nyc_z14_point.Rds")
+
+## Make leaflet palette
+mapbox_pal <- colorFactor(c("green", "orange", "red", "#660000"), 
+                            c("low", "moderate", "heavy", "severe"),
+                            na.color = "transparent")
+```
+
+```{r mapbox_point_leaf2, include=TRUE, warning=FALSE, message=FALSE, eval=TRUE}
+## Plot Data
+leaflet(width = "100%") %>%
+  addProviderTiles("Esri.WorldGrayCanvas") %>%
+  addPolylines(data = nyc_cong_point, 
+               color = ~mapbox_pal(congestion), 
+               opacity = 1,
+               weight = 2) %>%
+  setView(lat = 40.705, lng = -74.01, zoom = 14) 
+```
+
+```{r mapbox_point_head, include=TRUE, warning=FALSE, message=FALSE, eval=TRUE}
+## View dataset
+print(head(nyc_cong_point))
+```
+
+Like `gt_make_raster()`, `get_vector_tiles` uses a latitude, longitude, and zoom level as input. `get_vector_tiles` does not have parameters to define the number of pixels the map covers. However, `get_vector_tiles` also accepts an `sf` polygon, where multiple queries are made to cover the bounding box of the polygon. 
+
+The below example shows querying data for all of Manhattan. One key difference between using Mapbox and Google Maps is that `get_vector_tiles` requires 66 queries to cover the full area, while `gt_make_raster_from_polygon` requires 5 queries.
+
+```{r mapbox_polygon_code, include=TRUE, warning=FALSE, message=FALSE, eval=FALSE}
+## Grab shapefile of Manhattan
+us_sp <- getData('GADM', country='USA', level=2)
+ny_sp <- us_sp[us_sp$NAME_2 %in% "New York",]
+ny_sf <- ny_sp %>% st_as_sf()
+
+## Query Data
+nyc_cong_point <- get_vector_tiles(
+  tileset_id = "mapbox.mapbox-traffic-v1",
+  location = c(-74.006111, 40.712778), # c(longitude, latitude)
+  zoom = 14,
+  access_token = mapbox_key
+)$traffic$lines
+```
+
+```{r mapbox_polygon_leaf, include=FALSE, warning=FALSE, message=FALSE, eval=TRUE}
+nyc_cong_polygon <- readRDS("mapbox_nyc_z14_polygon.Rds")
+```
+
+```{r mapbox_polygon_leaf2, include=TRUE, warning=FALSE, message=FALSE, eval=TRUE}
+#### Plot Data
+leaflet(width = "100%") %>%
+  addProviderTiles("Esri.WorldGrayCanvas") %>%
+  addPolylines(data = nyc_cong_polygon, 
+               color = ~mapbox_pal(congestion), 
+               opacity = 1,
+               weight = 1) %>%
+  setView(lat = 40.7773729, lng = -73.968252, zoom = 12) 
+```
+
+In addition to providing vector-based data on traffic levels, Mapbox also provides information on [typical and live traffic speeds](https://www.mapbox.com/traffic-data). However, obtaining speed information requires Mapbox Enterprise access.
