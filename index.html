@@ -78,6 +78,7 @@
 <li><a href="#apikey">API Key</a></li>
 <li><a href="#quickstart">Quick Start</a></li>
 <li><a href="#usage">Usage</a></li>
+<li><a href="#alternatives">Alternatives to Google Maps</a></li>
 </ul>
 <div class="section level2">
 <h2 id="overview-">Overview <a name="overview"></a>
@@ -223,6 +224,81 @@
 <a class="anchor" aria-label="anchor" href="#usage-"></a>
 </h2>
 <p>See <a href="https://dime-worldbank.github.io/googletraffic/articles/googletraffic-vignette.html">this vignette</a> for additional information and examples illustrating how to use the package.</p>
+</div>
+<div class="section level2">
+<h2 id="alternatives-to-google-maps-traffic-information-">Alternatives to Google Maps traffic information <a name="alternatives"></a>
+<a class="anchor" aria-label="anchor" href="#alternatives-to-google-maps-traffic-information-"></a>
+</h2>
+<p>Google Maps is one of many sources that shows traffic information. One alternative source is Mapbox, which provides <a href="https://docs.mapbox.com/data/tilesets/reference/mapbox-traffic-v1/" class="external-link">vector tilesets</a> that—similar to Google—show four levels of live traffic. The <a href="https://walker-data.com/mapboxapi/index.html" class="external-link">mapboxapi</a> package provides a convenient way to obtain traffic information from Mapbox as <code>sf</code> polylines using the <a href="https://www.rdocumentation.org/packages/mapboxapi/versions/0.2/topics/get_vector_tiles" class="external-link">get_vector_tiles</a> function. The function requires a Mapbox API key, which can be obtained <a href="https://account.mapbox.com/auth/signup/" class="external-link">here</a>.</p>
+<p>They key differences between traffic information from the <code>mapboxapi</code> and <code>googletraffic</code> packages are that:</p>
+<ul>
+<li>
+<code>googletraffic</code> provides data in raster format, while <code>mapboxapi</code> provides data as polylines</li>
+<li>To cover traffic over large areas, <code>googletraffic</code> can require significantly less API calls compared to <code>mapboxapi</code>
+</li>
+</ul>
+<p>Below is an example querying traffic information from Mapbox:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">## Load package</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">mapboxapi</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/" class="external-link">sf</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Set API key</span></span>
+<span><span class="va">mapbox_key</span> <span class="op">&lt;-</span> <span class="st">"MAPBOX-KEY-HERE"</span></span>
+<span></span>
+<span><span class="co">## Query Data</span></span>
+<span><span class="va">nyc_cong_point</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/mapboxapi/man/get_vector_tiles.html" class="external-link">get_vector_tiles</a></span><span class="op">(</span></span>
+<span>  tileset_id <span class="op">=</span> <span class="st">"mapbox.mapbox-traffic-v1"</span>,</span>
+<span>  location <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">74.006111</span>, <span class="fl">40.712778</span><span class="op">)</span>, <span class="co"># c(longitude, latitude)</span></span>
+<span>  zoom <span class="op">=</span> <span class="fl">14</span>,</span>
+<span>  access_token <span class="op">=</span> <span class="va">key</span></span>
+<span><span class="op">)</span><span class="op">$</span><span class="va">traffic</span><span class="op">$</span><span class="va">lines</span></span>
+<span></span>
+<span><span class="co">#### Plot Data</span></span>
+<span><span class="va">nyc_cong_point</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>congestion <span class="op">=</span> <span class="va">congestion</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>           <span class="fu">tools</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/tools/toTitleCase.html" class="external-link">toTitleCase</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>           <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span>levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Low"</span>, <span class="st">"Moderate"</span>, <span class="st">"Heavy"</span>, <span class="st">"Severe"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">nyc_cong_point</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">congestion</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_color_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"green2"</span>, <span class="st">"orange"</span>, <span class="st">"red"</span>, <span class="st">"#660000"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"Congestion"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_void</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_rect</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"white"</span>, color<span class="op">=</span><span class="st">"white"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p align="center">
+<img src="reference/figures/mapbox_nyc_point.jpg" alt="Mapbox Example Point" width="800"></p>
+<p>Like <code><a href="reference/gt_make_raster.html">gt_make_raster()</a></code>, <code>get_vector_tiles</code> uses a latitude, longitude, and zoom level as input. <code>get_vector_tiles</code> does not have parameters to define the number of pixels the map covers. However, <code>get_vector_tiles</code> also accepts an <code>sf</code> polygon, where multiple queries are made to cover the bounding box of the polygon.</p>
+<p>The below example shows querying data for all of Manhattan. One key difference between using Mapbox and Google Maps is that <code>get_vector_tiles</code> requires 66 queries to cover Manhattan, while <code>gt_make_raster_from_polygon</code> requires 5 queries.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">## Grab shapefile of Manhattan</span></span>
+<span><span class="va">us_sp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/raster/man/getData.html" class="external-link">getData</a></span><span class="op">(</span><span class="st">'GADM'</span>, country<span class="op">=</span><span class="st">'USA'</span>, level<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span>
+<span><span class="va">ny_sp</span> <span class="op">&lt;-</span> <span class="va">us_sp</span><span class="op">[</span><span class="va">us_sp</span><span class="op">$</span><span class="va">NAME_2</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="st">"New York"</span>,<span class="op">]</span></span>
+<span><span class="va">ny_sf</span> <span class="op">&lt;-</span> <span class="va">ny_sp</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html" class="external-link">st_as_sf</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Query traffic data</span></span>
+<span><span class="va">nyc_cong_poly</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/mapboxapi/man/get_vector_tiles.html" class="external-link">get_vector_tiles</a></span><span class="op">(</span></span>
+<span>  tileset_id <span class="op">=</span> <span class="st">"mapbox.mapbox-traffic-v1"</span>,</span>
+<span>  location <span class="op">=</span> <span class="va">ny_sf</span>,</span>
+<span>  zoom <span class="op">=</span> <span class="fl">14</span>,</span>
+<span>  access_token <span class="op">=</span> <span class="va">key</span></span>
+<span><span class="op">)</span><span class="op">$</span><span class="va">traffic</span></span>
+<span></span>
+<span><span class="co">## Map</span></span>
+<span><span class="va">nyc_cong_poly</span> <span class="op">&lt;-</span> <span class="va">nyc_cong_poly</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>congestion <span class="op">=</span> <span class="va">congestion</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>           <span class="fu">tools</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/tools/toTitleCase.html" class="external-link">toTitleCase</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>           <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span>levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Low"</span>, <span class="st">"Moderate"</span>, <span class="st">"Heavy"</span>, <span class="st">"Severe"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">nyc_cong_poly</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">congestion</span><span class="op">)</span>,</span>
+<span>          size <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_color_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"green2"</span>, <span class="st">"orange"</span>, <span class="st">"red"</span>, <span class="st">"#660000"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"Congestion"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_void</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_rect</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"white"</span>, color<span class="op">=</span><span class="st">"white"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p align="center">
+<img src="reference/figures/mapbox_nyc_polygon.jpg" alt="Mapbox Example Polygon" width="800"></p>
+<p>In addition to providing vector-based data on traffic levels, Mapbox also provides information on <a href="https://www.mapbox.com/traffic-data" class="external-link">typical and live traffic speeds</a>. Obtaining this speed information requires Mapbox Enterprise access.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
