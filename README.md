@@ -180,7 +180,7 @@ ggplot() +
 
 Like `gt_make_raster()`, `get_vector_tiles` uses a latitude, longitude, and zoom level as input. `get_vector_tiles` does not have parameters to define the number of pixels the map covers. However, `get_vector_tiles` also accepts an `sf` polygon, where multiple queries are made to cover the bounding box of the polygon. 
 
-The below example shows querying data for all of Manhattan. One key difference between using Mapbox and Google Maps is that `get_vector_tiles` requires 66 queries to cover Manhattan, while `gt_make_raster_from_polygon` requires 14 queries (or less if using a larger height and width).
+The below example shows querying data for all of Manhattan. One key difference between using Mapbox and Google Maps is that `get_vector_tiles` requires 66 queries to cover Manhattan, while `gt_make_raster_from_polygon` requires 5 queries.
 
 ```r
 ## Grab shapefile of Manhattan
