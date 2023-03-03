@@ -7,7 +7,7 @@ if(F){
   library(tidyverse)
   library(googleway)
   library(htmlwidgets)
-  library(webshot)
+  library(webshot2)
   library(raster)
   library(png)
   library(plotwidgets)
