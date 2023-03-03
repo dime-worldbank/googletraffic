@@ -367,8 +367,8 @@ mapbox_key <- "MAPBOX-KEY-HERE"
 
 ## Make leaflet palette
 mapbox_pal <- colorFactor(c("green", "orange", "red", "#660000"), 
-                            c("low", "moderate", "heavy", "severe"),
-                            na.color = "transparent")
+                          c("low", "moderate", "heavy", "severe"),
+                          ordered = T)
 
 ## Query Data
 nyc_cong_point <- get_vector_tiles(
@@ -388,8 +388,8 @@ nyc_cong_point <- readRDS("mapbox_nyc_z14_point.Rds")
 
 ## Make leaflet palette
 mapbox_pal <- colorFactor(c("green", "orange", "red", "#660000"), 
-                            c("low", "moderate", "heavy", "severe"),
-                            na.color = "transparent")
+                          c("low", "moderate", "heavy", "severe"),
+                          ordered = T)
 ```
 
 ```{r mapbox_point_leaf2, include=TRUE, warning=FALSE, message=FALSE, eval=TRUE}
