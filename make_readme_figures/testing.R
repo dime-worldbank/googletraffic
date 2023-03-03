@@ -20,7 +20,7 @@ if(F){
   library(sf)
   library(sp)
   library(stringr)
-  library(webshot)
+  library(webshot2)
   library(raster)
   library(ColorNameR)
   library(schemr)
