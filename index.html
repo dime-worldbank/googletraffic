@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="index.html">googletraffic</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -130,6 +130,10 @@
 <p>The package can be installed via CRAN.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"googletraffic"</span><span class="op">)</span></span></code></pre></div>
+<p>To install the development version from Github:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"dime-worldbank/googletraffic"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="api-key-">API Key <a name="apikey"></a>
@@ -145,7 +149,7 @@
 <h3 id="setup-">Setup <a name="setup"></a>
 <a class="anchor" aria-label="anchor" href="#setup-"></a>
 </h3>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Load package</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dime-worldbank.github.io/googletraffic/">googletraffic</a></span><span class="op">)</span></span>
 <span></span>
@@ -162,7 +166,7 @@
 <a class="anchor" aria-label="anchor" href="#raster-around-point-"></a>
 </h3>
 <p>To create a raster around a point, we set the centroid coordinate, the <a href="https://wiki.openstreetmap.org/wiki/Zoom_levels" class="external-link">zoom</a> level, and the height/width around the centroid coordinate (height/width are in terms of pixels, and kilometer distance of a pixel is determined primarily by the zoom level).</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Make raster</span></span>
 <span><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/gt_make_raster.html">gt_make_raster</a></span><span class="op">(</span>location   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">40.712778</span>, <span class="op">-</span><span class="fl">74.006111</span><span class="op">)</span>,</span>
 <span>                    height     <span class="op">=</span> <span class="fl">2000</span>,</span>
@@ -192,7 +196,7 @@
 </h3>
 <p>We can also create a raster using a polygon to define the location. If needed, the function will make multiple API calls to cover the area within the polygon (a larger <code>zoom</code> value will result in needing to make more API calls).</p>
 <!--By default, the function will use a height and width of 2000 (pixels) for each API call; if needed, the function will make multiple API calls to cover the area within the polygon. If the same number of API calls can be made using a smaller height and width, the function will use a smaller height and width. However, the height/width can also be manually specified using the `height` and `width` parameters. Larger height/width mean less API calls are needed, but traffic data will fail to render if too large of a height/width are set.-->
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Grab shapefile of Manhattan</span></span>
 <span><span class="va">us_sp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/raster/man/getData.html" class="external-link">getData</a></span><span class="op">(</span><span class="st">'GADM'</span>, country<span class="op">=</span><span class="st">'USA'</span>, level<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span>
 <span><span class="va">ny_sp</span> <span class="op">&lt;-</span> <span class="va">us_sp</span><span class="op">[</span><span class="va">us_sp</span><span class="op">$</span><span class="va">NAME_2</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="st">"New York"</span>,<span class="op">]</span></span>
@@ -238,7 +242,7 @@
 </li>
 </ul>
 <p>Below is an example querying traffic information from Mapbox:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Load package</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">mapboxapi</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/" class="external-link">sf</a></span><span class="op">)</span></span>
@@ -269,7 +273,7 @@
 <img src="reference/figures/mapbox_nyc_point.jpg" alt="Mapbox Example Point" width="800"></p>
 <p>Like <code><a href="reference/gt_make_raster.html">gt_make_raster()</a></code>, <code>get_vector_tiles</code> uses a latitude, longitude, and zoom level as input. <code>get_vector_tiles</code> does not have parameters to define the number of pixels the map covers. However, <code>get_vector_tiles</code> also accepts an <code>sf</code> polygon, where multiple queries are made to cover the bounding box of the polygon.</p>
 <p>The below example shows querying data for all of Manhattan. One key difference between using Mapbox and Google Maps is that <code>get_vector_tiles</code> requires 66 queries to cover Manhattan, while <code>gt_make_raster_from_polygon</code> requires 5 queries.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Grab shapefile of Manhattan</span></span>
 <span><span class="va">us_sp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/raster/man/getData.html" class="external-link">getData</a></span><span class="op">(</span><span class="st">'GADM'</span>, country<span class="op">=</span><span class="st">'USA'</span>, level<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span>
 <span><span class="va">ny_sp</span> <span class="op">&lt;-</span> <span class="va">us_sp</span><span class="op">[</span><span class="va">us_sp</span><span class="op">$</span><span class="va">NAME_2</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="st">"New York"</span>,<span class="op">]</span></span>
