@@ -5,6 +5,7 @@ library(mapboxapi)
 library(sf)
 library(raster)
 library(ggplot2)
+library(leaflet)
 
 # Setup ------------------------------------------------------------------------
 ## Keys
@@ -73,13 +74,13 @@ ggsave(filename = file.path("~/Documents/Github/googletraffic/man/figures/mapbox
 
 # Leaflet ----------------------------------------------------------------------
 #### Point
-mapbox_pal <- colorFactor(c("green", "orange", "red", "#660000"), 
-                            c("low", "moderate", "heavy", "severe"),
-                            na.color = "transparent")
+mapbox_pal <- colorFactor(palette = c("green", "orange", "red", "#660000"), 
+                            domain = c("low", "moderate", "heavy", "severe"),
+                          ordered = T)
 
 leaflet(width = "100%") %>%
   addProviderTiles("Esri.WorldGrayCanvas") %>%
-  addPolylines(data = nyc_cong_point, color = ~mapbox_pal(congestion), opacity = 1) %>%
+  addPolylines(data = nyc_cong_point, color = ~mapbox_pal(congestion), popup = ~as.character(congestion), opacity = 1) %>%
   setView(lat = 40.705, lng = -74.01, zoom = 14) 
 
 #### Polygon

@@ -46,6 +46,13 @@ The package can be installed via CRAN.
 install.packages("googletraffic")
 ```
 
+To install the development version from Github:
+
+```r
+# install.packages("devtools")
+devtools::install_github("dime-worldbank/googletraffic")
+```
+
 ## API Key <a name="apikey"></a>
 
 Querying Google traffic information requires a Google API key with the [Maps Javascript API](https://developers.google.com/maps/documentation/javascript/overview) enabled. To create a Google API key, [follow these instructions](https://developers.google.com/maps/get-started#create-project).
