@@ -67,7 +67,7 @@ gt_make_png <- function(location,
     message(paste0("Pausing for ", webshot_delay, " seconds to allow traffic data to render"))
   }
   
-  webshot::webshot(url = filename_html,
+  webshot2::webshot(url = filename_html,
                    file = file.path(filename_dir, paste0(filename_only,".png")),
                    vheight = height,
                    vwidth = width,
