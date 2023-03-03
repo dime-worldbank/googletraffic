@@ -20,7 +20,7 @@ Imports:
   sf,
   sp,
   stringr,
-  webshot,
+  webshot2,
   raster,
   ColorNameR,
   schemr
