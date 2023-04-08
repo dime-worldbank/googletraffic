@@ -13,7 +13,7 @@ gt_estimate_webshot_delay <- function(height,
   
   if(is.null(webshot_delay)){
     hw_max <- max(height, width)
-    webshot_delay <- max(1,hw_max / 200)
+    webshot_delay <- max(1,hw_max / 125)
   }
   
   return(webshot_delay)
