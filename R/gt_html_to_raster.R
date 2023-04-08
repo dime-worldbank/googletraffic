@@ -47,6 +47,10 @@ gt_html_to_raster <- function(filename,
   
   # Gives a warning referencing lengths/logical that can be ignored
   # In is.null(x) || is.na(x) : 'length(x) = 4 > 1' in coercion to 'logical(1)'
+  
+  dir.create(filename_dir)
+  file.create(file.path(filename_dir, paste0(filename_only,".png")))
+  
   suppressWarnings({
     webshot2::webshot(url = filename,
                       file = file.path(filename_dir, paste0(filename_only,".png")),
