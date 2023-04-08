@@ -49,12 +49,12 @@ gt_html_to_raster <- function(filename,
   # In is.null(x) || is.na(x) : 'length(x) = 4 > 1' in coercion to 'logical(1)'
   suppressWarnings({
     webshot2::webshot(url = filename,
-                     file = file.path(filename_dir, paste0(filename_only,".png")),
-                     vheight = height,
-                     vwidth = width,
-                     cliprect = "viewport",
-                     delay = webshot_delay,
-                     zoom = webshot_zoom) # change
+                      file = file.path(filename_dir, paste0(filename_only,".png")),
+                      vheight = height,
+                      vwidth = width,
+                      cliprect = "viewport",
+                      delay = webshot_delay,
+                      zoom = webshot_zoom) # change
   })
   
   #### Load as raster and image
