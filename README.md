@@ -165,7 +165,7 @@ nyc_cong_point <- get_vector_tiles(
   tileset_id = "mapbox.mapbox-traffic-v1",
   location = c(-74.006111, 40.712778), # c(longitude, latitude)
   zoom = 14,
-  access_token = key
+  access_token = mapbox_key
 )$traffic$lines
 
 #### Plot Data
@@ -200,7 +200,7 @@ nyc_cong_poly <- get_vector_tiles(
   tileset_id = "mapbox.mapbox-traffic-v1",
   location = ny_sf,
   zoom = 14,
-  access_token = key
+  access_token = mapbox_key
 )$traffic
 
 ## Map
