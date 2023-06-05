@@ -1,3 +1,11 @@
+# googletraffic 0.1.3
+
+* Bugfix: Before use webshot, initialize a blank png
+
+# googletraffic 0.1.2
+
+* Use `webshot2` instead of `webshot`
+
 # googletraffic 0.1.1
 
 * Add `webshot_zoom` parameter

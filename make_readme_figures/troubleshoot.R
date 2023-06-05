@@ -28,10 +28,10 @@ google_key <- google_key_df$Key
 
 # Make raster ------------------------------------------------------------------
 r <- googletraffic::gt_make_raster(location = c(40.712778, -74.006111),
-                                   height     = 2000,
-                                   width      = 2000,
+                                   height     = 800,
+                                   width      = 800,
                                    zoom       = 16,
-                                   webshot_delay = 20,
+                                   #webshot_delay = 20,
                                    google_key = google_key)
 r
 
