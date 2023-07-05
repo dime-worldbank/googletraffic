@@ -5,26 +5,36 @@
 
 # Setup ------------------------------------------------------------------------
 # devtools::install_github("dime-worldbank/googletraffic")
-library(googletraffic)
+#library(googletraffic)
 library(dplyr)
 library(ggplot2)
 library(leaflet)
 library(raster)
 
-if(F){
-  library(dplyr)
-  library(googleway)
-  library(htmlwidgets)
-  library(plotwidgets)
-  library(png)
-  library(sf)
-  library(sp)
-  library(stringr)
-  library(webshot2)
-  library(raster)
-  library(ColorNameR)
-  library(schemr)
-}
+library(dplyr)
+#library(googleway)
+library(htmlwidgets)
+library(plotwidgets)
+library(png)
+library(sf)
+library(sp)
+library(stringr)
+library(webshot2)
+library(raster)
+library(ColorNameR)
+library(schemr)
+
+source("~/Documents/Github/googletraffic/R/gt_estimate_webshot_delay.R")
+source("~/Documents/Github/googletraffic/R/gt_html_to_raster.R")
+source("~/Documents/Github/googletraffic/R/gt_load_png_as_traffic_raster.R")
+source("~/Documents/Github/googletraffic/R/gt_make_extent.R")
+source("~/Documents/Github/googletraffic/R/gt_make_grid.R")
+source("~/Documents/Github/googletraffic/R/gt_make_html.R")
+source("~/Documents/Github/googletraffic/R/gt_make_png.R")
+source("~/Documents/Github/googletraffic/R/gt_make_raster_from_grid.R")
+source("~/Documents/Github/googletraffic/R/gt_make_raster_from_polygon.R")
+source("~/Documents/Github/googletraffic/R/gt_make_raster.R")
+source("~/Documents/Github/googletraffic/R/gt_mosaic.R")
 
 api_keys_df <- read.csv("~/Dropbox/World Bank/Webscraping/Files for Server/api_keys.csv")
 
@@ -34,12 +44,11 @@ google_key_df <- api_keys_df |>
 google_key <- google_key_df$Key
 
 # Test -------------------------------------------------------------------------
-gt_make_png(location = c(40.717437418183884, -73.99145764250052),
-            height = 200,
-            width = 200,
-            zoom = 16,
-            out_filename = paste0("~/Desktop/test123.png"),
-            google_key = google_key)
+r <- gt_make_raster(location = c(40.717437418183884, -73.99145764250052),
+                    height = 1000,
+                    width = 1000,
+                    zoom = 16,
+                    google_key = google_key)
 
 
 # Make PNGs --------------------------------------------------------------------

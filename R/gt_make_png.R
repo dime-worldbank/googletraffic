@@ -61,19 +61,22 @@ gt_make_png <- function(location,
   ## Convert .html to png
   filename_root <- filename_html %>% stringr::str_replace_all(".html$", "")
   filename_only <- basename(filename_root)
-  filename_dir  <- filename_root %>% stringr::str_replace_all(paste0("/", filename_only), "")
+  #filename_dir  <- tempdir() # filename_root %>% stringr::str_replace_all(paste0("/", filename_only), "")
+  filename_dir  <- filename_root %>% 
+    stringr::str_replace_all(filename_only, "") %>%
+    stringr::str_sub(end = -2)
   
   if(print_progress){
     message(paste0("Pausing for ", webshot_delay, " seconds to allow traffic data to render"))
   }
   
   webshot2::webshot(url = filename_html,
-                   file = file.path(filename_dir, paste0(filename_only,".png")),
-                   vheight = height,
-                   vwidth = width,
-                   cliprect = "viewport",
-                   delay = webshot_delay,
-                   zoom = webshot_zoom)
+                    file = file.path(filename_dir, paste0(filename_only,".png")),
+                    vheight = height,
+                    vwidth = width,
+                    cliprect = "viewport",
+                    delay = webshot_delay,
+                    zoom = webshot_zoom)
   
   ## Read/Write png to file
   img <- png::readPNG(file.path(filename_dir, paste0(filename_only,".png")))
@@ -82,6 +85,6 @@ gt_make_png <- function(location,
   ## Delete html file
   unlink(filename_html)
   unlink(paste0(filename_only,".png"))
-
+  
   return(NULL)
 }
