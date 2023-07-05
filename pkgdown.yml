@@ -3,7 +3,7 @@ pkgdown: 2.0.6
 pkgdown_sha: ~
 articles:
   googletraffic-vignette: googletraffic-vignette.html
-last_built: 2023-07-05T04:07Z
+last_built: 2023-07-05T04:12Z
 urls:
   reference: https://dime-worldbank.github.io/googletraffic/reference
   article: https://dime-worldbank.github.io/googletraffic/articles
