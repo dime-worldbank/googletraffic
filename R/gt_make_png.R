@@ -61,7 +61,7 @@ gt_make_png <- function(location,
   ## Convert .html to png
   filename_root <- filename_html %>% stringr::str_replace_all(".html$", "")
   filename_only <- basename(filename_root)
-  filename_dir  <- filename_root %>% stringr::str_replace_all(paste0("/", filename_only), "")
+  filename_dir  <- tempdir() # filename_root %>% stringr::str_replace_all(paste0("/", filename_only), "")
   
   if(print_progress){
     message(paste0("Pausing for ", webshot_delay, " seconds to allow traffic data to render"))
