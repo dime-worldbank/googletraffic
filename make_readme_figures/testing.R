@@ -41,6 +41,12 @@ gt_make_png(location = c(40.717437418183884, -73.99145764250052),
             out_filename = paste0("~/Desktop/test123.png"),
             google_key = google_key)
 
+r <- gt_make_raster(location = c(40.717437418183884, -73.99145764250052),
+            height = 200,
+            width = 200,
+            zoom = 16,
+            google_key = google_key)
+
 
 # Make PNGs --------------------------------------------------------------------
 dir.create("~/Desktop/gt_pngs")
