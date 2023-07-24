@@ -10,7 +10,6 @@ library(dplyr)
 library(ggplot2)
 library(leaflet)
 library(raster)
-
 library(dplyr)
 #library(googleway)
 library(htmlwidgets)
