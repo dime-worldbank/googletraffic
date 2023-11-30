@@ -60,16 +60,17 @@ gt_load_png_as_traffic_raster <- function(filename,
     ## Image to hex
     rimg <- raster::as.raster(img) 
 
-    google_colours = c("#11D68FFF", "#FFCF43FF", "#F24E42FF", "#A92727FF")
-    #google_colours = c("#63D668FF", "#FF974DFF", "#F23C32FF", "#811F1FFF")
+    #google_colours = c("#63D668", "#FF974D", "#F23C32", "#811F1F")
+    google_colours = c("#11D68F", "#FFCF43", "#F24E42", "#A92727")
+    google_colours_ff <- paste0(google_colours, "FF")
     
     if(traffic_color_dist_thresh == 0){
       
       r[] <- NA
-      r[rimg %in% google_colours[1]] <- 1
-      r[rimg %in% google_colours[2]] <- 2
-      r[rimg %in% google_colours[3]] <- 3
-      r[rimg %in% google_colours[4]] <- 4
+      r[rimg %in% google_colours_ff[1]] <- 1
+      r[rimg %in% google_colours_ff[2]] <- 2
+      r[rimg %in% google_colours_ff[3]] <- 3
+      r[rimg %in% google_colours_ff[4]] <- 4
       
     } else {
       
