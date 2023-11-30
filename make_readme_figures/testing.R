@@ -47,6 +47,20 @@ r <- gt_make_raster(location = c(40.717437418183884, -73.99145764250052),
             zoom = 16,
             google_key = google_key)
 
+## Plot
+r_df <- rasterToPoints(r, spatial = TRUE) %>% as.data.frame()
+names(r_df) <- c("value", "x", "y")
+
+ggplot() +
+  geom_raster(data = r_df, 
+              aes(x = x, y = y, 
+                  fill = as.factor(value))) +
+  labs(fill = "Traffic\nLevel") +
+  scale_fill_manual(values = c("green2", "orange", "red", "#660000")) +
+  coord_quickmap() + 
+  theme_void() +
+  theme(plot.background = element_rect(fill = "white", color="white"))
+
 
 # Make PNGs --------------------------------------------------------------------
 dir.create("~/Desktop/gt_pngs")
