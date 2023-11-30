@@ -59,14 +59,16 @@ gt_load_png_as_traffic_raster <- function(filename,
     #### Assign traffic colors 
     ## Image to hex
     rimg <- raster::as.raster(img) 
+
+    google_colours = c("#11d68f", "#ffcf43", "#f24e42", "#a92727")
     
     if(traffic_color_dist_thresh == 0){
       
       r[] <- NA
-      r[rimg %in% "#63D668FF"] <- 1
-      r[rimg %in% "#FF974DFF"] <- 2
-      r[rimg %in% "#F23C32FF"] <- 3
-      r[rimg %in% "#811F1FFF"] <- 4
+      r[rimg %in% google_colours[1]] <- 1
+      r[rimg %in% google_colours[2]] <- 2
+      r[rimg %in% google_colours[3]] <- 3
+      r[rimg %in% google_colours[4]] <- 4
       
     } else {
       
@@ -85,19 +87,19 @@ gt_load_png_as_traffic_raster <- function(filename,
       
       ## Distance
       color_df$dist_1 <- ColorNameR::colordiff(color_df[,c("l", "a", "b")],
-                                               as.matrix(schemr::hex_to_lab("#63D668")),
+                                               as.matrix(hex_to_lab(google_colours[1])),
                                                metric = traffic_color_dist_metric)
       
       color_df$dist_2 <- ColorNameR::colordiff(color_df[,c("l", "a", "b")],
-                                               as.matrix(schemr::hex_to_lab("#FF974D")),
+                                               as.matrix(hex_to_lab(google_colours[2])),
                                                metric = traffic_color_dist_metric)
       
       color_df$dist_3 <- ColorNameR::colordiff(color_df[,c("l", "a", "b")],
-                                               as.matrix(schemr::hex_to_lab("#F23C32")),
+                                               as.matrix(hex_to_lab(google_colours[3])),
                                                metric = traffic_color_dist_metric)
       
       color_df$dist_4 <- ColorNameR::colordiff(color_df[,c("l", "a", "b")],
-                                               as.matrix(schemr::hex_to_lab("#811F1F")),
+                                               as.matrix(hex_to_lab(google_colours[4])),
                                                metric = traffic_color_dist_metric)
       
       ## Assign traffic levels
