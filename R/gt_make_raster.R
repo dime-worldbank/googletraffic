@@ -58,7 +58,9 @@ gt_make_raster <- function(location,
   webshot_delay <- gt_estimate_webshot_delay(height, width, webshot_delay)
   
   ## Filename; as html
-  filename_html <- tempfile(pattern = "file", tmpdir = tempdir(), fileext = ".html")
+  temp_dir <- tempdir() %>% str_replace_all("\\\\", "/")
+  filename_html <- tempfile(pattern = "file", tmpdir = temp_dir, fileext = ".html") %>%
+    str_replace_all("\\\\", "/")
   
   ## Make html
   gt_make_html(location = location,

@@ -51,11 +51,11 @@ gt_html_to_raster <- function(filename,
   # In is.null(x) || is.na(x) : 'length(x) = 4 > 1' in coercion to 'logical(1)'
   
   dir.create(filename_dir)
-  file.create(file.path(filename_dir, paste0(filename_only,".png")))
+  file.create(file.path(filename_dir, paste0(filename_only,".png")) %>% str_replace_all("\\\\", "/"))
   
   suppressWarnings({
     webshot2::webshot(url = filename,
-                      file = file.path(filename_dir, paste0(filename_only,".png")),
+                      file = file.path(filename_dir, paste0(filename_only,".png")) %>% str_replace_all("\\\\", "/"),
                       vheight = height,
                       vwidth = width,
                       cliprect = "viewport",
@@ -64,7 +64,7 @@ gt_html_to_raster <- function(filename,
   })
   
   #### Load as raster and image
-  png_filename <- file.path(filename_dir, paste0(filename_only, ".png"))
+  png_filename <- file.path(filename_dir, paste0(filename_only, ".png")) %>% str_replace_all("\\\\", "/")
   
   r <- gt_load_png_as_traffic_raster(filename = png_filename,
                                      location = c(latitude, longitude),
@@ -75,7 +75,7 @@ gt_html_to_raster <- function(filename,
                                      traffic_color_dist_metric = traffic_color_dist_metric)
   
   ## Delete png from temp file
-  unlink(file.path(filename_dir, paste0(filename_only,".png")))
+  unlink(file.path(filename_dir, paste0(filename_only,".png")) %>% str_replace_all("\\\\", "/"))
   
   return(r)
 }
