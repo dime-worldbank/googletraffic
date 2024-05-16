@@ -1,6 +1,10 @@
 Package: googletraffic
 Title: Google Traffic
+<<<<<<< HEAD
 Version: 0.1.5
+=======
+Version: 0.1.4
+>>>>>>> 6f46d251b8f9ff2db2790082b53c9dfc3b4f9ead
 Authors@R: 
     person("Robert", "Marty", , "rmarty@worldbank.org", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-3164-3813"))
