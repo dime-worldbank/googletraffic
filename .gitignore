@@ -4,7 +4,8 @@
 .Rhistory
 docs
 *googletraffic-vignette.html
-
+.Rhistory
+.Rapp.history
 
 
 inst/doc
