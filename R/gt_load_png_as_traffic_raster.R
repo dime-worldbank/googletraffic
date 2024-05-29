@@ -79,7 +79,7 @@ gt_load_png_as_traffic_raster <- function(filename,
         unique() %>% 
         as.data.frame() %>%
         dplyr::rename(hex = ".") %>%
-        dplyr::mutate(hex_noff = str_replace_all(.data$hex, "FF$", ""))
+        dplyr::mutate(hex_noff = str_replace_all(.data$hex, "FF$", "FF"))
       
       lab_df <- color_df$hex_noff %>% 
         schemr::hex_to_lab()
