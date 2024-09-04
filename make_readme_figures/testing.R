@@ -29,8 +29,8 @@ if(F){
 api_keys_df <- read.csv("~/Dropbox/World Bank/Webscraping/Files for Server/api_keys.csv")
 
 google_key_df <- api_keys_df |>
-  dplyr::filter(Service == "Google Directions API",
-                Account == "ramarty@email.wm.edu")
+  dplyr::filter(Service == "Google Javascript API",
+                Account == "robmarty3@gmail.com")
 google_key <- google_key_df$Key
 
 # Test -------------------------------------------------------------------------

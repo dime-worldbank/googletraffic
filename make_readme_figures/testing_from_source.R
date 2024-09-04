@@ -1,4 +1,5 @@
 
+### Packages
 library(dplyr)
 library(googleway)
 library(htmlwidgets)
@@ -18,6 +19,27 @@ files <- file.path("~", "Documents", "Github", "googletraffic", "R") |>
   list.files(full.names = T,
              pattern = "*.R")
 for(file_i in files) source(file_i)
+
+api_keys_df <- read.csv("~/Dropbox/World Bank/Webscraping/Files for Server/api_keys.csv")
+
+google_key_df <- api_keys_df |>
+  dplyr::filter(Service == "Google Javascript API",
+                Account == "robmarty3@gmail.com")
+google_key <- google_key_df$Key
+
+# Test -------------------------------------------------------------------------
+gt_make_png(location = c(40.717437418183884, -73.99145764250052),
+            height = 500,
+            width = 500,
+            zoom = 16,
+            out_filename = paste0("~/Desktop/test123.png"),
+            google_key = google_key)
+
+r <- gt_make_raster(location = c(40.717437418183884, -73.99145764250052),
+                    height = 500,
+                    width = 500,
+                    zoom = 16,
+                    google_key = google_key)
 
 nbo <- gadm(country = "KEN", level = 1, path = tempdir())
 nbo <- nbo[nbo$NAME_1 == "Nairobi",] %>% st_as_sf()
