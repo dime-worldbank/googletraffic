@@ -42,8 +42,8 @@ gt_make_png(location = c(40.717437418183884, -73.99145764250052),
             google_key = google_key)
 
 r <- gt_make_raster(location = c(40.717437418183884, -73.99145764250052),
-            height = 200,
-            width = 200,
+            height = 600,
+            width = 600,
             zoom = 16,
             google_key = google_key)
 

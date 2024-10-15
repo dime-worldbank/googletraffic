@@ -66,17 +66,44 @@ gt_make_png <- function(location,
     stringr::str_replace_all(filename_only, "") %>%
     stringr::str_sub(end = -2)
   
+  message("test123")
+  
   if(print_progress){
     message(paste0("Pausing for ", webshot_delay, " seconds to allow traffic data to render"))
   }
   
-  webshot2::webshot(url = filename_html,
-                    file = file.path(filename_dir, paste0(filename_only,".png")),
-                    vheight = height,
-                    vwidth = width,
-                    cliprect = "viewport",
-                    delay = webshot_delay,
-                    zoom = webshot_zoom)
+  #### Approach 1
+  suppressWarnings({
+    webshot2::webshot(url = filename_html,
+                      file = file.path(filename_dir, paste0(filename_only,".png")),
+                      vheight = height,
+                      vwidth = width,
+                      cliprect = "viewport",
+                      delay = webshot_delay,
+                      zoom = webshot_zoom)
+  })
+  
+  #### Approach 2
+  ## Check if the PNG is blank
+  img <- png::readPNG(file.path(filename_dir, paste0(filename_only,".png")))
+  
+  if (all(img == 1)) {
+    
+    chrome_path <- Sys.which("chrome")
+    if (chrome_path != "") {
+      system2(chrome_path, 
+              args = c("--headless", "--disable-gpu", "--screenshot", 
+                       paste0("--window-size=", width, ",", height),
+                       "--default-background-color=0",
+                       filename_html),
+              stdout = TRUE,
+              stderr = TRUE)
+      
+      # Move the screenshot to the desired location
+      file.rename("screenshot.png", file.path(filename_dir, paste0(filename_only,".png")))
+      
+    }
+  }
   
   ## Read/Write png to file
   img <- png::readPNG(file.path(filename_dir, paste0(filename_only,".png")))

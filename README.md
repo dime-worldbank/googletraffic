@@ -20,7 +20,7 @@ Create Georeferenced Traffic Data from the [Google Maps Javascript API](https://
 
 Google Maps [displays information about traffic conditions](https://www.google.com/maps/@38.909083,-77.0249335,12.07z/data=!5m1!1e1) across an area. This package provides functions to produce georeferenced rasters from real-time Google Maps traffic information. Having Google traffic information in a georeferenced data format facilitates analysis of traffic information (e.g., spatially merging traffic information with other data sources). 
 
-This package was inspired by (1) existing research that has used Google traffic information, including in [New York City](https://www.sciencedirect.com/science/article/pii/S0048969721034070) and [Dar es Salaam](https://openknowledge.worldbank.org/handle/10986/33445), and (2) similar algorithms implemented in [JavaScript](https://ieeexplore.ieee.org/abstract/document/8326831) and in a [C shell script](https://arxiv.org/abs/2105.12235).
+This package was inspired by (1) existing research that has used Google traffic information, including in [New York City](https://doi.org/10.1016/j.scitotenv.2021.148336) and [Dar es Salaam](https://openknowledge.worldbank.org/handle/10986/33445), and (2) similar algorithms implemented in [JavaScript](https://ieeexplore.ieee.org/abstract/document/8326831) and in a [C shell script](https://arxiv.org/abs/2105.12235).
 
 <!--- The below image shows an example raster produced using the package showing [traffic within Washington, DC.](https://www.google.com/maps/@38.9098813,-77.0406205,15.01z/data=!5m1!1e1)
 
@@ -55,7 +55,7 @@ devtools::install_github("dime-worldbank/googletraffic")
 
 ## API Key <a name="apikey"></a>
 
-Querying Google traffic information requires a Google API key with the [Maps Javascript API](https://developers.google.com/maps/documentation/javascript/overview) enabled. To create a Google API key, [follow these instructions](https://developers.google.com/maps/get-started#create-project).
+Querying Google traffic information requires a Google API key with the [Maps Javascript API](https://developers.google.com/maps/documentation/javascript/overview) enabled. To create a Google API key, [follow these instructions](https://developers.google.com/maps/get-started#create-project). For information on Google Maps API pricing, see [here](https://mapsplatform.google.com/pricing/); 1,000 queries to the Maps JavaScript API (for Dynamic Maps) costs \$7. Google Maps provides a \$200 monthly credit; consequently, 28,571 queries can be made within the \$200 credit amount each month.
 
 ## Quickstart <a name="quickstart"></a>
 

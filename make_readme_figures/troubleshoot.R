@@ -4,7 +4,18 @@
 #library(googletraffic)
 
 # Setup ------------------------------------------------------------------------
+library(dplyr)
+library(googleway)
+library(htmlwidgets)
+library(plotwidgets)
+library(png)
+library(sf)
+library(sp)
+library(stringr)
+library(webshot2)
 library(raster)
+library(ColorNameR)
+library(schemr)
 
 git_dir <- "~/Documents/Github/googletraffic/R/"
 source(file.path(git_dir, "gt_mosaic.R"))
@@ -27,20 +38,19 @@ google_key_df <- api_keys_df |>
 google_key <- google_key_df$Key
 
 # Make raster ------------------------------------------------------------------
-r <- googletraffic::gt_make_raster(location = c(40.712778, -74.006111),
-                                   height     = 800,
-                                   width      = 800,
-                                   zoom       = 16,
-                                   #webshot_delay = 20,
-                                   google_key = google_key)
-r
-
-# Make png ---------------------------------------------------------------------
-gt_make_png(location     = c(40.712778, -74.006111),
-            height       = 1000,
-            width        = 1000,
-            zoom         = 16,
-            out_filename = "~/Desktop/new_folder/hello/google_traffic.png",
-            google_key   = google_key)
-
-
+r <- gt_make_raster(location = c(40.712778, -74.006111),
+                    height     = 600,
+                    width      = 600,
+                    zoom       = 15,
+                    google_key = google_key)
+# r
+# 
+# # Make png ---------------------------------------------------------------------
+# gt_make_png(location     = c(40.712778, -74.006111),
+#             height       = 1000,
+#             width        = 1000,
+#             zoom         = 16,
+#             out_filename = "~/Desktop/new_folder/hello/google_traffic.png",
+#             google_key   = google_key)
+# 
+# 

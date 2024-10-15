@@ -53,6 +53,7 @@ gt_html_to_raster <- function(filename,
   dir.create(filename_dir)
   file.create(file.path(filename_dir, paste0(filename_only,".png")) %>% str_replace_all("\\\\", "/"))
   
+  #### Approach 1
   suppressWarnings({
     webshot2::webshot(url = filename,
                       file = file.path(filename_dir, paste0(filename_only,".png")) %>% str_replace_all("\\\\", "/"),
@@ -63,9 +64,56 @@ gt_html_to_raster <- function(filename,
                       zoom = webshot_zoom) # change
   })
   
+  #### Approach 2
+  ## Check if the PNG is blank
+  img <- png::readPNG(file.path(filename_dir, paste0(filename_only,".png")))
+  
+  if (all(img == 1)) {
+    
+    chrome_path <- Sys.which("chrome")
+    if (chrome_path != "") {
+      system2(chrome_path, 
+              args = c("--headless", "--disable-gpu", "--screenshot", 
+                       paste0("--window-size=", width, ",", height),
+                       "--default-background-color=0",
+                       filename_html),
+              stdout = TRUE,
+              stderr = TRUE)
+      
+      # Move the screenshot to the desired location
+      file.rename("screenshot.png", out_filename)
+      
+    }
+  }
+  
   #### Load as raster and image
   png_filename <- file.path(filename_dir, paste0(filename_only, ".png")) %>% str_replace_all("\\\\", "/")
   
+  #### Approach 2
+  ## Check if the PNG is blank
+  img <- png::readPNG(png_filename)
+  
+  a <<- img
+  
+  if (all(img == 1)) {
+    
+    chrome_path <- Sys.which("chrome")
+    if (chrome_path != "") {
+      system2(chrome_path, 
+              args = c("--headless", "--disable-gpu", "--screenshot", 
+                       paste0("--window-size=", width, ",", height),
+                       "--default-background-color=0",
+                       filename_html),
+              stdout = TRUE,
+              stderr = TRUE)
+      
+      # Move the screenshot to the desired location
+      file.rename("screenshot.png", out_filename)
+      
+    }
+  }
+  
+  #### PNG to Raster
   r <- gt_load_png_as_traffic_raster(filename = png_filename,
                                      location = c(latitude, longitude),
                                      height   = height,
