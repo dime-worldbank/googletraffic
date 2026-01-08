@@ -54,7 +54,7 @@ gt_make_grid <- function(polygon,
   if(nrow(polygon) > 1){
     polygon$id <- 1
     polygon <- polygon %>%
-      dplyr::group_by(id) %>%
+      dplyr::group_by(.data$id) %>%
       dplyr::summarize(geometry = st_union(geometry))
   }
   
