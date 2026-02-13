@@ -35,15 +35,15 @@ google_key <- google_key_df$Key
 
 # Test -------------------------------------------------------------------------
 gt_make_png(location = c(40.717437418183884, -73.99145764250052),
-            height = 200,
-            width = 200,
+            height = 1000,
+            width = 1000,
             zoom = 16,
             out_filename = paste0("~/Desktop/test123.png"),
             google_key = google_key)
 
 r <- gt_make_raster(location = c(40.717437418183884, -73.99145764250052),
-            height = 600,
-            width = 600,
+            height = 1000,
+            width = 1000,
             zoom = 16,
             google_key = google_key)
 
